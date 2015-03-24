@@ -1,0 +1,24 @@
+h1 {
+    font-family: 'Lobster', cursive;
+    padding-top:15px;
+ }
+
+p.nb {
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 16px;
+ }
+
+ .navMainTabs{
+ 	border-color: #ffffff;
+ 	background-color:#0000ff; 
+ }
+
+ .navbar-custom {
+    color: #FFFFFF;
+    background-color: #4E78B6;
+}
+
+a.gestionBoton{
+	width: 100px;
+}

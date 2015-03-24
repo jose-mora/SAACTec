@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Programa de asignación de cargas</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/customStyle.css">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<?php
+
+?>
+
+<body>
+	<div class="container">
+		<?php include("header.html"); ?>
+
+		<div>
+			<blockquote>
+    			<p>Por el momento esta secci&oacute;n se encuentra en construcci&oacute;n</p>
+  			</blockquote>
+		</div>	
+		</br>
+		
+		<div align="center">
+
+      <img class="img-responsive" src="img/underconst.png">
+		
+		</div>
+		
+	</div>
+		
+</body>
+</html>
