@@ -43,12 +43,7 @@
 ?>
 		<div>
       <h2> Profesores </h2>
-			<blockquote>
-    			<p>A continuaci&oacute;n se muestra la lista de los profesores registrados en el sistema junto con informaci&oacute;n de
-           contacto del mismo. Si el profesor a buscar no se encuentra en la lista, por favor registrarlo en el Sistema de Asignaci&oacute;n de Cargas</p>
-  			</blockquote>
-		</div>	
-		</br>
+			
 		
     <?php
 
@@ -56,6 +51,14 @@
 
         if ($rolUser == 'super') {      
     ?>
+
+    	<blockquote>
+    			<p>A continuaci&oacute;n se muestra la lista de los profesores registrados en el sistema junto con informaci&oacute;n de
+           contacto del mismo. Si el profesor a buscar no se encuentra en la lista, por favor registrarlo en el Sistema de Asignaci&oacute;n de Cargas</p>
+  		</blockquote>
+		</div>	
+		</br>
+
 		  <div align="center">
 		    <div class="btn-group btn-group-lg">
     	 	   <a href="gestionProfesores.php" class="btn btn-primary"> Buscar Profesor </a>
