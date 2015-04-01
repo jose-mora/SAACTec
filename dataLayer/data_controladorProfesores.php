@@ -72,7 +72,6 @@ class data_controladorProfesores
         global $mysqli;
         
         $query = "SELECT * FROM profesores WHERE activo = 1 ORDER BY 'apellido1'";
-        //echo $query;
         $result = $mysqli->query($query);
 
         return $result;
@@ -82,8 +81,22 @@ class data_controladorProfesores
 
     	global $mysqli;
 
-        $query = "UPDATE profesores SET activo=". $valor ." WHERE nombre='".$emailProfesor."'";
+        $query = "UPDATE profesores SET activo=". $valor ." WHERE email='".$emailProfesor."'";
 
+        $mysqli->query($query);
+
+        $mysqli->close(); 
+        
+        return 0;
+    }
+
+    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel){
+
+        global $mysqli;
+
+        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ."' WHERE email='".$email."'";
+
+        echo $query;
         $mysqli->query($query);
 
         $mysqli->close(); 

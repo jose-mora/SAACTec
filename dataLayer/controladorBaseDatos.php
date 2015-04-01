@@ -34,6 +34,12 @@ class controladorBaseDatos {
 
     }
 
+    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel){
+
+        $cont = new data_controladorProfesores();
+        return $cont->actualizarProfesor($nom,$ap1,$ap2,$email,$tel);
+    }
+
     function retonarProfesor($criterio,$valor){
         $cont = new data_controladorProfesores();
         $result = $cont-> retonarProfesor($criterio,$valor);
@@ -41,7 +47,9 @@ class controladorBaseDatos {
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_profesor($obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']); 
+            $newProf =  new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']);
+            $newProf->setActivo($obj['activo']);
+            $array[] = $newProf;
         }
 
         return $array;  
@@ -54,22 +62,27 @@ class controladorBaseDatos {
 
     function retornarProfesor($emailProfesor){
         $cont = new data_controladorProfesores();
-        return $cont-> retornarProfesor($emailProfesor);
+        $result =  $cont-> retornarProfesor($emailProfesor);
+
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+            $newProf =  new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']);
+            $newProf->setActivo($obj['activo']);
+            $array[] = $newProf;
+        }
+
+        if (count($array) > 0) {
+            return $array[0];
+        }else{
+            return null;
+        }
     }
 
     function gestionarProfesor($emailProfesor,$valor){
         $cont = new data_controladorProfesores();
-        $result = $cont-> gestionarProfesor($emailProfesor,$valor);
-        $array = array();
-
-        echo "paso a gestionar";
-
-        while ($obj = $result->fetch_assoc()) {
-            echo "paso";
-            $array[] = new obj_profesor($obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']); 
-        }
-
-        return $array;  
+        return $cont-> gestionarProfesor($emailProfesor,$valor);
+        
     }
 
     function actualizarEvaluacion($emailProfesor,$evaluacion){
@@ -85,7 +98,7 @@ class controladorBaseDatos {
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_profesor($obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']); 
+            $array[] = new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono']); 
         }
 
         return $array;   

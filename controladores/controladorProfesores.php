@@ -23,6 +23,33 @@ class controladorProfesores
         return $controlador->registrarProfesores($nom,$ap1,$ap2,$email,$tel);
 	}
 
+	function actualizarProfesor($obj, $emailOri){
+
+		$controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
+
+		$emailNuevo = $obj->email;
+		$nom = $obj->name;
+		$ap1 = $obj->apellido1;
+		$ap2 = $obj->apellido2;		
+		$tel = $obj->tel;
+
+		if ($emailOri != $emailNuevo ) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
+			echo " cambio de email";
+			$profesor = $this->retornarProfesor($emailNuevo);
+
+			if ($profesor) { //ya existe, devolvemos error
+				echo " ya existe email";
+				return 4;
+			}else{
+				return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel);
+			}
+		}else{
+			return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel);
+		}
+		
+		
+	}
+
 	function retonarProfesor($criterio,$valor){
 
 		$criterioReal = "";
@@ -46,11 +73,13 @@ class controladorProfesores
 	}
 
 	function retornarProfesor($emailProfesor){
-
+		$controlador = new controladorBaseDatos();
+		return $controlador->retornarProfesor($emailProfesor);
 	}
 
-	function gestionarProfesor($emailProfesor){
-
+	function gestionarProfesor($emailProfesor,$valor){
+		$controlador = new controladorBaseDatos();
+		return $controlador->gestionarProfesor($emailProfesor,$valor);
 	}
 
 	function retornarProfesoresActivos(){

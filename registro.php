@@ -61,7 +61,7 @@
 
     if (!$validateFlag) { //if the validation passes
 
-      $prof = new obj_profesor($username,$lastname,$lastname2,$email,$tel); 
+      $prof = new obj_profesor(0,$username,$lastname,$lastname2,$email,$tel); 
       $resultado =  $controlador->registrarProfesores($prof);
 
 
