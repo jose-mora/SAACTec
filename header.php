@@ -43,9 +43,9 @@
         			
         		<li><a href="mantenimiento.php"><p class="nb"> Mantenimientos </p></a></li>
 
-        		<li><a href="underConstruction.php"><p class="nb">Preferencias</p></a></li>
+        		<li><a href="preferenciasBuscarProfesor.php"><p class="nb">Preferencias</p></a></li>
  
-        		<li><a href="underConstruction.php"><p class="nb">Consultas</p></a></li>
+        		<li><a href="reportes.php"><p class="nb">Reportes</p></a></li>
 
         		<li><a href="underConstruction.php"><p class="nb">Asignar Cargas</p></a></li>
 

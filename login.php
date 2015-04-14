@@ -21,7 +21,14 @@
  $loginStatus = 0;
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-      $_SESSION['logged_user']= "elizondo1288@hotmail.com super";
+      $tipoUsuario = $_POST["tipoUser"];
+
+      if (strcmp($tipoUsuario, 'Administrador') == 0) {
+          $_SESSION['logged_user']= "elizondo1288@hotmail.com super";
+      }else{
+          $_SESSION['logged_user']= "elizondo1288@hotmail.com profesor";
+      }
+   
       header('Location: ../Asignacion/profesores.php'); 
  }
 
@@ -58,6 +65,13 @@
 
               <label for="name">Password:</label>
               <input type="name" class="form-control" name="ideGrupo" id="ideGrupo"/>
+
+              <label for="name">Tipo Usuario:</label>
+              <select class="form-control" name="tipoUser" id="tipoUser">
+                <option>Administrador</option>
+                <option>Profesor</option>
+              </select>
+
               <br/><br/>
               <button type="submit" class="btn btn-primary">Ingresar</button>
           </div>

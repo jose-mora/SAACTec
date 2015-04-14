@@ -162,7 +162,6 @@
     </div>
 		<?php
       if ($mostrarLista) {
-    
     ?>
 
     <div class="well well-lg">
@@ -170,10 +169,10 @@
     		<thead>
       			<tr>
        				<th>Nombre</th>
-       				<th>Apellido</th>
        				<th class="hidden-xs">Email</th>
               <th>Acci&oacute;n</th>
-              <th>Actualizar</th>
+              <th class="hidden-xs">Actualizar</th>
+              <th>Notas</th>
    				</tr>
    			</thead>
    			<tbody>
@@ -189,8 +188,7 @@
 						echo '<tr>';
      				}
      		?>
-       				<td><? echo $obj->name; ?></td>
-       				<td><? echo $obj->apellido1; ?></td>
+       				<td><? echo $obj->name . ' ' . $obj->apellido1  ?></td>
        				<td class="hidden-xs"><? echo $obj->email; ?></td>
 
                <?php
@@ -209,7 +207,8 @@
                 }
               ?>
 
-              <td><? echo "<a href='gestionProfesores.php?objUpdate=". $obj->email ."' class='btn btn-primary gestionBoton'> Actualizar </a> "; ?></td>
+              <td class="hidden-xs"><? echo "<a href='gestionProfesores.php?objUpdate=". $obj->email ."' class='btn btn-primary gestionBoton'> Actualizar </a> "; ?></td>
+              <td><? echo "<a href='notaProfesor.php?prgest=". $obj->email ."' class='btn btn-primary gestionBoton'> Gestionar </a> "; ?></td>
 
      		</tr>
      		<?php endforeach; ?>

@@ -138,6 +138,16 @@
           <label for="tel">Telefono:</label>
           <input type="telephone" class="form-control" id="tel" name="tel">
         </div>
+        <div class="form-group">
+          <label for="sede">Jornada Laboral:</label>
+          <select class="form-control" name="franjaInicio" id="franjaInicio">
+            <option>25%</option>
+            <option>50%</option>
+            <option>100%</option>
+            <option>133%</option>
+          </select>
+        </div>
+
         <button type="button" class="btn btn-primary" onclick="goBack();"> Atras </button>
         <button type="submit" class="btn btn-primary">Registrar</button>
           

@@ -18,7 +18,12 @@
 
 <body>
 	<div class="container">
-		<?php include("header.html"); ?>
+		<?php 
+
+		session_start(); 
+		include("header.php"); 
+
+		?>
 
 		<div>
 			<blockquote>
