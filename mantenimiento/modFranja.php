@@ -14,6 +14,7 @@
               <thead>
                 <tr>
                   <th>Nombre de Franja</th>
+                  <!-- <th>D&iacute;a</th> -->  
                   <th>Acci&oacute;n</th>
                 </tr>
               </thead>
@@ -34,6 +35,7 @@
                   
               ?>
               <td><? echo $obj->name; ?></td>
+             <!-- <td><? //echo $obj->dia; ?></td> -->
              <?php
                 if ($obj->activo == 1) {
               

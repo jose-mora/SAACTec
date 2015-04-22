@@ -41,6 +41,17 @@
                   <option>9 pm</option>
                 </select>
 
+                <!--
+                <label for="sede">D&iacute;a:</label>
+                <select class="form-control" name="franjaDia" id="franjaDia">
+                  <option>L</option>
+                  <option>K</option>
+                  <option>M</option>
+                  <option>J</option>
+                  <option>V</option>
+                </select>
+                -->
+
 
           			<input type="hidden" name="operation" id="operation" value="franja_reg">	
         		</div>

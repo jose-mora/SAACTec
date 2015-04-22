@@ -83,7 +83,7 @@
           /*************************/
 
           //Metodo para registrar una franja en el sistema
-          function registrarFranja($inicio,$fin){
+          function registrarFranja($inicio,$fin,$dia){
 
 
               $numeroRespuesta =0;
@@ -128,7 +128,7 @@
                 }
 
                 if ($insertar) { //si podemos insertar (no se encontro la sede)
-                  return $controlador->insertarFranja($nombreFranja);
+                  return $controlador->insertarFranja($nombreFranja,$dia);
 
                 }else{
                   return 1;
@@ -167,7 +167,7 @@
 
           /*************************/
 
-          function registrarCurso($nombreCurso){
+          function registrarCurso($nombreCurso,$nivelCurso){
 
               if ( strlen( $nombreCurso ) <= 0 ){ 
 
@@ -190,7 +190,7 @@
 
               if ($insertar) { 
 
-                return $controlador->insertarCurso($nombreCurso);
+                return $controlador->insertarCurso($nombreCurso,$nivelCurso);
 
               }else{
                 return 1;

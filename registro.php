@@ -37,6 +37,8 @@
     $lastname2 = test_input($_POST['lastname2']);
     $email = test_input($_POST["email"]);
     $tel = test_input($_POST["tel"]);
+    $jornada = test_input($_POST["jornada"]);
+    $nivel = test_input($_POST["nivel"]);
 
     if ( strlen( $username ) <= 0 ){
       $validateFlag = TRUE;
@@ -58,10 +60,18 @@
       $validateFlag = TRUE;
       $emptyAmmount++;
     }
+    if ( strlen( $jornada ) <= 0 ){
+      $validateFlag = TRUE;
+      $emptyAmmount++;
+    }
+    if ( strlen( $nivel ) <= 0 ){
+      $validateFlag = TRUE;
+      $emptyAmmount++;
+    }
 
     if (!$validateFlag) { //if the validation passes
 
-      $prof = new obj_profesor(0,$username,$lastname,$lastname2,$email,$tel); 
+      $prof = new obj_profesor(0,$username,$lastname,$lastname2,$email,$tel,$jornada,$nivel); 
       $resultado =  $controlador->registrarProfesores($prof);
 
 
@@ -140,11 +150,20 @@
         </div>
         <div class="form-group">
           <label for="sede">Jornada Laboral:</label>
-          <select class="form-control" name="franjaInicio" id="franjaInicio">
+          <select class="form-control" name="jornada" id="jornada">
             <option>25%</option>
             <option>50%</option>
             <option>100%</option>
             <option>133%</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sede">Nivel Acad&eacute;mico:</label>
+          <select class="form-control" name="nivel" id="nivel">
+            <option>Bachiller</option>
+            <option>Licenciado</option>
+            <option>Master</option>
+            <option>Doctorado</option>
           </select>
         </div>
 

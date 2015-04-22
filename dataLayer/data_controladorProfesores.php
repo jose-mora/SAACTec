@@ -10,13 +10,13 @@ class data_controladorProfesores
 	
 	function __construct(){}
 
-	function registrarProfesores($nom,$ap1,$ap2,$email,$tel){
+	function registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
 
 		global $mysqli;
 
 		$query = "";
-        $query = "INSERT INTO profesores(nombre, apellido1, apellido2, email, telefono, evaluacionActual,activo) ";
-        $query = $query. "VALUES ('". $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "',70,1)";
+        $query = "INSERT INTO profesores(nombre, apellido1, apellido2, email, telefono, evaluacionActual,activo,jornada,nivel) ";
+        $query = $query. "VALUES ('". $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "',70,1,'". $jor . "','". $niv . "')";
 
         //echo $query;
 
@@ -90,11 +90,11 @@ class data_controladorProfesores
         return 0;
     }
 
-    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel){
+    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
 
         global $mysqli;
 
-        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ." WHERE email='".$email."'";
+        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ."', jornada='". $jor ."', nivel='". $niv ." WHERE email='".$email."'";
 
         $mysqli->query($query);
 

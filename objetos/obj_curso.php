@@ -5,12 +5,14 @@
             public $name;
             public $activo;
             public $ide;
-            
+            public $nivel;
+
             // Assigning the values
-            public function __construct($ide,$name,$activo) {
+            public function __construct($ide,$name,$activo,$nivel) {
               $this->ide = $ide;
               $this->name = $name;
               $this->activo = $activo;
+              $this->nivel = $nivel;
             }
     }
           

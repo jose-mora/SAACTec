@@ -21,6 +21,14 @@
         	<div class="form-group">
         			<label for="name">Nombre Curso:</label>
         			<input type="name" class="form-control" name="name" id="name">
+
+              <label for="sede">Nivel Acad&eacute;mico:</label>
+              <select class="form-control" name="nivel" id="nivel">
+                <option>Bachillerato</option>
+                <option>Licenciatura</option>
+                <option>Maestria</option>
+                <option>Doctorado</option>
+              </select>
 					    <input type="hidden" id="operation" name="operation" value="curso_reg">
         	</div>
         	<button type="submit" class="btn btn-primary">Registrar Curso</button>

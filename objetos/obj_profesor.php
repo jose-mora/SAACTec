@@ -8,18 +8,22 @@
             public $email;
             public $tel;
             public $ide;
+            public $jornada;
+            public $nivel;
 
             public $activo;
             
             
             // Assigning the values
-             public function __construct($ide,$name, $apellido1, $apellido2, $email,$tel) {
+             public function __construct($ide,$name, $apellido1, $apellido2, $email,$tel,$jornada,$nivel) {
               $this->name = $name;
               $this->apellido1 = $apellido1;
               $this->apellido2 = $apellido2;
               $this->email = $email;
               $this->tel = $tel;
               $this->ide = $ide;
+              $this->jornada = $jornada;
+              $this->nivel = $nivel;
 
             }
 

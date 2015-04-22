@@ -13,6 +13,7 @@
               <thead>
                 <tr>
                   <th>Nombre de Curso</th>
+                  <th>Nivel de Curso</th>
                   <th>Acci&oacute;n</th>
                 </tr>
               </thead>
@@ -32,6 +33,7 @@
                   }
               ?>
               <td><? echo $obj->name; ?></td>
+              <td><? echo $obj->nivel; ?></td>
 
               <?php
                 if ($obj->activo == 1) {
@@ -48,7 +50,7 @@
 
                 }
               ?>
-              
+               
               </tr>
               <?php endforeach; ?>
             

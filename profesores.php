@@ -61,8 +61,8 @@
 
 		  <div align="center">
 		    <div class="btn-group btn-group-lg">
-    	 	   <a href="gestionProfesores.php" class="btn btn-primary"> Buscar Profesor </a>
-           <a href="registro.php" class="btn btn-primary"> Registro Profesor </a> 	
+    	 	   <a href="gestionProfesores.php" class="btn btn-primary"> Buscar </a>
+           <a href="registro.php" class="btn btn-primary"> Registro </a> 	
   	     </div>	
 		  </div>
 

@@ -6,11 +6,11 @@ class data_controladorCursos {
 
     public function __construct() {}
 
-	function registrarCurso($nombreCurso){
+	function registrarCurso($nombreCurso,$nivelCurso){
 
 		global $mysqli;
 
-        $query = "INSERT INTO cursos (nombre) VALUES ('". $nombreCurso . "')";
+        $query = "INSERT INTO cursos (nombre,nivel) VALUES ('". $nombreCurso . "','". $nivelCurso . "')";
 
 		$mysqli->query($query);
 

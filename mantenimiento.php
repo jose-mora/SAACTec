@@ -99,13 +99,15 @@
  		}
  		if ($operation == "curso_reg") {  //si es regitrar curso
  			$nombreCurso = $_POST["name"];
-      $numeroRespuesta = $controlador->registrarCurso($nombreCurso); 
+      $nivelCurso = $_POST["nivel"];
+      $numeroRespuesta = $controlador->registrarCurso($nombreCurso,$nivelCurso); 
       procesarRespuesta($numeroRespuesta,'regCurso');
  		}
  		if ($operation == "franja_reg") {  //si es regitrar franja
  			$inicio = $_POST["franjaInicio"];
+      //$dia = $_POST["franjaDia"];
  			$fin = $_POST["franjaFin"];
-      $numeroRespuesta = $controlador->registrarFranja($inicio, $fin);
+      $numeroRespuesta = $controlador->registrarFranja($inicio, $fin,'L');
       procesarRespuesta($numeroRespuesta,'regFranja');
  		}
  		if ($operation == "grupo_reg") { //si es registrar grupo
@@ -152,9 +154,9 @@ function procesarRespuesta($numeroRespuesta,$encargado){
     					<span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="mantenimiento.php?etype=regSede">Registrar Sede</a></li>
+    					<li><a href="mantenimiento.php?etype=regSede">Registrar</a></li>
     					<li class="divider"></li>
-    					<li><a href="mantenimiento.php?etype=modSede">Gestionar Sede</a></li>
+    					<li><a href="mantenimiento.php?etype=modSede">Gestionar</a></li>
   					</ul>
 				</div>
 				<!--Cursos-->
@@ -164,9 +166,9 @@ function procesarRespuesta($numeroRespuesta,$encargado){
     					<span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="mantenimiento.php?etype=regCurso">Registrar Curso</a></li>
+    					<li><a href="mantenimiento.php?etype=regCurso">Registrar</a></li>
     					<li class="divider"></li>
-    					<li><a href="mantenimiento.php?etype=modCurso">Gestionar Cursos</a></li>
+    					<li><a href="mantenimiento.php?etype=modCurso">Gestionar</a></li>
   					</ul>
 				</div>
 				<!-- Grupos-->
@@ -176,9 +178,9 @@ function procesarRespuesta($numeroRespuesta,$encargado){
     					<span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="mantenimiento.php?etype=regGrupo">Registrar Grupo</a></li>
+    					<li><a href="mantenimiento.php?etype=regGrupo">Registrar</a></li>
     					<li class="divider"></li>
-    					<li><a href="mantenimiento.php?etype=modGrupo">Gestionar Grupo</a></li>
+    					<li><a href="mantenimiento.php?etype=modGrupo">Gestionar</a></li>
   					</ul>
 				</div>
 				<!-- Franjas-->
@@ -188,9 +190,9 @@ function procesarRespuesta($numeroRespuesta,$encargado){
     					<span class="caret"></span>
   					</button>
   					<ul class="dropdown-menu" role="menu">
-    					<li><a href="mantenimiento.php?etype=regFranja">Registrar Franjas</a></li>
+    					<li><a href="mantenimiento.php?etype=regFranja">Registrar</a></li>
     					<li class="divider"></li>
-    					<li><a href="mantenimiento.php?etype=modFranja">Gestionar Franjas</a></li>
+    					<li><a href="mantenimiento.php?etype=modFranja">Gestionar</a></li>
   					</ul>
 				</div>           		            
        		</div>

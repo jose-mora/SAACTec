@@ -19,8 +19,10 @@ class controladorProfesores
 		$ap2 = $obj->apellido2;
 		$email = $obj->email;
 		$tel = $obj->tel;
+		$jor = $obj->jornada;
+		$niv = $obj->nivel;
 
-        return $controlador->registrarProfesores($nom,$ap1,$ap2,$email,$tel);
+        return $controlador->registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv);
 	}
 
 	function actualizarProfesor($obj, $emailOri){
@@ -32,6 +34,8 @@ class controladorProfesores
 		$ap1 = $obj->apellido1;
 		$ap2 = $obj->apellido2;		
 		$tel = $obj->tel;
+		$jor = $obj->jornada;
+		$niv = $obj->nivel;
 
 		if ($emailOri != $emailNuevo ) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
 			echo " cambio de email";
@@ -41,10 +45,10 @@ class controladorProfesores
 				echo " ya existe email";
 				return 4;
 			}else{
-				return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel);
+				return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel,$jor,$niv);
 			}
 		}else{
-			return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel);
+			return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel,$jor,$niv);
 		}
 		
 		
