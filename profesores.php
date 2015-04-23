@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Programa de asignación de cargas</title>
+	<?php
+          include ("tituloPagina.php");
+        ?>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -61,8 +63,8 @@
 
 		  <div align="center">
 		    <div class="btn-group btn-group-lg">
-    	 	   <a href="gestionProfesores.php" class="btn btn-primary"> Buscar </a>
-           <a href="registro.php" class="btn btn-primary"> Registro </a> 	
+    	 	   <a href="gestionProfesores.php" class="btn btn-primary"> Buscar Profesor </a>
+           <a href="registro.php" class="btn btn-primary"> Registro Profesor </a> 	
   	     </div>	
 		  </div>
 

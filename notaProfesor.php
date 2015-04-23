@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Programa de asignación de cargas</title>
+	<?php
+          include ("tituloPagina.php");
+        ?>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

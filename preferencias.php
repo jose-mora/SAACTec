@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Programa de asignación de cargas</title>
+	<?php
+          include ("tituloPagina.php");
+        ?>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -101,7 +103,7 @@
     ?>
 
       <div class="well well-lg">
-        <h3>Grupos del curso</h3>
+        <h3>Grupos del Curso</h3>
 
         <table class="table table-condensed">
         <thead>
