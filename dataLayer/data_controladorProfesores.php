@@ -94,7 +94,7 @@ class data_controladorProfesores
 
         global $mysqli;
 
-        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ."', jornada='". $jor ."', nivel='". $niv ." WHERE email='".$email."'";
+        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ."', jornada='". $jor ."', nivel='". $niv ."' WHERE email='".$email."'";
 
         $mysqli->query($query);
 

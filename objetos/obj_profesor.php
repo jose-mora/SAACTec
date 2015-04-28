@@ -15,16 +15,24 @@
             
             
             // Assigning the values
-             public function __construct($ide,$name, $apellido1, $apellido2, $email,$tel,$jornada,$nivel) {
+            public function __construct($ide, $name, $apellido1, $apellido2, $email, $tel) {
+              $this->ide = $ide;
+              $this->name = $name;
+              $this->apellido1 = $apellido1;
+              $this->apellido2 = $apellido2;
+              $this->email = $email;
+              $this->tel = $tel;              
+            }
+            
+            public function __construct2($ide, $name, $apellido1, $apellido2, $email, $tel, $jornada, $nivel) {              
+              $this->ide = $ide;
               $this->name = $name;
               $this->apellido1 = $apellido1;
               $this->apellido2 = $apellido2;
               $this->email = $email;
               $this->tel = $tel;
-              $this->ide = $ide;
               $this->jornada = $jornada;
               $this->nivel = $nivel;
-
             }
 
             public function setActivo($activo){

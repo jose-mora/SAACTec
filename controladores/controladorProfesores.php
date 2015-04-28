@@ -3,95 +3,93 @@
 include('dataLayer/controladorBaseDatos.php');
 
 /**
-* Clase para el mantenimiento de profesores
-*/
-class controladorProfesores
-{
-	
-	function __construct(){}
+ * Clase para el mantenimiento de profesores
+ */
+class controladorProfesores {
 
-	function registrarProfesores($obj){
+    function __construct() {
+        
+    }
 
-		$controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
+    function registrarProfesores($obj) {
 
-		$nom = $obj->name;
-		$ap1 = $obj->apellido1;
-		$ap2 = $obj->apellido2;
-		$email = $obj->email;
-		$tel = $obj->tel;
-		$jor = $obj->jornada;
-		$niv = $obj->nivel;
+        $controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
 
-        return $controlador->registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv);
-	}
+        $nom = $obj->name;
+        $ap1 = $obj->apellido1;
+        $ap2 = $obj->apellido2;
+        $email = $obj->email;
+        $tel = $obj->tel;
+        $jor = $obj->jornada;
+        $niv = $obj->nivel;
 
-	function actualizarProfesor($obj, $emailOri){
+        return $controlador->registrarProfesores($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
+    }
 
-		$controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
+    function actualizarProfesor($obj, $emailOri) {
 
-		$emailNuevo = $obj->email;
-		$nom = $obj->name;
-		$ap1 = $obj->apellido1;
-		$ap2 = $obj->apellido2;		
-		$tel = $obj->tel;
-		$jor = $obj->jornada;
-		$niv = $obj->nivel;
+        $controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
 
-		if ($emailOri != $emailNuevo ) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
-			echo " cambio de email";
-			$profesor = $this->retornarProfesor($emailNuevo);
+        $emailNuevo = $obj->email;
+        $nom = $obj->name;
+        $ap1 = $obj->apellido1;
+        $ap2 = $obj->apellido2;
+        $tel = $obj->tel;
+        $jor = $obj->jornada;
+        $niv = $obj->nivel;
 
-			if ($profesor) { //ya existe, devolvemos error
-				echo " ya existe email";
-				return 4;
-			}else{
-				return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel,$jor,$niv);
-			}
-		}else{
-			return $controlador->actualizarProfesor($nom,$ap1,$ap2,$emailNuevo,$tel,$jor,$niv);
-		}
-		
-		
-	}
+        if ($emailOri != $emailNuevo) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
+            echo " cambio de correo electr&oacute;";
+            $profesor = $this->retornarProfesor($emailNuevo);
 
-	function retonarProfesor($criterio,$valor){
+            if ($profesor) { //ya existe, devolvemos error
+                echo " ya existe el correo electr&oacute;";
+                return 4;
+            } else {
+                return $controlador->actualizarProfesor($nom, $ap1, $ap2, $emailNuevo, $tel, $jor, $niv);
+            }
+        } else {
+            return $controlador->actualizarProfesor($nom, $ap1, $ap2, $emailNuevo, $tel, $jor, $niv);
+        }
+    }
 
-		$criterioReal = "";
+    function retonarProfesor($criterio, $valor) {
 
-		if ($criterio == "Nombre") {
-			$criterioReal = "nombre";
-		}elseif ($criterio == "Primer Apellido") {
-			$criterioReal = "apellido1";
-		}elseif ($criterio == "Segundo Apellido") {
-			$criterioReal = "apellido2";
-		}else{
-			$criterioReal = "email";
-		}
+        $criterioReal = "";
 
-		$controlador = new controladorBaseDatos();
-		return $controlador->retonarProfesor($criterioReal,$valor);
-	}
+        if ($criterio == "Nombre") {
+            $criterioReal = "nombre";
+        } elseif ($criterio == "Primer Apellido") {
+            $criterioReal = "apellido1";
+        } elseif ($criterio == "Segundo Apellido") {
+            $criterioReal = "apellido2";
+        } else {
+            $criterioReal = "email";
+        }
 
-	function retornarProfesores(){
+        $controlador = new controladorBaseDatos();
+        return $controlador->retonarProfesor($criterioReal, $valor);
+    }
 
-	}
+    function retornarProfesores() {
+        
+    }
 
-	function retornarProfesor($emailProfesor){
-		$controlador = new controladorBaseDatos();
-		return $controlador->retornarProfesor($emailProfesor);
-	}
+    function retornarProfesor($emailProfesor) {
+        $controlador = new controladorBaseDatos();
+        return $controlador->retornarProfesor($emailProfesor);
+    }
 
-	function gestionarProfesor($emailProfesor,$valor){
-		$controlador = new controladorBaseDatos();
-		return $controlador->gestionarProfesor($emailProfesor,$valor);
-	}
+    function gestionarProfesor($emailProfesor, $valor) {
+        $controlador = new controladorBaseDatos();
+        return $controlador->gestionarProfesor($emailProfesor, $valor);
+    }
 
-	function retornarProfesoresActivos(){
-		//echo "  PROFESORES ACTIVOS /  ";
-		$controlador = new controladorBaseDatos();
-		return $controlador->retornarProfesoresActivos();
-
-	}
+    function retornarProfesoresActivos() {
+        //echo "  PROFESORES ACTIVOS /  ";
+        $controlador = new controladorBaseDatos();
+        return $controlador->retornarProfesoresActivos();
+    }
 
 }
 
