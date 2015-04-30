@@ -76,6 +76,7 @@
 
               <br/><br/>
               <button type="submit" class="btn btn-primary">Ingresar</button>
+              <a href="crearCuenta.php" class="btn btn-primary">Registrarse</a>
           </div>
       </form>
     </div>    
