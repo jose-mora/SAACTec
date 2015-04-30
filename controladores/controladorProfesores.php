@@ -14,16 +14,29 @@ class controladorProfesores {
     function registrarProfesores($obj) {
 
         $controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
-
+        
+        $tipoProfesor = $obj->tipoProfesor;
+        $departamentoEscuela = $obj->departamentoEscuela;
+        $gradoAcademicoProfesor = $obj->gradoAcademicoProfesor;
+        $cedula = $obj->cedula;
         $nom = $obj->name;
         $ap1 = $obj->apellido1;
         $ap2 = $obj->apellido2;
         $email = $obj->email;
         $tel = $obj->tel;
+        $cel = $obj->cel;
         $jor = $obj->jornada;
-        $niv = $obj->nivel;
+        $direccion = $obj->direccion;
+        //$notas = $obj->notas;
+        $niv = $obj->nivel;//TODO: Creo que este no tengo que usarlo
+        
+        echo $nom;
+        echo $tipoProfesor;
+        echo $departamentoEscuela;
 
-        return $controlador->registrarProfesores($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
+        //return $controlador->registrarProfesores($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
+        return $controlador->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2,
+                                         $email, $tel, $cel, $jor, $direccion/*, $notas*/);
     }
 
     function actualizarProfesor($obj, $emailOri) {

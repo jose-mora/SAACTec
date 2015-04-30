@@ -10,18 +10,20 @@ class data_controladorProfesores
 	
 	function __construct(){}
 
-	function registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
+        //$nom,$ap1,$ap2,$email,$tel,$jor,$niv
+	function registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2,
+                                     $email, $tel, $cel, $jor, $direccion){
 
 		global $mysqli;
 
 		$query = "";
-        $query = "INSERT INTO profesores(nombre, apellido1, apellido2, email, telefono, evaluacionActual,activo,jornada,nivel) ";
-        $query = $query. "VALUES ('". $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "',70,1,'". $jor . "','". $niv . "')";
-
-        //echo $query;
+        $query = "INSERT INTO profesores(tipoProfesor, departamentoEscuela, gradoAcademicoProfesor, cedula, nombre, apellido1, apellido2, email, "
+               . "telefono, celular, evaluacionActual, activo, jornada, direccion, nivel) ";
+        $query = $query. "VALUES ('". $tipoProfesor . "','". $departamentoEscuela . "','". $gradoAcademicoProfesor . "','". $cedula . "','"
+                . $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "','". $cel . "',70, 1,'". $jor . "','". $direccion . "','1')";
 
         $mysqli->query($query);
-        $mysqli->close(); 
+        //$mysqli->close(); 
        
         return 0;
         

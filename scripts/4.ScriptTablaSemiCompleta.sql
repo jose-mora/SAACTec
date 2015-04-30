@@ -25,6 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `cursos`
 --
+USE TestDB;
+
 
 CREATE TABLE IF NOT EXISTS `cursos` (
 `id` int(11) NOT NULL,
@@ -101,14 +103,20 @@ INSERT INTO `grupos` (`id`, `ideGrupo`, `idSede`, `idCurso`, `idFranja`, `activo
 
 CREATE TABLE IF NOT EXISTS `profesores` (
 `id` int(11) NOT NULL,
+  `tipoProfesor` varchar(150) NOT NULL,
+  `departamentoEscuela` varchar(150) NOT NULL,
+  `gradoAcademicoProfesor` varchar(150) NOT NULL,
+  `cedula` varchar(150) NOT NULL,
   `nombre` varchar(150) NOT NULL,
   `apellido1` varchar(75) NOT NULL,
   `apellido2` varchar(75) NOT NULL,
   `email` varchar(150) NOT NULL,
   `telefono` varchar(50) NOT NULL,
+  `celular` varchar(50) NOT NULL,
   `evaluacionActual` float NOT NULL,
   `activo` int(11) NOT NULL,
   `jornada` varchar(70) NOT NULL,
+  `direccion` varchar(150) NOT NULL,
   `nivel` varchar(70) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -116,9 +124,10 @@ CREATE TABLE IF NOT EXISTS `profesores` (
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `evaluacionActual`, `activo`, `jornada`, `nivel`) VALUES
-(1, 'Esteban', 'Elizondo', 'Camacho', 'elizondo1288@gmail.com', '8864-2030', 70, 1, '', ''),
-(2, 'Jonathan', 'Mendez', 'Baltodano', 'jmendezb@yahoo.com', '84232189', 70, 1, '', '');
+INSERT INTO `profesores` (`id`, `tipoProfesor`, `departamentoEscuela`, `gradoAcademicoProfesor`, `cedula`, `nombre`, `apellido1`, 
+            `apellido2`, `email`, `telefono`, `celular`, `evaluacionActual`, `activo`, `jornada`, `direccion`, `nivel`) VALUES
+(1, 'Con plaza', 'Escuela de computacion', 'Bachiller', '702110185', 'Esteban', 'Elizondo', 'Camacho', 'elizondo1288@gmail.com', '8864-2030', '8864-2030', 70, 1, '', 'San José Costa Rica', ''),
+(2, 'Interino', 'Escuela de computacion', 'Bachiller', '702110185', 'Jonathan', 'Mendez', 'Baltodano', 'jmendezb@yahoo.com', '8423-2189', '8423-2189', 70, 1, '', 'San José Costa Rica', '');
 
 -- --------------------------------------------------------
 

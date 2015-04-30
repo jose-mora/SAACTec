@@ -8,46 +8,65 @@ include('data_controladorProfesores.php');
 
 class controladorBaseDatos {
 
-    public function __construct() {}
+    public function __construct() {
+        
+    }
 
-    /********************************************************************************************************** PROFESORES
-    
-    Operaciones con  profesores
+    /*     * ******************************************************************************************************** PROFESORES
 
-    /*************************/
+      Operaciones con  profesores
 
-    function registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
+      /************************ */
+
+    /*
+
+      $tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2,
+      $email, $tel, $cel, $jor, $direccion, $notas
+     */
+
+    //$nom,$ap1,$ap2,$email,$tel,$jor,$niv
+    function registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion/* , $notas */) {
 
         $profs = $this->retornarProfesor($email);
         $nombre = "";
-        while ($obj = $profs->fetch_assoc()) {
-            $nombre= $obj['nombre'];
-        }
-
-
-        if ($nombre != "") {
+        /*if (count($profs) > 0) {
+            while ($obj = $profs->fetch_assoc()) {
+                $nombre = $obj['nombre'];
+            }
+        }*/
+        
+        if ($profs){
             return 1;
-        }else{
+        }
+        else{
             $cont = new data_controladorProfesores();
-            return $cont-> registrarProfesores($nom,$ap1,$ap2,$email,$tel,$jor,$niv);    
+            //$nom,$ap1,$ap2,$email,$tel,$jor,$niv
+            return $cont->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
         }
 
+//        if ($nombre != "") {
+//            return 1;
+//        } else {
+//            $cont = new data_controladorProfesores();
+//            //$nom,$ap1,$ap2,$email,$tel,$jor,$niv
+//            return $cont->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
+//        }
     }
 
-    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
+    function actualizarProfesor($nom, $ap1, $ap2, $email, $tel, $jor, $niv) {
 
         $cont = new data_controladorProfesores();
-        return $cont->actualizarProfesor($nom,$ap1,$ap2,$email,$tel,$jor,$niv);
+        return $cont->actualizarProfesor($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
     }
 
-    function retonarProfesor($criterio,$valor){
+    function retonarProfesor($criterio, $valor) {
         $cont = new data_controladorProfesores();
-        $result = $cont-> retonarProfesor($criterio,$valor);
+        $result = $cont->retonarProfesor($criterio, $valor);
 
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $newProf =  new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono'],$obj['jornada'],$obj['nivel']);
+            $newProf = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
         }
@@ -56,259 +75,257 @@ class controladorBaseDatos {
         //$newProf2 =  new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono'],$obj['jornada'],$obj['nivel']);
         //$array[] = $newProf1;
 
-        return $array;  
+        return $array;
     }
 
-    function retornarProfesores(){
+    function retornarProfesores() {
         $cont = new data_controladorProfesores();
-        return $cont-> retornarProfesores();
+        return $cont->retornarProfesores();
     }
 
-    function retornarProfesor($emailProfesor){
+    function retornarProfesor($emailProfesor) {
         $cont = new data_controladorProfesores();
-        $result =  $cont-> retornarProfesor($emailProfesor);
+        $result = $cont->retornarProfesor($emailProfesor);
 
         $array = array();
         while ($obj = $result->fetch_assoc()) {
-            $newProf =  new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono'],$obj['jornada'],$obj['nivel']);
+            $newProf = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
         }
 
         if (count($array) > 0) {
             return $array[0];
-        }else{
+        } else {
             return null;
         }
     }
 
-    function gestionarProfesor($emailProfesor,$valor){
+    function gestionarProfesor($emailProfesor, $valor) {
         $cont = new data_controladorProfesores();
-        return $cont-> gestionarProfesor($emailProfesor,$valor);
-        
+        return $cont->gestionarProfesor($emailProfesor, $valor);
     }
 
-    function actualizarEvaluacion($emailProfesor,$evaluacion){
+    function actualizarEvaluacion($emailProfesor, $evaluacion) {
         $cont = new data_controladorProfesores();
-        return $cont-> actualizarEvaluacion($emailProfesor,$evaluacion);
+        return $cont->actualizarEvaluacion($emailProfesor, $evaluacion);
     }
 
-    function retornarProfesoresActivos(){
+    function retornarProfesoresActivos() {
 
         //echo "BASE DE DATOS /  ";
         $cont = new data_controladorProfesores();
-        $result =  $cont-> retornarProfesoresActivos();
+        $result = $cont->retornarProfesoresActivos();
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_profesor($obj['id'],$obj['nombre'],$obj['apellido1'],$obj['apellido2'],$obj['email'],$obj['telefono'],$obj['jornada'],$obj['nivel']); 
-        }
-
-        return $array;   
-    }
-
-    /**************************************************************************************************** SEDES
-	
-	Operaciones con  sedes
-
-    /*************************/
-
-	function insertarSede($nombreSede){
-
-		$cont = new data_controladorSedes();
-        return $cont->registrarSede($nombreSede);
-    }
-
-    function retornarSedes(){
-
-    	$cont = new data_controladorSedes();
-        $result = $cont->retornarSedes();
-        $array = array();
-
-        while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_sede($obj['id'],$obj['nombre'],$obj['activo']);
+            //$array[] = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel'])
+            $array[] = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], 
+                    $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], 
+                    $obj['jornada'], $obj['direccion'], $obj['nivel']);
         }
 
         return $array;
     }
 
-    function eliminarSede($sedeElim){
+    /*     * ************************************************************************************************** SEDES
 
-    	$cont = new data_controladorSedes();
-    	return $cont->eliminarSede($sedeElim);
+      Operaciones con  sedes
+
+      /************************ */
+
+    function insertarSede($nombreSede) {
+
+        $cont = new data_controladorSedes();
+        return $cont->registrarSede($nombreSede);
     }
 
-    function retornarSede($nombreSede){
+    function retornarSedes() {
+
+        $cont = new data_controladorSedes();
+        $result = $cont->retornarSedes();
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+            $array[] = new obj_sede($obj['id'], $obj['nombre'], $obj['activo']);
+        }
+
+        return $array;
+    }
+
+    function eliminarSede($sedeElim) {
+
+        $cont = new data_controladorSedes();
+        return $cont->eliminarSede($sedeElim);
+    }
+
+    function retornarSede($nombreSede) {
 
         $cont = new data_controladorSedes();
         $result = $cont->retornarSede($nombreSede);
         $obj = $result->fetch_assoc();
-        $objSede= new obj_sede($obj['id'],$obj['nombre'],$obj['activo']);
-        
+        $objSede = new obj_sede($obj['id'], $obj['nombre'], $obj['activo']);
+
         return $objSede;
     }
 
-    function retornarSedesActivas(){
+    function retornarSedesActivas() {
 
         $cont = new data_controladorSedes();
         $array = array();
 
         $result = $cont->retornarSedesActivas();
-        
-        while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_sede($obj['id'],$obj['nombre'],$obj['activo']);
-
-        }
-
-        return $array;  
-    }
-
-    function gestionarSedes($sedeGest,$valor){
-         $cont = new data_controladorSedes();
-        return $cont->gestionarSedes($sedeGest,$valor);   
-    }
-    /********************************************************************************************************** FRANJAS
-	
-	Operaciones con  franjas
-
-    /*************************/
-
-	function insertarFranja($nombreFranja,$dia){
-		$cont = new data_controladorFranjas();
-        return $cont->registrarFranja($nombreFranja,$dia);
-    }
-
-    function retornarFranja($nombreFranja){
-        $cont = new data_controladorFranjas();
-        
-        $result = $cont->retornarFranja($nombreFranja);
-        $obj = $result->fetch_assoc();
-
-        $objFranja= new obj_franja($obj['nombre'],$obj['id'],$obj['activo']);
-
-        return $objFranja;
-    }
-
-    function retornarFranjas(){
-
-    	$cont = new data_controladorFranjas();
-        $result = $cont->retornarFranjas();
-        $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_franja($obj['nombre'],$obj['id'],$obj['activo']);
+            $array[] = new obj_sede($obj['id'], $obj['nombre'], $obj['activo']);
         }
 
         return $array;
     }
 
-    function retornarFranjasActivas(){
+    function gestionarSedes($sedeGest, $valor) {
+        $cont = new data_controladorSedes();
+        return $cont->gestionarSedes($sedeGest, $valor);
+    }
+
+    /*     * ******************************************************************************************************** FRANJAS
+
+      Operaciones con  franjas
+
+      /************************ */
+
+    function insertarFranja($nombreFranja, $dia) {
+        $cont = new data_controladorFranjas();
+        return $cont->registrarFranja($nombreFranja, $dia);
+    }
+
+    function retornarFranja($nombreFranja) {
+        $cont = new data_controladorFranjas();
+
+        $result = $cont->retornarFranja($nombreFranja);
+        $obj = $result->fetch_assoc();
+
+        $objFranja = new obj_franja($obj['nombre'], $obj['id'], $obj['activo']);
+
+        return $objFranja;
+    }
+
+    function retornarFranjas() {
+
+        $cont = new data_controladorFranjas();
+        $result = $cont->retornarFranjas();
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+            $array[] = new obj_franja($obj['nombre'], $obj['id'], $obj['activo']);
+        }
+
+        return $array;
+    }
+
+    function retornarFranjasActivas() {
 
         $cont = new data_controladorFranjas();
         $result = $cont->retornarFranjasActivas();
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_franja($obj['nombre'],$obj['id'],$obj['activo']);
+            $array[] = new obj_franja($obj['nombre'], $obj['id'], $obj['activo']);
         }
 
         return $array;
     }
 
-
-
-    function gestionarFranja($franjaGest,$valor){
+    function gestionarFranja($franjaGest, $valor) {
 
         $cont = new data_controladorFranjas();
-        return $cont->gestionarFranja($franjaGest,$valor); 
+        return $cont->gestionarFranja($franjaGest, $valor);
     }
 
-    /**********************************************************************************************************  CURSOS
-	
-	Operaciones con  cursos
+    /*     * ********************************************************************************************************  CURSOS
 
-    /*************************/
+      Operaciones con  cursos
 
-	function insertarCurso($nombreCurso,$nivelCurso){
+      /************************ */
 
-		$cont = new data_controladorCursos();
-        return $cont->registrarCurso($nombreCurso,$nivelCurso);
+    function insertarCurso($nombreCurso, $nivelCurso) {
+
+        $cont = new data_controladorCursos();
+        return $cont->registrarCurso($nombreCurso, $nivelCurso);
     }
 
-    function retornarCursos(){
-    	$cont = new data_controladorCursos();
+    function retornarCursos() {
+        $cont = new data_controladorCursos();
         $result = $cont->retornarCursos();
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_curso($obj['id'],$obj['nombre'],$obj['activo'],$obj['nivel']);
+            $array[] = new obj_curso($obj['id'], $obj['nombre'], $obj['activo'], $obj['nivel']);
         }
 
         return $array;
     }
 
-    function retornarCurso($nombreCurso){
+    function retornarCurso($nombreCurso) {
 
         $cont = new data_controladorCursos();
         $result = $cont->retornarCurso($nombreCurso);
         $obj = $result->fetch_assoc();
 
-        $objCurso= new obj_curso($obj['id'],$obj['nombre'],$obj['activo'],$obj['nivel']);
-        
+        $objCurso = new obj_curso($obj['id'], $obj['nombre'], $obj['activo'], $obj['nivel']);
+
         return $objCurso1;
     }
 
-    function retornarCursosActivos(){
+    function retornarCursosActivos() {
 
         $cont = new data_controladorCursos();
         $result = $cont->retornarCursosActivos();
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $array[] = new obj_curso($obj['ide'],$obj['nombre'],$obj['activo'],$obj['nivel']);
+            $array[] = new obj_curso($obj['ide'], $obj['nombre'], $obj['activo'], $obj['nivel']);
         }
 
-        return $array;   
+        return $array;
     }
 
-    function gestionarCurso($cursoGest,$valor){
+    function gestionarCurso($cursoGest, $valor) {
         $cont = new data_controladorCursos();
-        return $cont->gestionarCurso($cursoGest,$valor);
-
+        return $cont->gestionarCurso($cursoGest, $valor);
     }
 
+    /*     * ******************************************************************************************************** GRUPOS
 
-    /********************************************************************************************************** GRUPOS
-	
-	Operaciones con  grupos
+      Operaciones con  grupos
 
-    /*************************/
+      /************************ */
 
-	function registrarGrupo($ideGrupo, $idSede, $idCurso,$idFranja){
+    function registrarGrupo($ideGrupo, $idSede, $idCurso, $idFranja) {
 
-		$cont = new data_controladorGrupos();
+        $cont = new data_controladorGrupos();
 
-        return $cont->registrarGrupo($ideGrupo, $idSede, $idCurso,$idFranja);
+        return $cont->registrarGrupo($ideGrupo, $idSede, $idCurso, $idFranja);
     }
 
-    function retornarGrupos(){
+    function retornarGrupos() {
         $cont = new data_controladorGrupos();
         $result = $cont->retornarGrupos();
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
 
-            $array[] = new obj_grupo($obj['ideGrupo'],$obj['idCurso'],$obj['idSede'],$obj['idFranja'],$obj['activo']);
+            $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
         }
 
         return $array;
     }
 
-    function gestionarGrupo($grupoGest,$valor){
+    function gestionarGrupo($grupoGest, $valor) {
         $cont = new data_controladorGrupos();
-        return $cont->gestionarGrupo($grupoGest,$valor);
+        return $cont->gestionarGrupo($grupoGest, $valor);
     }
+
 }
-	
 
 ?>

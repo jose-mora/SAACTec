@@ -2,15 +2,21 @@
 
 	class obj_profesor {
             // Creating some properties (variables tied to an object)
+            public $ide;
+            public $tipoProfesor;
+            public $departamentoEscuela;
+            public $gradoAcademicoProfesor;
+            public $cedula;
             public $name;
             public $apellido1;
             public $apellido2;
             public $email;
             public $tel;
-            public $ide;
-            public $jornada;
+            public $cel;            
+            public $jornada;            
+            public $direccion;
+            //public $notas;
             public $nivel;
-
             public $activo;
             
             
@@ -33,6 +39,23 @@
               $this->tel = $tel;
               $this->jornada = $jornada;
               $this->nivel = $nivel;
+            }
+            
+            public function __construct3($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $name, $lastname, $lastname2,
+                                         $email, $tel, $cel, $jornadaLaboral, $direccion/*, $notas*/) {                            
+              $this->tipoProfesor = $tipoProfesor;
+              $this->departamentoEscuela = $departamentoEscuela;
+              $this->gradoAcademicoProfesor = $gradoAcademicoProfesor;
+              $this->cedula = $cedula;
+              $this->name = $name;
+              $this->apellido1 = $lastname;
+              $this->apellido2 = $lastname2;
+              $this->email = $email;
+              $this->tel = $tel;
+              $this->cel = $cel;
+              $this->jornada = $jornadaLaboral;
+              $this->direccion = $direccion;
+              //$this->notas = $notas;
             }
 
             public function setActivo($activo){
