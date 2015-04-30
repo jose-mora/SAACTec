@@ -92,15 +92,14 @@ class data_controladorProfesores
         return 0;
     }
 
-    function actualizarProfesor($nom,$ap1,$ap2,$email,$tel,$jor,$niv){
+    function actualizarProfesor($tp, $de, $ga, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion){
 
         global $mysqli;
 
-        $query = "UPDATE profesores SET nombre='". $nom ."', apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel ."', jornada='". $jor ."', nivel='". $niv ."' WHERE email='".$email."'";
+        $query = "UPDATE profesores SET tipoProfesor='". $tp ."',departamentoEscuela='". $de ."',gradoAcademicoProfesor='". $ga ."',cedula='". $cedula ."', nombre='". $nom ."',".
+        " apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel."', celular='". $cel ."', jornada='". $jor ."', direccion='". $direccion ."' WHERE email='".$email."'";
 
         $mysqli->query($query);
-
-        $mysqli->close(); 
         
         return 0;
     }

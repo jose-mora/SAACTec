@@ -50,7 +50,6 @@
               $this->cedula = $cedula;
 
               $this->name = $name;
-              echo "EL NOMBRE ES: ". $name;
               $this->apellido1 = $lastname;
               $this->apellido2 = $lastname2;
               $this->email = $email;

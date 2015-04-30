@@ -53,10 +53,10 @@ class controladorBaseDatos {
 //        }
     }
 
-    function actualizarProfesor($nom, $ap1, $ap2, $email, $tel, $jor, $niv) {
+    function actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion){
 
         $cont = new data_controladorProfesores();
-        return $cont->actualizarProfesor($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
+        return $cont->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
     }
 
     function retonarProfesor($criterio, $valor) {
@@ -66,7 +66,7 @@ class controladorBaseDatos {
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $newProf = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel']);
+            $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
         }
@@ -89,7 +89,7 @@ class controladorBaseDatos {
 
         $array = array();
         while ($obj = $result->fetch_assoc()) {
-            $newProf = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel']);
+            $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
         }

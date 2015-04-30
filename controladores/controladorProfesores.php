@@ -43,12 +43,18 @@ class controladorProfesores {
         $controlador = new controladorBaseDatos(); //llamamos al controlador de base de datos
 
         $emailNuevo = $obj->email;
+        $tipoProfesor = $obj->tipoProfesor;
+        $departamentoEscuela = $obj->departamentoEscuela;
+        $gradoAcademicoProfesor = $obj->gradoAcademicoProfesor;
+        $cedula = $obj->cedula;
         $nom = $obj->name;
         $ap1 = $obj->apellido1;
         $ap2 = $obj->apellido2;
+        $email = $obj->email;
         $tel = $obj->tel;
+        $cel = $obj->cel;
         $jor = $obj->jornada;
-        $niv = $obj->nivel;
+        $direccion = $obj->direccion;
 
         if ($emailOri != $emailNuevo) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
             echo " cambio de correo electr&oacute;";
@@ -58,10 +64,10 @@ class controladorProfesores {
                 echo " ya existe el correo electr&oacute;";
                 return 4;
             } else {
-                return $controlador->actualizarProfesor($nom, $ap1, $ap2, $emailNuevo, $tel, $jor, $niv);
+                return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
             }
         } else {
-            return $controlador->actualizarProfesor($nom, $ap1, $ap2, $emailNuevo, $tel, $jor, $niv);
+            return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
         }
     }
 
