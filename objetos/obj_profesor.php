@@ -21,7 +21,7 @@
             
             
             // Assigning the values
-            public function __construct($ide, $name, $apellido1, $apellido2, $email, $tel) {
+            /*public function __construct($ide, $name, $apellido1, $apellido2, $email, $tel) {
               $this->ide = $ide;
               $this->name = $name;
               $this->apellido1 = $apellido1;
@@ -30,7 +30,7 @@
               $this->tel = $tel;              
             }
             
-            public function __construct2($ide, $name, $apellido1, $apellido2, $email, $tel, $jornada, $nivel) {              
+            public function __construct($ide, $name, $apellido1, $apellido2, $email, $tel, $jornada, $nivel) {              
               $this->ide = $ide;
               $this->name = $name;
               $this->apellido1 = $apellido1;
@@ -39,15 +39,18 @@
               $this->tel = $tel;
               $this->jornada = $jornada;
               $this->nivel = $nivel;
-            }
+            }*/
             
-            public function __construct3($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $name, $lastname, $lastname2,
-                                         $email, $tel, $cel, $jornadaLaboral, $direccion/*, $notas*/) {                            
+            public function __construct($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $name, $lastname, $lastname2,
+                                         $email, $tel, $cel, $jornadaLaboral, $direccion) {                            
               $this->tipoProfesor = $tipoProfesor;
+
               $this->departamentoEscuela = $departamentoEscuela;
               $this->gradoAcademicoProfesor = $gradoAcademicoProfesor;
               $this->cedula = $cedula;
+
               $this->name = $name;
+              echo "EL NOMBRE ES: ". $name;
               $this->apellido1 = $lastname;
               $this->apellido2 = $lastname2;
               $this->email = $email;

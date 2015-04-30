@@ -119,10 +119,9 @@ class controladorBaseDatos {
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
+
             //$array[] = new obj_profesor($obj['id'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['jornada'], $obj['nivel'])
-            $array[] = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], 
-                    $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], 
-                    $obj['jornada'], $obj['direccion'], $obj['nivel']);
+            $array[] = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
         }
 
         return $array;

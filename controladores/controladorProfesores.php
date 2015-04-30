@@ -35,8 +35,7 @@ class controladorProfesores {
         echo $departamentoEscuela;
 
         //return $controlador->registrarProfesores($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
-        return $controlador->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2,
-                                         $email, $tel, $cel, $jor, $direccion/*, $notas*/);
+        return $controlador->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
     }
 
     function actualizarProfesor($obj, $emailOri) {
