@@ -30,10 +30,6 @@ class controladorProfesores {
         //$notas = $obj->notas;
         $niv = $obj->nivel;//TODO: Creo que este no tengo que usarlo
         
-        echo $nom;
-        echo $tipoProfesor;
-        echo $departamentoEscuela;
-
         //return $controlador->registrarProfesores($nom, $ap1, $ap2, $email, $tel, $jor, $niv);
         return $controlador->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
     }
@@ -57,11 +53,9 @@ class controladorProfesores {
         $direccion = $obj->direccion;
 
         if ($emailOri != $emailNuevo) { //si el email cambio debemos fijarnos si ya el nuevo esta utilizado
-            echo " cambio de correo electr&oacute;";
             $profesor = $this->retornarProfesor($emailNuevo);
 
             if ($profesor) { //ya existe, devolvemos error
-                echo " ya existe el correo electr&oacute;";
                 return 4;
             } else {
                 return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);

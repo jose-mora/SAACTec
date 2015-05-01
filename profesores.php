@@ -33,6 +33,8 @@
 
 
   $validateFlag = FALSE;
+  $successFlag = FALSE;
+  $emptyAmmount = 0;
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -107,11 +109,13 @@
 
             $prof = new obj_profesor($tipoProfesor,$departamentoEscuela,$gradoAcademicoProfesor,$cedula,$username,$lastname,$lastname2,$email,$tel,$cel,$jornadaLaboral,$direccion); 
             $resultado =  $controlador->actualizarProfesor($prof, $emailOri);
-            echo "se actualizo profesor ";
+            $successFlag = TRUE;
 
         }else{
 
-            //mostrar error, campos vacios
+            if ($emptyAmmount == 12) {
+                        $validateFlag = FALSE;
+            }
         }
     }
 
@@ -206,6 +210,22 @@
         <h2> Bienvenido  <?php echo htmlentities($objProfesor->name)?>  <?php echo htmlentities($objProfesor->apellido1)?></h2>
         <div class="well well-lg">
           <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+
+    <?php
+        if ($validateFlag) {
+            echo '<div class="alert alert-danger" role="alert">
+                    <p>Se deben llenar todos los campos </p>
+                  </div>';
+        }
+
+        if ($successFlag) {
+            echo '<div class="alert alert-success" role="alert">
+                    <p>Profesor actualizado con &eacute;xito </p>
+                  </div>';
+                $successFlag = FALSE;
+        }
+    ?>
+
             
             <h3>Información Actual</h3>
 

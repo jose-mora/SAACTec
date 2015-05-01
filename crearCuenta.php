@@ -95,7 +95,6 @@
                     $emptyAmmount++;
                 }*/
 
-                
 
                 if (!$validateFlag) { //if the validation passes
                     $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, 
@@ -141,6 +140,7 @@
 		</div>	
     <div class="well well-lg">
       <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <h3>Registro de Profesores</h3>
         <?php
 
         $flagCrear = 0;
@@ -162,9 +162,9 @@
 
 
         <?php
+            if ($flagCrear == 0) {
 
         ?>
-        <h3>Registro de Profesores</h3>
                     <div class="form-group">
                         <label for="tipoProfesor">Tipo de profesor:</label>
                         <select class="form-control" name="tipoProfesor" id="tipoProfesor">
@@ -237,6 +237,12 @@
 
                     <button type="button" class="btn btn-primary" onclick="goBack();"> Atr&aacute;s </button>
                     <button type="submit" class="btn btn-primary">Registrar</button>
+        <?php
+                # code...
+            }
+        ?>
+        
+                    
 
                 </form>
 			
