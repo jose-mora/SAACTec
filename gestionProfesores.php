@@ -25,9 +25,11 @@
                 header('Location: ../Asignacion/index.php');
             }
 
-            $validateFlag = FALSE;
+            $validateFlag = true;
             $mostrarLista = false;
             $mostrarActualizar = false;
+            $emptyAmmount = 0;
+            $successFlag = FALSE;
             $result = [];
 
             include('objetos/obj_profesor.php');
@@ -76,34 +78,77 @@
                     }
                 }
                 if ($operation == "prof_actualizar") {  //si es regitrar curso
+                    $tipoProfesor = test_input($_POST["tipoProfesor"]);
+                    $departamentoEscuela = test_input($_POST["departamentoEscuela"]);
+                    $gradoAcademicoProfesor = test_input($_POST["gradoAcademicoProfesor"]);
+                    $cedula = test_input($_POST["cedula"]);
                     $username = test_input($_POST["name"]);
                     $lastname = test_input($_POST["lastname"]);
                     $lastname2 = test_input($_POST['lastname2']);
                     $email = test_input($_POST["email"]);
                     $tel = test_input($_POST["tel"]);
+                    $cel = test_input($_POST["cel"]);
+                    $jornadaLaboral = test_input($_POST["jornadaLaboral"]);
+                    $direccion = test_input($_POST["direccion"]);
                     $emailOri = test_input($_POST["emailOriginal"]);
 
-                    if (strlen($username) <= 0) {
-                        $validateFlag = TRUE;
-                    }
-                    if (strlen($lastname) <= 0) {
-                        $validateFlag = TRUE;
-                    }
-                    if (strlen($lastname2) <= 0) {
-                        $validateFlag = TRUE;
-                    }
-                    if (strlen($email) <= 0) {
-                        $validateFlag = TRUE;
-                    }
-                    if (strlen($tel) <= 0) {
-                        $validateFlag = TRUE;
-                    }
+//                    if ($tipoProfesor == "Seleccione") {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if ($departamentoEscuela == "Seleccione") {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if ($gradoAcademicoProfesor == "Seleccione") {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($cedula) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($username) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($lastname) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($lastname2) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($email) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($tel) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($cel) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if ($jornadaLaboral == "Seleccione") {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
+//                    if (strlen($direccion) <= 0) {
+//                        $validateFlag = TRUE;
+//                        $emptyAmmount++;
+//                    }
 
-                    if (!$validateFlag) { //if the validation passes
-                        $prof = new obj_profesor(1, $username, $lastname, $lastname2, $email, $tel);
+                    if (!$validateFlag) { //if the validation passes                        
+                        $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                         $resultado = $controlador->actualizarProfesor($prof, $emailOri);
-                    } else {
-
+                        echo "se actualizo el profesor correctamente";
+                    } else {//TODO: Revisar porque se va por el else
+                        $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
+                        $resultado = $controlador->actualizarProfesor($prof, $emailOri);
+                        echo "se actualizo el profesor correctamente";
                         //mostrar error, campos vacios
                     }
                 }
@@ -154,7 +199,7 @@
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th class="hidden-xs">Correo electr&oacute;</th>
+                                <th class="hidden-xs">Correo electr&oacute;nico</th>
                                 <th>Acci&oacute;n</th>
                                 <th class="hidden-xs">Actualizar</th>
                                 <th>Notas</th>
@@ -207,7 +252,7 @@
                 <div class="well well-lg">
                     <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                         <?php
-                        /* if ($validateFlag) {
+                        if ($validateFlag) {
                           echo '<div class="alert alert-danger" role="alert">
                           <p>Se deben llenar todos los campos </p>
                           </div>';
@@ -217,28 +262,186 @@
                           echo '<div class="alert alert-success" role="alert">
                           <p>Profesor registrado con &eacute;xito </p>
                           </div>';
-                          } */
+                          }
                         ?>
                         <h3>Actualizar profesor</h3>
                         <div class="form-group">
-                            <label for="name">Nombre:</label>
-                            <input type="text" class="form-control" name="name" id="name" value="<?php echo htmlentities($objProfesor->name) ?>">
+                            <label for="tipoProfesor">Tipo de profesor: <?php echo htmlentities($objProfesor->tipoProfesor)?></label>
+                            <select class="form-control" name="tipoProfesor" id="tipoProfesor">
+                                    <option>Seleccione</option>
+                                    <?php
+                                    $opcionSeleccionada = $objProfesor->tipoProfesor;
+                                    $seleccionado = "";
+                                    if ($opcionSeleccionada == "Con plaza") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Con plaza</option>
+                                        <?php
+                                    } elseif ($opcionSeleccionada == "Interino") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Interino</option>                                    
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                        </div>                                               
+                        
+                        <div class="form-group">
+                            <label for="departamentoEscuela">Departamento/Escuela: <?php echo htmlentities($objProfesor->departamentoEscuela)?></label>
+                            <select class="form-control" name="departamentoEscuela" id="departamentoEscuela">
+                                    <option>Seleccione</option>
+                                    <?php
+                                    $opcionSeleccionada = $objProfesor->departamentoEscuela;
+                                    $seleccionado = "";
+                                    if ($opcionSeleccionada == "Escuela de computacion") {
+                                        $seleccionado = "selected";
+                                    ?>
+                                    <option <?php echo $seleccionado ?>>Escuela de computacion</option>
+                                    <?php
+                                    } elseif ($opcionSeleccionada == "Escuela de administracion") {
+                                        $seleccionado = "selected";
+                                    ?>
+                                    <option <?php echo $seleccionado ?>>Escuela de administracion</option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                         </div>
                         <div class="form-group">
-                            <label for="lastname">Primer apellido:</label>
-                            <input type="text" class="form-control" name="lastname" id="lastname" value="<?php echo htmlentities($objProfesor->apellido1) ?>">
+                            <label for="gradoAcademicoProfesor">Grado acad&eacute;mico: <?php echo htmlentities($objProfesor->gradoAcademicoProfesor)?></label>
+                            <select class="form-control" name="gradoAcademicoProfesor" id="gradoAcademicoProfesor">
+                                <option>Seleccione</option>
+                                    <?php
+                                    $opcionSeleccionada = $objProfesor->gradoAcademicoProfesor;
+                                    $seleccionado = "";
+                                    if ($opcionSeleccionada == "Diplomado") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Diplomado</option>
+                                        <?php
+                                    } elseif ($opcionSeleccionada == "Bachiller") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Bachiller</option>                                    
+                                        <?php
+                                    }elseif ($opcionSeleccionada == "Licenciado(a)") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Licenciado(a)</option>                                    
+                                        <?php
+                                    }elseif ($opcionSeleccionada == "Master") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Master</option>                                    
+                                        <?php
+                                    }elseif ($opcionSeleccionada == "Doctor(a)") {
+                                        $seleccionado = "selected";
+                                        ?>
+                                        <option <?php echo $seleccionado ?>>Doctor(a)</option>                                    
+                                        <?php
+                                    }
+                                    ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="lastname">Segundo apellido:</label>
-                            <input type="text" class="form-control" name="lastname2" id="lastname2" value="<?php echo htmlentities($objProfesor->apellido2) ?>">
+                            <label for="cedula">C&eacute;dula: <?php echo htmlentities($objProfesor->cedula)?></label>
+                            <input type="text" class="form-control" name="cedula" id="cedula" value="<?php echo htmlentities($objProfesor->cedula)?>">
+                        </div>                   
+                        <div class="form-group">
+                            <label for="name">Nombre: <?php echo htmlentities($objProfesor->name)?></label>
+                            <input type="text" class="form-control" name="name" id="name" value="<?php echo htmlentities($objProfesor->name)?>">
+                        </div>                    
+                        <div class="form-group">
+                            <label for="lastname">Primer apellido: <?php echo htmlentities($objProfesor->apellido1)?></label>
+                            <input type="text" class="form-control" name="lastname" id="lastname" value="<?php echo htmlentities($objProfesor->apellido1)?>">
                         </div>
                         <div class="form-group">
-                            <label for="email">Correo electr&oacute;:</label>
-                            <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlentities($objProfesor->email) ?>">
+                            <label for="lastname">Segundo apellido: <?php echo htmlentities($objProfesor->apellido2)?></label>
+                            <input type="text" class="form-control" name="lastname2" id="lastname2" value="<?php echo htmlentities($objProfesor->apellido2)?>">
                         </div>
                         <div class="form-group">
-                            <label for="tel">Tel&eacute;fono:</label>
-                            <input type="telephone" class="form-control" id="tel" name="tel" value="<?php echo htmlentities($objProfesor->tel) ?>">
+                            <label for="email">Email: <?php echo htmlentities($objProfesor->email)?></label>
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlentities($objProfesor->email)?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">Tel&eacute;fono: <?php echo htmlentities($objProfesor->tel)?></label>
+                            <input type="telephone" class="form-control" id="tel" name="tel" value="<?php echo htmlentities($objProfesor->tel)?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="cel">Celular: <?php echo htmlentities($objProfesor->cel)?></label>
+                            <input type="telephone" class="form-control" id="cel" name="cel" value="<?php echo htmlentities($objProfesor->cel)?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="jornadaLaboral">Jornada laboral: <?php echo htmlentities($objProfesor->jornada)?></label>
+                            <select class="form-control" name="jornadaLaboral" id="jornadaLaboral">
+                                <option>Seleccione</option>
+                                    <?php
+                                    $opcionSeleccionada = $objProfesor->jornada;
+                                    if ($opcionSeleccionada) {
+                                        $seleccionado = "";
+                                        if ($opcionSeleccionada == "25%") {
+                                            $seleccionado = "selected";
+                                            ?>
+                                            <option <?php echo $seleccionado ?>>25%</option>
+                                            <option>50%</option>
+                                            <option>100%</option>
+                                            <option>120%</option>
+                                            <option>133%</option>
+                                            <?php
+                                        } elseif ($opcionSeleccionada == "50%") {
+                                            $seleccionado = "selected";
+                                            ?>
+                                            <option>25%</option>
+                                            <option <?php echo $seleccionado ?>>50%</option>
+                                            <option>100%</option>
+                                            <option>120%</option>
+                                            <option>133%</option>
+                                            <?php
+                                        } elseif ($opcionSeleccionada == "100%") {
+                                            $seleccionado = "selected";
+                                            ?>
+                                            <option>25%</option>
+                                            <option>50%</option>
+                                            <option <?php echo $seleccionado ?>>100%</option>
+                                            <option>120%</option>
+                                            <option>133%</option>
+                                            <?php
+                                        } elseif ($opcionSeleccionada == "120%") {
+                                            $seleccionado = "selected";
+                                            ?>
+                                            <option>25%</option>
+                                            <option>50%</option>
+                                            <option>100%</option>
+                                            <option <?php echo $seleccionado ?>>120%</option>
+                                            <option>133%</option>
+                                            <?php
+                                        } elseif ($opcionSeleccionada == "133%") {
+                                            $seleccionado = "selected";
+                                            ?>                                            
+                                            <option>25%</option>
+                                            <option>50%</option>
+                                            <option>100%</option>
+                                            <option>120%</option>
+                                            <option <?php echo $seleccionado ?>>133%</option>
+                                            <?php
+                                        }
+                                    }
+                                    else{?>
+                                        <option>25%</option>
+                                        <option>50%</option>
+                                        <option>100%</option>
+                                        <option>120%</option>
+                                        <option>133%</option>
+                                    <?php
+                                    
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Direcci&oacute;n: <?php echo htmlentities($objProfesor->direccion)?></label>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlentities($objProfesor->direccion)?>">
                         </div>
 
                         <input type="hidden" id="emailOriginal" name="emailOriginal" value="<?php echo htmlentities($objProfesor->email) ?>">

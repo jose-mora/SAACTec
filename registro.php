@@ -120,7 +120,7 @@
 
                     //empty fields detected
                     //if its 13, all of the fields were empty, so the user is reaching the screen
-                    if ($emptyAmmount == 12) {
+                    if ($emptyAmmount == 13) {
                         $validateFlag = FALSE;
                     }
                 }

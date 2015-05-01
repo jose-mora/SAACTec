@@ -85,8 +85,7 @@ class controladorBaseDatos {
 
     function retornarProfesor($emailProfesor) {
         $cont = new data_controladorProfesores();
-        $result = $cont->retornarProfesor($emailProfesor);
-
+        $result = $cont->retornarProfesor($emailProfesor);        
         $array = array();
         while ($obj = $result->fetch_assoc()) {
             $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);

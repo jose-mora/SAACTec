@@ -62,7 +62,7 @@ class controladorProfesores {
 
             if ($profesor) { //ya existe, devolvemos error
                 echo " ya existe el correo electr&oacute;";
-                return 4;
+                return 12;
             } else {
                 return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
             }
