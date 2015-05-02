@@ -126,8 +126,8 @@ CREATE TABLE IF NOT EXISTS `profesores` (
 
 INSERT INTO `profesores` (`id`, `tipoProfesor`, `departamentoEscuela`, `gradoAcademicoProfesor`, `cedula`, `nombre`, `apellido1`, 
             `apellido2`, `email`, `telefono`, `celular`, `evaluacionActual`, `activo`, `jornada`, `direccion`, `nivel`) VALUES
-(1, 'Con plaza', 'Escuela de computacion', 'Bachiller', '702110185', 'Esteban', 'Elizondo', 'Camacho', 'elizondo1288@gmail.com', '8864-2030', '8864-2030', 70, 1, '', 'San José Costa Rica', ''),
-(2, 'Interino', 'Escuela de computacion', 'Bachiller', '702110185', 'Jonathan', 'Mendez', 'Baltodano', 'jmendezb@yahoo.com', '8423-2189', '8423-2189', 70, 1, '', 'San José Costa Rica', '');
+(1, 'Con plaza', 'Escuela de computacion', 'Bachiller', '702110185', 'Esteban', 'Elizondo', 'Camacho', 'elizondo1288@gmail.com', '8864-2030', '8864-2030', 70, 1, '50%', 'San José Costa Rica', '1'),
+(2, 'Interino', 'Escuela de computacion', 'Bachiller', '702110185', 'Jonathan', 'Mendez', 'Baltodano', 'jmendezb@yahoo.com', '8423-2189', '8423-2189', 70, 1, '50%', 'San José Costa Rica', '1');
 
 -- --------------------------------------------------------
 

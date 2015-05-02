@@ -57,6 +57,7 @@
                     $emailProfesor = $_GET["objUpdate"];
                     $objProfesor = $controlador->retornarProfesor($emailProfesor);
                     $mostrarActualizar = true;
+                    $validateFlag = false;
                     //procesarRespuesta($numeroRespuesta,'modGrupo');
                 }
             }
@@ -71,12 +72,21 @@
                     $valor = $_POST["valor"];
 
                     if ($valor != "") {
-
                         $shop = $controlador->retonarProfesor($criterio, $valor);
 
                         if (count($shop) >= 1) {
                             $mostrarLista = true;
                         }
+                    } else if ($criterio == "Todos") {
+                        $shop = $controlador->retornarProfesoresActivos();
+                        
+                        if (count($shop) >= 1) {
+                            $mostrarLista = true;
+                        }
+                    } else {
+                        echo '<div class="alert alert-danger" role="alert">
+                             <p>No se proporcionó ningún valor a buscar</p>
+                             </div>';
                     }
                 }
                 if ($operation == "prof_actualizar") {  //si es regitrar curso
@@ -94,63 +104,65 @@
                     $direccion = test_input($_POST["direccion"]);
                     $emailOri = test_input($_POST["emailOriginal"]);
 
-//                    if ($tipoProfesor == "Seleccione") {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if ($departamentoEscuela == "Seleccione") {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if ($gradoAcademicoProfesor == "Seleccione") {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($cedula) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($username) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($lastname) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($lastname2) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($email) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($tel) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($cel) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if ($jornadaLaboral == "Seleccione") {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
-//                    if (strlen($direccion) <= 0) {
-//                        $validateFlag = TRUE;
-//                        $emptyAmmount++;
-//                    }
+                    if ($tipoProfesor == "Seleccione") {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if ($departamentoEscuela == "Seleccione") {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if ($gradoAcademicoProfesor == "Seleccione") {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($cedula) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($username) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($lastname) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($lastname2) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($email) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($tel) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($cel) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if ($jornadaLaboral == "Seleccione") {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
+                    if (strlen($direccion) <= 0) {
+                        $validateFlag = TRUE;
+                        $emptyAmmount++;
+                    }
 
-                    if (!$validateFlag) { //if the validation passes                        
+                    if ($validateFlag) { //if the validation passes                        
                         $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                         $resultado = $controlador->actualizarProfesor($prof, $emailOri);
-                        echo "se actualizo el profesor correctamente";
-                    } else {//TODO: Revisar porque se va por el else
-                        $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
-                        $resultado = $controlador->actualizarProfesor($prof, $emailOri);
-                        echo "se actualizo el profesor correctamente";
+                        echo '<div class="alert alert-success" role="alert">
+                             <p>Se actualizó el profesor correctamente</p>
+                             </div>';
+                    } else {
+//                        $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
+//                        $resultado = $controlador->actualizarProfesor($prof, $emailOri);
+//                        echo "se actualizo el profesor correctamente";
                         //mostrar error, campos vacios
                     }
                 }
@@ -176,10 +188,11 @@
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <label for="critero"> Criterio de b&uacute;squeda</label>
                     <select class="form-control" name="criterio" id="criterio">
+                        <option>Todos</option>
                         <option>Nombre</option>
                         <option>Primer apellido</option>
                         <option>Segundo apellido</option>
-                        <option>Correo electr&oacute;</option>
+                        <option>Correo electr&oacute;nico</option>
                     </select>
 
 
@@ -229,7 +242,7 @@
                                 <td><?php echo "<a href='gestionProfesores.php?objDes=" . $obj->email . "' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
                                 <?php
                             } else {
-                                ?>x
+                                ?>
                                 <td><?php echo "<a href='gestionProfesores.php?objActi=" . $obj->email . "' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
                                 <?php
                             }
