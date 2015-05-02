@@ -9,6 +9,9 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/customStyle.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php
+        header('Content-Type: text/html; charset=UTF-8');
+        ?>
 
     </head>
 

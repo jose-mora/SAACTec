@@ -20,7 +20,7 @@ class data_controladorProfesores
         $query = "INSERT INTO profesores(tipoProfesor, departamentoEscuela, gradoAcademicoProfesor, cedula, nombre, apellido1, apellido2, email, "
                . "telefono, celular, evaluacionActual, activo, jornada, direccion, nivel) ";
         $query = $query. "VALUES ('". $tipoProfesor . "','". $departamentoEscuela . "','". $gradoAcademicoProfesor . "','". $cedula . "','"
-                . $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "','". $cel . "',70, 0,'". $jor . "','". $direccion . "','1')";
+                . $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "','". $cel . "',70, 1,'". $jor . "','". $direccion . "','1')";
 
         $mysqli->query($query);
         //$mysqli->close(); 
