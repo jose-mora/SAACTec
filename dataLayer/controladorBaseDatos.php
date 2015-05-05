@@ -5,6 +5,7 @@ include('data_controladorFranjas.php');
 include('data_controladorCursos.php');
 include('data_controladorGrupos.php');
 include('data_controladorProfesores.php');
+include('data_controladorPreferencias.php');
 
 class controladorBaseDatos {
 
@@ -336,6 +337,38 @@ class controladorBaseDatos {
     function gestionarGrupo($grupoGest, $valor) {
         $cont = new data_controladorGrupos();
         return $cont->gestionarGrupo($grupoGest, $valor);
+    }
+
+    /*     * ******************************************************************************************************** GRUPOS
+
+      Operaciones con  Preferencias
+
+      /************************ */
+
+    function registrarPreferencia($email,$grupo,$nivel){
+
+        $cont = new data_controladorPreferencias();
+        return $cont->registrarPreferencia($email,$grupo,$nivel);
+        
+    }
+
+    function eliminarPreferencia($ideGrupo,$email){
+        
+        $cont = new data_controladorPreferencias();
+        return $cont->eliminarPreferencia($ideGrupo,$email);
+        
+    }
+
+    function cantidadA($email){
+
+        $cont = new data_controladorPreferencias();
+        return $cont->cantidadA($email);
+    }
+
+    function retornarPreferenciasProfesor($email){
+
+        $cont = new data_controladorPreferencias();
+        return $cont->retornarPreferenciasProfesor($email);
     }
 
 }
