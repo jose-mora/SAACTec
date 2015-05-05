@@ -272,7 +272,7 @@ class controladorBaseDatos {
 
         $objCurso = new obj_curso($obj['id'], $obj['nombre'], $obj['activo'], $obj['nivel']);
 
-        return $objCurso1;
+        return $objCurso;
     }
 
     function retornarCursosActivos() {
@@ -317,6 +317,20 @@ class controladorBaseDatos {
         }
 
         return $array;
+    }
+
+    function retornarGruposConIDCurso($idCurso){
+
+        $cont = new data_controladorGrupos();
+        $result = $cont->retornarGruposConIDCurso($idCurso);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
+        }
+
+        return $array;   
     }
 
     function gestionarGrupo($grupoGest, $valor) {

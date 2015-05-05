@@ -29,11 +29,12 @@
 
             $validateFlag = FALSE;
             $mostrarGrupos = false;
+            $cursoABuscar = "";
             $result = [];
-
 
             include('objetos/obj_preferencia.php');
             include('controladores/controladorMantenimientos.php');
+//            include('objetos/obj_curso.php');
             $controlador = new controladorMantenimientos();
 
             $result[] = new obj_preferencia('test@mail.com', 'A', 'TEST01C');
@@ -56,7 +57,9 @@
 
                 $operation = $_POST["operation"];
 
-                if ($operation == "buscar_grupo") {  //si es regitrar sede 
+                if ($operation == "buscar_grupo") {  //si es regitrar sede
+
+                    $cursoABuscar = $_POST["curso"];
                     $mostrarGrupos = true;
                 }
             }
@@ -71,16 +74,18 @@
 
             <div class="well well-lg">
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-<?php ?>
+
                     <h3>Agregar Preferencia Profesor</h3>
                     <label for="curso">Curso:</label>
                     <select class="form-control" name="curso" id="curso">
+
                     <?php
-                    $cursosArray = $controlador->retornarCursosActivos();
-                    for ($i = 0; $i < (count($cursosArray)); $i++) {
-                        echo "<option>" . $cursosArray[$i]->name . "</option>";
-                    }
+                        $cursosArray = $controlador->retornarCursosActivos();
+                        for ($i = 0; $i < (count($cursosArray)); $i++) {
+                            echo "<option>" . $cursosArray[$i]->name . "</option>";
+                        }
                     ?>
+
                     </select> 
                     <br/>
                     <input type="hidden" id="operation" name="operation" value="buscar_grupo">
@@ -89,13 +94,12 @@
                 </form>
             </div>
 
-                        <?php
-                        if ($mostrarGrupos) {
-                            ?>
+     <?php
+       if ($mostrarGrupos) {
+     ?>
 
                 <div class="well well-lg">
                     <h3>Grupos del Curso</h3>
-
                     <table class="table table-condensed">
                         <thead>
                             <tr>
@@ -106,24 +110,40 @@
                             </tr>
                         </thead>
                         <tbody>
+                <?php
+                    $curso = $controlador->retornarCurso($cursoABuscar);
+                    $gruposArray = $controlador->retornarGruposConIDCurso($curso->ide);
+                    $x = 1;
 
-                            <tr class="info">
-                                <td>PETI02C</td>
-                                <td class="hidden-xs"> 7 am - 9 am</td>
+                    foreach ($gruposArray as $obj) :
+          
+                        if ($x == 1) {
+                            $x=0;
+                            echo '<tr class="info">';         
+                        } else {
+                            $x=1;
+                            echo '<tr>';
+                        }
+
+                ?>
+                            
+                                <td><?php echo $obj->ideGrupo; ?></td>
+                                <td class="hidden-xs"> <?php echo $obj->franja; ?></td>
                                 <td>San Jose</td>
-                                <td><? echo "<a href='preferencias.php?prefA=PETI02C' class='btn btn-primary gestionBoton'> A </a> "; ?>
-                                    <? echo "<a href='preferencias.php?prefB=PETI02C' class='btn btn-primary gestionBoton'> B </a> "; ?>
-                                    <? echo "<a href='preferencias.php?prefC=PETI02C' class='btn btn-primary gestionBoton'> C </a> "; ?></td>
+                                <td><? echo "<a href='preferencias.php?prefA=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> A </a> "; ?>
+                                    <? echo "<a href='preferencias.php?prefB=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> B </a> "; ?>
+                                    <? echo "<a href='preferencias.php?prefC=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> C </a> "; ?></td>
 
                             </tr>
+                    <?php endforeach; ?>
 
 
                         </tbody>
                     </table>
                 </div>
     <?php
-}
-?>
+        }
+    ?>
 
 
             <div class="well well-lg">
