@@ -9,11 +9,10 @@
 
             
             // Assigning the values
-            public function __construct($email,$rank,$ideGrupo,$email) {
+            public function __construct($email,$rank,$ideGrupo) {
               $this->email = $email;
               $this->rank = $rank;
               $this->ideGrupo = $ideGrupo;
-              $this->email = $email;
             }
 
     }
