@@ -141,7 +141,7 @@
             ?>
             <?php
             if ($loggedHeader) {
-                if ($rolUser == 'super') {
+                if ($rolUser == 'Administrador') {
                     ?>
                     <div>
                         <h2> Profesores </h2>
@@ -200,7 +200,9 @@
 
                             <?php
                         } else {
-                            $objProfesor = $controlador->retornarProfesor('elizondo1288@gmail.com');
+                            $arrayInfo = explode(" ", $_SESSION['logged_user']);
+                            $usuario = $arrayInfo[0];
+                            $objProfesor = $controlador->retornarProfesor($usuario);
                             ?>
 
                     <h2> Bienvenido  <?php echo htmlentities($objProfesor->name) ?>  <?php echo htmlentities($objProfesor->apellido1) ?></h2>

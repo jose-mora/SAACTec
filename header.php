@@ -35,7 +35,7 @@
 
             if ($loggedHeader) {
 
-              if ($rolUser == 'super') {      
+              if ($rolUser == 'Administrador') {      
   
           ?>
 

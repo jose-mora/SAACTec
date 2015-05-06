@@ -5,12 +5,38 @@ include('data_controladorFranjas.php');
 include('data_controladorCursos.php');
 include('data_controladorGrupos.php');
 include('data_controladorProfesores.php');
+include('data_controladorUsuarios.php');
 
 class controladorBaseDatos {
 
     public function __construct() {
         
     }
+
+    /********************************************************************************************************** USUARIOS/LOGIN
+    
+    Operaciones con  Usuarios / Login
+
+    /*************************/
+
+    function retornarUsuario($usuario,$contrasena,$tipoUsuario){
+        $cont = new data_controladorUsuarios();
+        if (strcmp($tipoUsuario, 'Profesor')==0){
+            $result = $cont-> retornarUsuarioProf($usuario,$contrasena);
+        } else {
+            $result = $cont-> retornarUsuarioAdm($usuario,$contrasena);
+        }
+
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+            $newUs =  new obj_usuario($obj['tipoUsuario'],$obj['usuario'],$obj['contrasena']); 
+            $array[] = $newUs;
+        }
+        return $array;  
+    }
+
+    /*
 
     /*     * ******************************************************************************************************** PROFESORES
 
