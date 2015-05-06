@@ -261,6 +261,7 @@
                                 <label for="tel">Direcci&oacute;n: <?php echo htmlentities($objProfesor->direccion) ?></label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo htmlentities($objProfesor->direccion) ?>">
                             </div>
+
                             <div class="form-group">
                                 <label for="sede">Jornada Laboral:  <?php echo htmlentities($objProfesor->jornada) ?></label>
                                 <select class="form-control" name="jornadaLaboral" id="jornadaLaboral">
@@ -293,6 +294,16 @@
                                     <option>Escuela de administraci&oacute;n</option>                            
                                 </select>
                             </div>
+                            
+                            <div class="form-group">
+                                <label for="pas">Password: </label>
+                                <input type="password" class="form-control" id="password" name="password" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="rePas">Confirmar Password: </label>
+                                <input type="text" class="form-control" id="rePassword" name="rePassword" value="">
+                            </div>
+
                             <input type="hidden" id="emailOriginal" name="emailOriginal" value="<?php echo htmlentities($objProfesor->email) ?>">
                             <input type="hidden" id="operation" name="operation" value="prof_actualizar">
                             <button type="submit" class="btn btn-primary">Actualizar</button>
