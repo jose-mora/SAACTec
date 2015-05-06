@@ -2,7 +2,7 @@
 
 include 'connection.php';
 
-class data_controladorSedes {
+class data_controladorPreferencias {
 
     public function __construct() {}
 
@@ -12,7 +12,6 @@ class data_controladorSedes {
 
         $query = "INSERT INTO preferencias (email,ideGrupo,nivel) VALUES ('". $email . "','". $grupo . "','". $nivel . "')";
 		$mysqli->query($query);
-		$mysqli->close(); 
     	
     	return 0;
 		

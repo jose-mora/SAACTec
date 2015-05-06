@@ -31,26 +31,34 @@
             $mostrarGrupos = false;
             $cursoABuscar = "";
             $result = [];
+            $respuestaIngresar = 2;
 
             include('objetos/obj_preferencia.php');
             include('controladores/controladorMantenimientos.php');
+            include('controladores/controladorPreferencias.php');
 //            include('objetos/obj_curso.php');
             $controlador = new controladorMantenimientos();
+            $controladorPrefs = new controladorPreferencias();
 
-            $result[] = new obj_preferencia('test@mail.com', 'A', 'TEST01C');
-            $result[] = new obj_preferencia('test@mail.com', 'B', 'TEST02C');
-            $result[] = new obj_preferencia('test@mail.com', 'C', 'TEST03C');
+            //$result[] = new obj_preferencia('test@mail.com', 'A', 'TEST01C');
+            //$result[] = new obj_preferencia('test@mail.com', 'B', 'TEST02C');
+            //$result[] = new obj_preferencia('test@mail.com', 'C', 'TEST03C');
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 if (!empty($_GET["prefA"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'A', $_GET["prefA"]);
+
+                    $respuestaIngresar = $controladorPrefs->registrarPreferencia($_SESSION['prefProf'],$_GET["prefA"],'A');
                 }
                 if (!empty($_GET["prefB"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'B', $_GET["prefB"]);
+                    $respuestaIngresar = $controladorPrefs->registrarPreferencia($_SESSION['prefProf'],$_GET["prefB"],'B');
                 }
                 if (!empty($_GET["prefC"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'C', $_GET["prefC"]);
+                    $respuestaIngresar = $controladorPrefs->registrarPreferencia($_SESSION['prefProf'],$_GET["prefC"],'C');
                 }
+                if (!empty($_GET["prem"])) {
+                    $_SESSION['prefProf']= $_GET["prem"];
+                }
+                //
             }
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -72,6 +80,21 @@
             </div>	
             </br>
 
+    <?php
+    echo $respuestaIngresar ;
+
+        if ($respuestaIngresar == 1) {
+            echo '<div class="alert alert-danger" role="alert">
+                <p>Preferencia existente </p>
+                </div>';
+        }
+        if ($respuestaIngresar == 0) {
+            echo '<div class="alert alert-success" role="alert">
+                <p>Profesor registrado con &eacute;xito </p>
+                </div>';
+            $respuestaIngresar = 2;
+        }
+    ?>
             <div class="well well-lg">
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
@@ -81,6 +104,8 @@
 
                     <?php
                         $cursosArray = $controlador->retornarCursosActivos();
+                        echo "Largo: ". count($cursosArray);
+
                         for ($i = 0; $i < (count($cursosArray)); $i++) {
                             echo "<option>" . $cursosArray[$i]->name . "</option>";
                         }
@@ -90,7 +115,7 @@
                     <br/>
                     <input type="hidden" id="operation" name="operation" value="buscar_grupo">
                     <button type="submit" class="btn btn-primary">Buscar Grupos</button>
-
+    
                 </form>
             </div>
 
@@ -142,7 +167,7 @@
                     </table>
                 </div>
     <?php
-        }
+        }//else de mostrar grupos
     ?>
 
 
@@ -159,23 +184,32 @@
                     <tbody>
 
 
-<?php
-$x = 1;
-foreach ($result as $obj) :
-    if ($x == 1) {
-        $x = 0;
-        echo '<tr class="info">';
-    } else {
-        $x = 1;
-        echo '<tr>';
-    }
+    <?php
+
+        if (isset($_SESSION['prefProf'])) {
+
+            $result = $controladorPrefs->retornarPreferenciasProfesor($_SESSION['prefProf']);
+
+        
+            $x = 1;
+            foreach ($result as $obj) :
+                if ($x == 1) {
+                    $x = 0;
+                    echo '<tr class="info">';
+                } else {
+                    $x = 1;
+                    echo '<tr>';
+                }
     ?>
-                        <td><? echo $obj->ideGrupo; ?></td>
-                        <td><? echo $obj->rank; ?></td>
-                        <td><? echo "<a preferencias.php?delPref=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Remover </a> "; ?></td>
+                        <td><?php echo $obj->ideGrupo; ?></td>
+                        <td><?php echo $obj->rank; ?></td>
+                        <td><?php echo "<a preferencias.php?delPref=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Remover </a> "; ?></td>
 
                         </tr>
-                        <?php endforeach; ?>
+    <?php   endforeach; 
+
+        }
+    ?>
 
                     </tbody>
                 </table>

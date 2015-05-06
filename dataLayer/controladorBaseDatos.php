@@ -368,7 +368,16 @@ class controladorBaseDatos {
     function retornarPreferenciasProfesor($email){
 
         $cont = new data_controladorPreferencias();
-        return $cont->retornarPreferenciasProfesor($email);
+        $result = $cont->retornarPreferenciasProfesor($email);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_preferencia($obj['email'], $obj['nivel'], $obj['ideGrupo']);
+        }
+
+        return $array; 
+
     }
 
 }

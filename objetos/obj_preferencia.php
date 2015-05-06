@@ -5,8 +5,6 @@
             public $email;
             public $rank;
             public $ideGrupo;
-            public $email; //el email del profesor dado que este es un valor unico
-
             
             // Assigning the values
             public function __construct($email,$rank,$ideGrupo) {
