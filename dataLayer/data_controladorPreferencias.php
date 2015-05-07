@@ -17,14 +17,14 @@ class data_controladorPreferencias {
 		
     }
 
-    function eliminarPreferencia($ideGrupo,$email){
+    function eliminarPreferencia($ideGrupo,$email,$rank){
         
         global $mysqli;
 
-        $query = "DELETE FROM preferencias WHERE ideGrupo = '".$ideGrupo."' AND email = '".$email."'";
+        $query = "DELETE FROM preferencias WHERE ideGrupo = '".$ideGrupo."' AND email = '".$email."' AND nivel = '".$rank."'";
+
         echo $query;
         $mysqli->query($query); 
-        $mysqli->close(); 
         
 
         return 0;
@@ -33,10 +33,16 @@ class data_controladorPreferencias {
     function cantidadA($email){
 
         global $mysqli; 
+        $cantidadA = 0;
         $query = "SELECT COUNT(*) as cantidad FROM preferencias WHERE nivel ='A' AND email = '". $email ."'";
         $result = $mysqli->query($query);
-        $result = $count['cantidad'];
-        return $result;
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $cantidadA = $obj['cantidad'];
+        }
+
+        return $cantidadA;
     }
 
     function retornarPreferenciasProfesor($email){

@@ -31,6 +31,7 @@
                     $_SESSION['logged_user'] = "elizondo1288@hotmail.com super";
                 } else {
                     $_SESSION['logged_user'] = "elizondo1288@hotmail.com profesor";
+                    $_SESSION['prefProf'] = "elizondo1288@hotmail.com";
                 }
 
                 header('Location: ../Asignacion/profesores.php');

@@ -17,10 +17,10 @@ class controladorPreferencias {
         
     }
 
-    function eliminarPreferencia($ideGrupo,$email){
+    function eliminarPreferencia($ideGrupo,$email,$rank){
         
         $cont = new controladorBaseDatos();
-        return $cont->eliminarPreferencia($ideGrupo,$email);
+        return $cont->eliminarPreferencia($ideGrupo,$email,$rank);
         
     }
 
@@ -28,6 +28,11 @@ class controladorPreferencias {
 
         $cont = new controladorBaseDatos();
         return $cont->cantidadA($email);
+    }
+
+    function cantidadBC($email){
+        $cont = new controladorBaseDatos();
+        return $cont->cantidadBC($email);   
     }
 
     function retornarPreferenciasProfesor($email){

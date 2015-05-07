@@ -58,6 +58,9 @@
                 if (!empty($_GET["prem"])) {
                     $_SESSION['prefProf']= $_GET["prem"];
                 }
+                if (!empty($_GET["delPref"])) {
+                    $respuestaIngresar = $controladorPrefs->eliminarPreferencia($_GET["delPref"],$_SESSION['prefProf'],$_GET["delRank"]);
+                }
                 //
             }
 
@@ -81,16 +84,31 @@
             </br>
 
     <?php
-    echo $respuestaIngresar ;
+
+        $cantidadA = $controladorPrefs->cantidadA($_SESSION['prefProf']);
+        $cantidadBC= $controladorPrefs->cantidadBC($_SESSION['prefProf']);
+
+        if ($cantidadA > 0) { //si existen preferencias tipo A
+
+            if ($cantidadBC < $cantidadA) { //si las BC no suman lo suficiente
+                echo '<div class="alert alert-danger" role="alert">
+                <p>La cantidad de preferencias B y C en conjunto debe ser igual o mayor a la cantidad de preferencias A</p>
+                <p>Preferencias B y C: '.$cantidadBC.'</p>
+                <p>Preferencias A: '.$cantidadA.'</p>
+                </div>';
+            }
+        }
+
+
 
         if ($respuestaIngresar == 1) {
             echo '<div class="alert alert-danger" role="alert">
-                <p>Preferencia existente </p>
+                <p>Ya existe una preferencia registrada para ese grupo </p>
                 </div>';
         }
         if ($respuestaIngresar == 0) {
             echo '<div class="alert alert-success" role="alert">
-                <p>Profesor registrado con &eacute;xito </p>
+                <p>Acci&oacute;n realizada con &eacute;xito </p>
                 </div>';
             $respuestaIngresar = 2;
         }
@@ -203,7 +221,7 @@
     ?>
                         <td><?php echo $obj->ideGrupo; ?></td>
                         <td><?php echo $obj->rank; ?></td>
-                        <td><?php echo "<a preferencias.php?delPref=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Remover </a> "; ?></td>
+                        <td><?php echo "<a href='preferencias.php?delPref=". $obj->ideGrupo ."&delRank=".$obj->rank."' class='btn btn-primary gestionBoton'> Remover </a> "; ?></td>
 
                         </tr>
     <?php   endforeach; 

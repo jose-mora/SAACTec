@@ -348,14 +348,40 @@ class controladorBaseDatos {
     function registrarPreferencia($email,$grupo,$nivel){
 
         $cont = new data_controladorPreferencias();
-        return $cont->registrarPreferencia($email,$grupo,$nivel);
+        $encontrado = 0;
+        $result = $cont->retornarPreferenciasProfesor($email);
+
+        while ($obj = $result->fetch_assoc()) {
+
+            if (($grupo == $obj['ideGrupo'])&& ($nivel == $obj['nivel'])) {
+                 $encontrado = 1; //1 significa que ya existe esa preferencia con ese grado
+            }
+            
+        }
+
+        if ($encontrado == 0) { //no existe preferencia para ese grupo
+
+            //ahora vemos si la cantidad de A no es mayor a 4
+            $cantidadA = $this->cantidadA($email);
+
+            if ($cantidadA <= 4) {
+                return $cont->registrarPreferencia($email,$grupo,$nivel);    
+            }else{
+                return 3; //3 sería ya sobrepaso el limite de preferencias
+            }  
+
+            
+        }else{
+            return $encontrado;
+        }
+        
         
     }
 
-    function eliminarPreferencia($ideGrupo,$email){
+    function eliminarPreferencia($ideGrupo,$email,$rank){
         
         $cont = new data_controladorPreferencias();
-        return $cont->eliminarPreferencia($ideGrupo,$email);
+        return $cont->eliminarPreferencia($ideGrupo,$email,$rank);
         
     }
 
@@ -363,6 +389,27 @@ class controladorBaseDatos {
 
         $cont = new data_controladorPreferencias();
         return $cont->cantidadA($email);
+    }
+
+    function cantidadBC($email){
+
+        $cont = new data_controladorPreferencias();
+        $result = $this->retornarPreferenciasProfesor($email);//sacamos el total de preferencias
+
+        $cantidadA =$this->cantidadA($email); //sacamos las cantidad de tipo A
+
+        $cantidadBC = count($result); //obtenemos el total
+        //echo "Cantidad A ".$cantidadA;
+        //echo "Cantidad BC ".$cantidadBC;
+        //echo "Cantidad B C final:   ". $cantidadBC;
+
+        $cantidadBC = $cantidadBC - $cantidadA; //hacemos la resta de las totales menos las A
+
+        if ($cantidadBC < 0) { //por si solo tenemos A
+            $cantidadBC = 0;
+        }
+
+        return $cantidadBC;
     }
 
     function retornarPreferenciasProfesor($email){
