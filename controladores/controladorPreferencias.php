@@ -41,6 +41,11 @@ class controladorPreferencias {
         return $cont->retornarPreferenciasProfesor($email);
     }
 
+    function gestionarPreferencias($email,$valor){
+        $cont = new controladorBaseDatos();
+        $result = $cont->gestionarPreferencias($email,$valor);
+    }
+
 }
 
 ?>

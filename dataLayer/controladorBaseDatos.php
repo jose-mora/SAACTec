@@ -427,6 +427,11 @@ class controladorBaseDatos {
 
     }
 
+    function gestionarPreferencias($email,$valor){
+        $cont = new data_controladorPreferencias();
+        $result = $cont->gestionarPreferencias($email,$valor);
+    }
+
 }
 
 ?>

@@ -23,7 +23,7 @@ class data_controladorPreferencias {
 
         $query = "DELETE FROM preferencias WHERE ideGrupo = '".$ideGrupo."' AND email = '".$email."' AND nivel = '".$rank."'";
 
-        echo $query;
+        //echo $query;
         $mysqli->query($query); 
         
 
@@ -52,6 +52,16 @@ class data_controladorPreferencias {
 		$result = $mysqli->query($query);
 
 		return $result;
+    }
+
+    function gestionarPreferencias($email,$valor){
+
+        global $mysqli;
+
+        $query = "UPDATE preferencias SET activo=". $valor ." WHERE email='".$email."'";
+        $mysqli->query($query);
+        
+        return 0;
     }
 
 }

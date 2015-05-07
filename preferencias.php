@@ -96,7 +96,13 @@
                 <p>Preferencias B y C: '.$cantidadBC.'</p>
                 <p>Preferencias A: '.$cantidadA.'</p>
                 </div>';
+
+                $controladorPrefs->gestionarPreferencias($_SESSION['prefProf'],0);
+            }else{
+                $controladorPrefs->gestionarPreferencias($_SESSION['prefProf'],1);
             }
+        }else{
+            $controladorPrefs->gestionarPreferencias($_SESSION['prefProf'],1);
         }
 
 
