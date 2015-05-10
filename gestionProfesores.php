@@ -16,6 +16,17 @@
 
     </head>
     <body>
+
+        <script type="text/javascript">
+          function habilitarTextBox(checkBool, textID) {
+            for (var i = 0; i < textID.length; i++) {
+                textFldObj = document.getElementById(textID[i]);
+                textFldObj.disabled = !checkBool;
+                if (!checkBool) { textFldObj.value = ''; }
+            };
+          }
+        </script>
+
         <div class="container">
 
             <?php
@@ -27,7 +38,8 @@
                 header('Location: ../Asignacion/index.php');
             }
 
-            $validateFlag = true;
+            $validateFlag = false;
+            $validateFlagPswd = FALSE;
             $mostrarLista = false;
             $mostrarActualizar = false;
             $emptyAmmount = 0;
@@ -37,6 +49,10 @@
             include('objetos/obj_profesor.php');
             include('controladores/controladorProfesores.php');
             $controlador = new controladorProfesores();
+
+            include('objetos/obj_usuario.php');
+            include('controladores/controladorUsuarios.php');
+            $controladorUsuario = new controladorUsuarios();
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 if (!empty($_GET["etype"])) {
@@ -78,7 +94,7 @@
                             $mostrarLista = true;
                         }
                     } else if ($criterio == "Todos") {
-                        $shop = $controlador->retornarProfesoresActivos();
+                        $shop = $controlador->retornarTodosLosProfesores();
                         
                         if (count($shop) >= 1) {
                             $mostrarLista = true;
@@ -153,17 +169,51 @@
                         $emptyAmmount++;
                     }
 
-                    if ($validateFlag) { //if the validation passes                        
+                    if (isset($_POST['chkPassword'])) {
+                        $passwd = $_POST["password"];
+                        $rePasswd = $_POST["rePassword"];
+
+                        if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)){
+                            $validateFlag = TRUE;
+                            $emptyAmmount++;
+                        } else {
+                            if (strcmp($passwd, $rePasswd)!=0){
+                                $validateFlag = TRUE;
+                                $validateFlagPswd = TRUE;
+                            }
+                        }
+                    }
+
+                    if (!$validateFlag) { //if the validation passes                        
                         $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                         $resultado = $controlador->actualizarProfesor($prof, $emailOri);
-                        echo '<div class="alert alert-success" role="alert">
-                             <p>Se actualizó el profesor correctamente</p>
+                        
+                        if ($resultado==12){
+                            echo '<div class="alert alert-danger" role="alert">
+                             <p>Esta dirección de correo ya existe, se canceló la actualización</p>
                              </div>';
+
+                        } else {
+
+                            //Si es cambio de correo (username)
+                            if (strcmp($email, $emailOri)!=0){
+                                $resultado = $controladorUsuario->actualizarUsuario($email,$emailOri);
+                            }
+                            //Si cambia la contraseña
+                            if (isset($_POST['chkPassword'])){
+                                $resultado = $controladorUsuario->actualizarContrasena($passwd,$emailOri);
+                            }
+
+                            echo '<div class="alert alert-success" role="alert">
+                                 <p>Se actualizó el profesor correctamente</p>
+                                 </div>';
+                        }
                     } else {
 //                        $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
 //                        $resultado = $controlador->actualizarProfesor($prof, $emailOri);
 //                        echo "se actualizo el profesor correctamente";
                         //mostrar error, campos vacios
+
                     }
                 }
             }
@@ -456,6 +506,19 @@
                         <div class="form-group">
                             <label for="direccion">Direcci&oacute;n: <?php echo htmlentities($objProfesor->direccion) ?></label>
                             <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlentities($objProfesor->direccion) ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-inline"><input type="checkbox" id="chkPassword" name="chkPassword" value="" onclick="habilitarTextBox(this.checked, ['password','rePassword'])">¿Actualizar Contraseña?</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pas">Password </label>
+                            <input type="password" class="form-control" disabled="true" id="password" name="password" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="rePas">Confirmar Password </label>
+                            <input type="password" class="form-control" disabled="true" id="rePassword" name="rePassword" value="">
                         </div>
 
                         <input type="hidden" id="emailOriginal" name="emailOriginal" value="<?php echo htmlentities($objProfesor->email) ?>">

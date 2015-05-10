@@ -1,6 +1,6 @@
 <?php
 
-include('dataLayer/controladorBaseDatos.php');
+//include('dataLayer/controladorBaseDatos.php');
 
 /**
  * Clase para el mantenimiento de profesores
@@ -57,14 +57,14 @@ class controladorProfesores {
 
             if ($profesor) { //ya existe, devolvemos error
 
-                echo " ya existe el correo electr&oacute;";
+                //echo " ya existe el correo electr&oacute;";
                 return 12;
 
             } else {
-                return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
+                return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion, $emailOri);
             }
         } else {
-            return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
+            return $controlador->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion, $emailOri);
         }
     }
 
@@ -93,6 +93,11 @@ class controladorProfesores {
     function retornarProfesor($emailProfesor) {
         $controlador = new controladorBaseDatos();
         return $controlador->retornarProfesor($emailProfesor);
+    }
+
+    function retornarTodosLosProfesores() {
+        $controlador = new controladorBaseDatos();
+        return $controlador->retornarTodosLosProfesores();
     }
 
     function gestionarProfesor($emailProfesor, $valor) {

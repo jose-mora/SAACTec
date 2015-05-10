@@ -20,7 +20,7 @@ class data_controladorProfesores
         $query = "INSERT INTO profesores(tipoProfesor, departamentoEscuela, gradoAcademicoProfesor, cedula, nombre, apellido1, apellido2, email, "
                . "telefono, celular, evaluacionActual, activo, jornada, direccion, nivel) ";
         $query = $query. "VALUES ('". $tipoProfesor . "','". $departamentoEscuela . "','". $gradoAcademicoProfesor . "','". $cedula . "','"
-                . $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "','". $cel . "',70, 1,'". $jor . "','". $direccion . "','1')";
+                . $nom . "','". $ap1 . "','". $ap2 . "','". $email . "','". $tel . "','". $cel . "',70, 0,'". $jor . "','". $direccion . "','1')";
 
         $mysqli->query($query);
         //$mysqli->close(); 
@@ -79,6 +79,16 @@ class data_controladorProfesores
         return $result;
     }
 
+     function retornarTodosLosProfesores(){
+
+        global $mysqli;
+        
+        $query = "SELECT * FROM profesores ORDER BY 'apellido1'";
+        $result = $mysqli->query($query);
+
+        return $result;
+    }
+
     function gestionarProfesor($emailProfesor,$valor){
 
     	global $mysqli;
@@ -92,12 +102,12 @@ class data_controladorProfesores
         return 0;
     }
 
-    function actualizarProfesor($tp, $de, $ga, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion){
+    function actualizarProfesor($tp, $de, $ga, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion, $emailViejo){
 
         global $mysqli;
 
         $query = "UPDATE profesores SET tipoProfesor='". $tp ."',departamentoEscuela='". $de ."',gradoAcademicoProfesor='". $ga ."',cedula='". $cedula ."', nombre='". $nom ."',".
-        " apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel."', celular='". $cel ."', jornada='". $jor ."', direccion='". $direccion ."' WHERE email='".$email."'";
+        " apellido1='". $ap1 ."', apellido2='". $ap2 ."', email='". $email ."', telefono='". $tel."', celular='". $cel ."', jornada='". $jor ."', direccion='". $direccion ."' WHERE email='".$emailViejo."'";
 
         $mysqli->query($query);
         

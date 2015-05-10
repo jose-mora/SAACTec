@@ -17,12 +17,10 @@ class data_controladorUsuarios {
 				  WHERE 
 				  	usuarios.usuario = '".$usuario."' AND usuarios.contrasena = '".$contrasena."' 
 				  	AND usuarios.tipoUsuario = 'Profesor' AND profesores.activo = 1";
-echo $query;
 
         $result = $mysqli->query($query);
 
         return $result;
-		
     }
 
     function retornarUsuarioAdm($usuario,$contrasena){
@@ -39,7 +37,52 @@ echo $query;
         $result = $mysqli->query($query);
 
         return $result;
-		
+    }
+
+    function registrarUsuario($usuario,$contrasena,$tipoUsuario){
+
+    	global $mysqli;
+
+    	$query = "INSERT INTO
+    				usuarios (contrasena, usuario, tipoUsuario)
+    			  VALUES
+    			    ('".$contrasena."','".$usuario."','".$tipoUsuario."')";
+
+    	$mysqli->query($query);
+       
+        return 0;
+    }
+
+    function actualizarContrasena($passwd,$emailOri){
+
+        global $mysqli;
+
+        $query = "UPDATE
+                    usuarios
+                  SET
+                    contrasena = '".$passwd."'
+                  WHERE
+                    usuario = '".$emailOri."'";
+
+        $mysqli->query($query);
+       
+        return 0;
+    }
+
+    function actualizarUsuario($email,$emailOri){
+
+        global $mysqli;
+
+        $query = "UPDATE
+                    usuarios
+                  SET
+                    usuario = '".$email."'
+                  WHERE
+                    usuario = '".$emailOri."'";
+
+        $mysqli->query($query);
+       
+        return 0;
     }
 }
 

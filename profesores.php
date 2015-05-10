@@ -8,15 +8,24 @@
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/customStyle.css">
-
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         header('Content-Type: text/html; charset=UTF-8');
         ?>
-
     </head>
+
     <body>
+
+        <script type="text/javascript">
+          function habilitarTextBox(checkBool, textID) {
+            for (var i = 0; i < textID.length; i++) {
+                textFldObj = document.getElementById(textID[i]);
+                textFldObj.disabled = !checkBool;
+                if (!checkBool) { textFldObj.value = ''; }
+            };
+          }
+        </script>
+
         <div class="container">
 
             <?php
@@ -30,12 +39,19 @@
 
             include('objetos/obj_profesor.php');
             include('controladores/controladorProfesores.php');
+
+            include('objetos/obj_usuario.php');
+            include('controladores/controladorUsuarios.php');
+
             $controlador = new controladorProfesores();
+            $controladorUsuario = new controladorUsuarios();
+
             //include('controladores/controladorEvaluaciones.php');
             //$controladorEv = new controladorEvaluaciones();
 
 
             $validateFlag = FALSE;
+            $validateFlagPswd = FALSE;
             $successFlag = FALSE;
             $emptyAmmount = 0;
 
@@ -56,7 +72,6 @@
                     $cel = test_input($_POST["cel"]);
                     $jornadaLaboral = test_input($_POST["jornadaLaboral"]);
                     $direccion = test_input($_POST["direccion"]);
-
                     $emailOri = test_input($_POST["emailOriginal"]);
 
                     if ($tipoProfesor == "Seleccione") {
@@ -108,12 +123,51 @@
                         $emptyAmmount++;
                     }
 
+                    if (isset($_POST['chkPassword'])) {
+                        $passwd = $_POST["password"];
+                        $rePasswd = $_POST["rePassword"];
+                        if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)){
+                            $validateFlag = TRUE;
+                            $emptyAmmount++;
+                        } else {
+                            if (strcmp($passwd, $rePasswd)!=0){
+                                $validateFlag = TRUE;
+                                $validateFlagPswd = TRUE;
+                            }
+                        }
+                    }                    
+
                     if (!$validateFlag) { //if the validation passes
                         $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                         $resultado = $controlador->actualizarProfesor($prof, $emailOri);
-                        $successFlag = TRUE;
+
+                        if ($resultado==12){
+                            echo '<div class="alert alert-danger" role="alert">
+                            <p>Esta dirección de correo ya existe, se canceló la actualización</p>
+                            </div>';
+                        }
+                        else
+                        {
+                            $successFlag = TRUE;
+                            
+                            //Si cambia la contraseña
+                            if (isset($_POST['chkPassword'])){
+                                $resultado = $controladorUsuario->actualizarContrasena($passwd,$emailOri);
+                            }
+
+                            //Si es cambio de correo (username)
+                            if (strcmp($email, $emailOri)!=0){
+                                $resultado = $controladorUsuario->actualizarUsuario($email,$emailOri);
+                                echo "<script type='text/javascript'> 
+                                        alert('Se desconectará la sesión, su usuario ha cambiado');
+                                        window.location='logout.php';
+                                     </script>";
+                            }
+                        }
+                        
                     } else {
 
+                        //OJO REVISAR SI SE DEBE CAMBIAR A 13
                         if ($emptyAmmount == 12) {
                             $validateFlag = FALSE;
                         }
@@ -210,10 +264,16 @@
                         <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
                     <?php
-                    if ($validateFlag) {
+                    if ($validateFlag==TRUE && $validateFlagPswd==FALSE) {
                         echo '<div class="alert alert-danger" role="alert">
                     <p>Se deben llenar todos los campos </p>
-                  </div>';
+                    </div>';
+                    }
+
+                    if ($validateFlagPswd) {
+                        echo '<div class="alert alert-danger" role="alert">
+                        <p>Las contraseñas no coinciden </p>
+                        </div>';
                     }
 
                     if ($successFlag) {
@@ -223,8 +283,6 @@
                         $successFlag = FALSE;
                     }
                     ?>
-
-
                             <h3>Información Actual</h3>
 
                             <div class="form-group">
@@ -296,12 +354,16 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="pas">Password: </label>
-                                <input type="password" class="form-control" id="password" name="password" value="">
+                                <label class="checkbox-inline"><input type="checkbox" id="chkPassword" name="chkPassword" value="" onclick="habilitarTextBox(this.checked, ['password','rePassword'])">¿Actualizar Contraseña?</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pas">Password </label>
+                                <input type="password" class="form-control" disabled="true" id="password" name="password" value="">
                             </div>
                             <div class="form-group">
-                                <label for="rePas">Confirmar Password: </label>
-                                <input type="text" class="form-control" id="rePassword" name="rePassword" value="">
+                                <label for="rePas">Confirmar Password </label>
+                                <input type="password" class="form-control" disabled="true" id="rePassword" name="rePassword" value="">
                             </div>
 
                             <input type="hidden" id="emailOriginal" name="emailOriginal" value="<?php echo htmlentities($objProfesor->email) ?>">

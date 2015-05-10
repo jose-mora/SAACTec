@@ -36,6 +36,21 @@ class controladorBaseDatos {
         return $array;  
     }
 
+    function registrarUsuario($usuario, $contrasena, $tipoUsuario){
+        $cont = new data_controladorUsuarios();
+        return $cont->registrarUsuario($usuario, $contrasena, $tipoUsuario);
+    }
+
+    function actualizarContrasena($passwd,$emailOri){
+        $cont = new data_controladorUsuarios();
+        return $cont->actualizarContrasena($passwd,$emailOri);
+    }
+
+    function actualizarUsuario($email,$emailOri){
+        $cont = new data_controladorUsuarios();
+        return $cont->actualizarUsuario($email,$emailOri);
+    }
+
     /*
 
     /*     * ******************************************************************************************************** PROFESORES
@@ -79,10 +94,10 @@ class controladorBaseDatos {
 //        }
     }
 
-    function actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion){
+    function actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion,$emailViejo){
 
         $cont = new data_controladorProfesores();
-        return $cont->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
+        return $cont->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion,$emailViejo);
     }
 
     function retonarProfesor($criterio, $valor) {
@@ -109,6 +124,20 @@ class controladorBaseDatos {
         return $cont->retornarProfesores();
     }
 
+    function retornarTodosLosProfesores() {
+        $cont = new data_controladorProfesores();
+        $result = $cont->retornarTodosLosProfesores();
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {            
+            $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
+            $newProf->setActivo($obj['activo']);
+            $array[] = $newProf;
+        }
+
+        return $array;
+    }
+    
     function retornarProfesor($emailProfesor) {
         $cont = new data_controladorProfesores();
         $result = $cont->retornarProfesor($emailProfesor);        

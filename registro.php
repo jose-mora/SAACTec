@@ -16,6 +16,7 @@
 
     </head>
     <body>
+
         <div class="container">
             <?php ?>
             <?php
@@ -27,6 +28,7 @@
             }
 
             $validateFlag = FALSE;
+            $validateFlagPswd = FALSE;
             $successFlag = FALSE;
             $emptyAmmount = 0;
 
@@ -34,6 +36,9 @@
             include('controladores/controladorProfesores.php');
             $controlador = new controladorProfesores();
 
+            include('objetos/obj_usuario.php');
+            include('controladores/controladorUsuarios.php');
+            $controladorUsuario = new controladorUsuarios();
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $tipoProfesor = test_input($_POST["tipoProfesor"]);
@@ -48,6 +53,8 @@
                 $cel = test_input($_POST["cel"]);
                 $jornadaLaboral = test_input($_POST["jornadaLaboral"]);
                 $direccion = test_input($_POST["direccion"]);
+                $passwd = $_POST["password"];
+                $rePasswd = $_POST["rePassword"];
                 //$notas = test_input($_POST["notas"]);                           
                 
                 if ($tipoProfesor == "Seleccione") {
@@ -103,19 +110,41 @@
                     $emptyAmmount++;
                 }*/
 
+                if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)){
+                    $validateFlag = TRUE;
+                    $emptyAmmount++;
+                } else {
+                    if (strcmp($passwd, $rePasswd)!=0){
+                        $validateFlag = TRUE;
+                        $validateFlagPswd = TRUE;
+                    }
+                }
+
                 if (!$validateFlag) { //if the validation passes
                     $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, 
                             $email, $tel, $cel, $jornadaLaboral, $direccion/*, $notas*/);
                     $resultado = $controlador->registrarProfesores($prof);
 
-
-                    if ($resultado > 0) {
-                        $validateFlag = TRUE;
-                        $successFlag = FALSE;
-                    } else {
-                        $validateFlag = FALSE;
+                    if ($resultado==1){
+                        echo '<div class="alert alert-danger" role="alert">
+                        <p>Esta dirección de correo ya existe, se canceló la inserción</p>
+                        </div>';
+                    }
+                    else{
+                        
+                        $usr = new obj_usuario("Profesor",$email,$passwd);
+                        $resultado2 = $controladorUsuario->registrarUsuario($usr);
                         $successFlag = TRUE;
                     }
+
+                    // if ($resultado > 0) {
+                    //     $validateFlag = TRUE;
+                    //     $successFlag = FALSE;
+                    // } else {
+                    //     $validateFlag = FALSE;
+                    //     $successFlag = TRUE;
+                        
+                    // }
 
                     //$_SESSION['profesor']= $prof;
                     //header('Location: ../Asignacion/profesores.php');   
@@ -146,10 +175,16 @@
             <div class="well well-lg">
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 <?php
-if ($validateFlag) {
+ if ($validateFlag==TRUE && $validateFlagPswd==FALSE) {
     echo '<div class="alert alert-danger" role="alert">
-                    <p>Se deben llenar todos los campos </p>
-                  </div>';
+    <p>Se deben llenar todos los campos </p>
+    </div>';
+}
+
+if ($validateFlagPswd) {
+    echo '<div class="alert alert-danger" role="alert">
+    <p>Las contraseñas no coinciden </p>
+    </div>';
 }
 
 if ($successFlag) {
@@ -228,6 +263,15 @@ if ($successFlag) {
                     <div class="form-group">
                         <label for="direccion">Direcci&oacute;n:</label>
                         <input type="text" class="form-control" name="direccion" id="direccion">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pas">Password: </label>
+                        <input type="password" class="form-control" id="password" name="password" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="rePas">Confirmar Password: </label>
+                        <input type="password" class="form-control" id="rePassword" name="rePassword" value="" >
                     </div>
 
                     <button type="button" class="btn btn-primary" onclick="goBack();"> Atr&aacute;s </button>
