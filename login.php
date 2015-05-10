@@ -33,7 +33,7 @@
                 $alias="";
                 $controlador = new controladorUsuarios();
 
-                  //Validar que haya escrito usuario y contraseá
+                //Validar que haya escrito usuario y contraseá
                 if ((strlen($usuario)>0) && (strlen($contrasena)>0)){
                     $user = $controlador->retornarUsuario($usuario,$contrasena,$tipoUsuario);
                       //si hay un array es porque encontró el usuario

@@ -5,7 +5,6 @@
             public $email;
             public $rank;
             public $ideGrupo;
-
             
             // Assigning the values
             public function __construct($email,$rank,$ideGrupo) {

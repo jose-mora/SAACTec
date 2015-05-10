@@ -32,6 +32,18 @@ class data_controladorGrupos {
 		return $result;
     }
 
+    function retornarGruposConIDCurso($idCurso){
+
+        global $mysqli;
+        
+        $query = "SELECT * FROM grupos WHERE idCurso=".$idCurso."";
+
+        $result = $mysqli->query($query);
+
+
+        return $result;
+    }
+
     function gestionarGrupo($grupoGest,$valor){
 
         global $mysqli;

@@ -272,6 +272,12 @@
               $controlador = new controladorBaseDatos(); 
               return $controlador->gestionarGrupo($grupoGest,$valor);
           }
+
+          function retornarGruposConIDCurso($idCurso){
+
+            $controlador = new controladorBaseDatos();
+            return $controlador->retornarGruposConIDCurso($idCurso);
+          }
     }
           
 ?>

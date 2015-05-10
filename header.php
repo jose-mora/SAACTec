@@ -58,6 +58,7 @@
 
           ?>
             <li><a href="profesores.php"><p class="nb"> Profesores </p></a></li>
+            <li><a href="preferencias.php"><p class="nb">Preferencias</p></a></li>
             <li><a href="acercaDe.php"><p class="nb">Acerca de</p></a></li>
             <li><a href="logout.php"><p class="nb">Salir</p></a></li>
 

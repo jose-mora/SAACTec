@@ -6,6 +6,8 @@ include('data_controladorCursos.php');
 include('data_controladorGrupos.php');
 include('data_controladorProfesores.php');
 include('data_controladorUsuarios.php');
+include('data_controladorPreferencias.php');
+
 
 class controladorBaseDatos {
 
@@ -327,7 +329,7 @@ class controladorBaseDatos {
 
         $objCurso = new obj_curso($obj['id'], $obj['nombre'], $obj['activo'], $obj['nivel']);
 
-        return $objCurso1;
+        return $objCurso;
     }
 
     function retornarCursosActivos() {
@@ -374,9 +376,116 @@ class controladorBaseDatos {
         return $array;
     }
 
+    function retornarGruposConIDCurso($idCurso){
+
+        $cont = new data_controladorGrupos();
+        $result = $cont->retornarGruposConIDCurso($idCurso);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
+        }
+
+        return $array;   
+    }
+
     function gestionarGrupo($grupoGest, $valor) {
         $cont = new data_controladorGrupos();
         return $cont->gestionarGrupo($grupoGest, $valor);
+    }
+
+    /*     * ******************************************************************************************************** GRUPOS
+
+      Operaciones con  Preferencias
+
+      /************************ */
+
+    function registrarPreferencia($email,$grupo,$nivel){
+
+        $cont = new data_controladorPreferencias();
+        $encontrado = 0;
+        $result = $cont->retornarPreferenciasProfesor($email);
+
+        while ($obj = $result->fetch_assoc()) {
+
+            if (($grupo == $obj['ideGrupo'])&& ($nivel == $obj['nivel'])) {
+                 $encontrado = 1; //1 significa que ya existe esa preferencia con ese grado
+            }
+            
+        }
+
+        if ($encontrado == 0) { //no existe preferencia para ese grupo
+
+            //ahora vemos si la cantidad de A no es mayor a 4
+            $cantidadA = $this->cantidadA($email);
+
+            if ($cantidadA <= 4) {
+                return $cont->registrarPreferencia($email,$grupo,$nivel);    
+            }else{
+                return 3; //3 sería ya sobrepaso el limite de preferencias
+            }  
+
+            
+        }else{
+            return $encontrado;
+        }
+        
+        
+    }
+
+    function eliminarPreferencia($ideGrupo,$email,$rank){
+        
+        $cont = new data_controladorPreferencias();
+        return $cont->eliminarPreferencia($ideGrupo,$email,$rank);
+        
+    }
+
+    function cantidadA($email){
+
+        $cont = new data_controladorPreferencias();
+        return $cont->cantidadA($email);
+    }
+
+    function cantidadBC($email){
+
+        $cont = new data_controladorPreferencias();
+        $result = $this->retornarPreferenciasProfesor($email);//sacamos el total de preferencias
+
+        $cantidadA =$this->cantidadA($email); //sacamos las cantidad de tipo A
+
+        $cantidadBC = count($result); //obtenemos el total
+        //echo "Cantidad A ".$cantidadA;
+        //echo "Cantidad BC ".$cantidadBC;
+        //echo "Cantidad B C final:   ". $cantidadBC;
+
+        $cantidadBC = $cantidadBC - $cantidadA; //hacemos la resta de las totales menos las A
+
+        if ($cantidadBC < 0) { //por si solo tenemos A
+            $cantidadBC = 0;
+        }
+
+        return $cantidadBC;
+    }
+
+    function retornarPreferenciasProfesor($email){
+
+        $cont = new data_controladorPreferencias();
+        $result = $cont->retornarPreferenciasProfesor($email);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_preferencia($obj['email'], $obj['nivel'], $obj['ideGrupo']);
+        }
+
+        return $array; 
+
+    }
+
+    function gestionarPreferencias($email,$valor){
+        $cont = new data_controladorPreferencias();
+        $result = $cont->gestionarPreferencias($email,$valor);
     }
 
 }
