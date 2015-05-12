@@ -15,5 +15,9 @@
             for (var i = 0; i < textID.length; i++) {
                 textFldObj = document.getElementById(textID[i]);
                 textFldObj.disabled = !checkBool;
-                if (!checkBool) { textFldObj.value = ''; }
+                if (!checkBool)
+                {
+                    textFldObj.value = '';
+                } 
+            }
   };

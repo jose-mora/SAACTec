@@ -7,6 +7,7 @@ include('data_controladorGrupos.php');
 include('data_controladorProfesores.php');
 include('data_controladorUsuarios.php');
 include('data_controladorPreferencias.php');
+include('data_controladorHistoricoNotas.php');
 
 
 class controladorBaseDatos {
@@ -147,6 +148,7 @@ class controladorBaseDatos {
         while ($obj = $result->fetch_assoc()) {
             $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
+            $newProf->setIdProfesor($obj['id']);
             $array[] = $newProf;
         }
 
@@ -487,7 +489,33 @@ class controladorBaseDatos {
         $cont = new data_controladorPreferencias();
         $result = $cont->gestionarPreferencias($email,$valor);
     }
+    
+    /*     * ******************************************************************************************************** HISTORICO NOTAS
 
+      Operaciones con  HISTORICO NOTAS
+
+      /************************ */
+    
+    function registrarNota($idProfesor, $periodo, $nota, $anular) {
+        $cont = new data_controladorHistoricoNotas();
+        return $cont->registrarNota($idProfesor, $periodo, $nota, $anular);
+    }    
+    
+    function retornarNotas($idProfesor) {
+        $cont = new data_controladorHistoricoNotas();
+        $result = $cont->retornarNotas($idProfesor);
+        $array = array();
+        while ($obj = $result->fetch_assoc()){
+            $newNota = new obj_nota($obj['idProfesor'], $obj['periodo'], $obj['nota'], $obj['anular']);
+            $array[] = $newNota;
+        }
+        return $array;
+    }
+    
+    function anularNota($idProfesor, $tiempo, $modalidad, $periodoLectivo, $anular) {
+        $cont = new data_controladorHistoricoNotas();
+        return $cont->anularNota($idProfesor, $tiempo, $modalidad, $periodoLectivo, $anular);
+    }
 }
 
 ?>

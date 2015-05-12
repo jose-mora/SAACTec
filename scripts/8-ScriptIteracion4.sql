@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 -- Base de datos: `testdb`
 --
 
+USE TestDB;
+
 -- --------------------------------------------------------
 
 --
@@ -200,6 +202,22 @@ INSERT INTO `usuarios` (`idUsuario`, `tipoUsuario`, `usuario`, `contrasena`) VAL
 (5, 'Profesor', 'asd@sdf.com', '12345'),
 (6, 'Profesor', 'saced@saactec.com', '12345'),
 (7, 'Profesor', 'norma@tec.com', '654321');
+
+
+--
+-- Estructura de tabla para la tabla `HistoricoNotas` 
+--
+
+CREATE TABLE `historiconotas` (
+  `idhistoriconotas` INT NOT NULL AUTO_INCREMENT,
+  `idProfesor` INT(11) NOT NULL,
+  `periodo` VARCHAR(150) NOT NULL,
+  `nota` INT(3) NOT NULL,
+  `anular` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`idhistoriconotas`))
+ENGINE = InnoDB DEFAULT CHARSET=latin1;
+
+
 
 --
 -- Índices para tablas volcadas

@@ -64,6 +64,14 @@
               $this->activo = $activo;
             }
             
+            public function setIdProfesor($ide){
+              $this->ide = $ide;
+            }
+            
+            public function getIdProfesor(){
+              return $this->ide;
+            }
+            
             // Creating a method (function tied to an object)
             public function greet() {
               return "Hello, my name is " . $this->name . " " . $this->apellido1 . ". Nice to meet you! :-)";
