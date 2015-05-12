@@ -17,13 +17,16 @@
     <body>
 
         <script type="text/javascript">
-          function habilitarTextBox(checkBool, textID) {
-            for (var i = 0; i < textID.length; i++) {
-                textFldObj = document.getElementById(textID[i]);
-                textFldObj.disabled = !checkBool;
-                if (!checkBool) { textFldObj.value = ''; }
-            };
-          }
+            function habilitarTextBox(checkBool, textID) {
+                for (var i = 0; i < textID.length; i++) {
+                    textFldObj = document.getElementById(textID[i]);
+                    textFldObj.disabled = !checkBool;
+                    if (!checkBool) {
+                        textFldObj.value = '';
+                    }
+                }
+                ;
+            }
         </script>
 
         <div class="container">
@@ -43,8 +46,12 @@
             include('objetos/obj_usuario.php');
             include('controladores/controladorUsuarios.php');
 
+            include('objetos/obj_nota.php');
+            include('controladores/controladorHistoricoNotas.php');
+
             $controlador = new controladorProfesores();
             $controladorUsuario = new controladorUsuarios();
+            $controladorNotas = new controladorHistoricoNotas();
 
             //include('controladores/controladorEvaluaciones.php');
             //$controladorEv = new controladorEvaluaciones();
@@ -52,6 +59,7 @@
             $validateFlag = FALSE;
             $validateFlagPswd = FALSE;
             $successFlag = FALSE;
+            $mostrarLista = false;
             $emptyAmmount = 0;
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -125,45 +133,42 @@
                     if (isset($_POST['chkPassword'])) {
                         $passwd = $_POST["password"];
                         $rePasswd = $_POST["rePassword"];
-                        if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)){
+                        if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)) {
                             $validateFlag = TRUE;
                             $emptyAmmount++;
                         } else {
-                            if (strcmp($passwd, $rePasswd)!=0){
+                            if (strcmp($passwd, $rePasswd) != 0) {
                                 $validateFlag = TRUE;
                                 $validateFlagPswd = TRUE;
                             }
                         }
-                    }                    
+                    }
 
                     if (!$validateFlag) { //if the validation passes
                         $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                         $resultado = $controlador->actualizarProfesor($prof, $emailOri);
 
-                        if ($resultado==12){
+                        if ($resultado == 12) {
                             echo '<div class="alert alert-danger" role="alert">
                             <p>Esta dirección de correo ya existe, se canceló la actualización</p>
                             </div>';
-                        }
-                        else
-                        {
+                        } else {
                             $successFlag = TRUE;
-                            
+
                             //Si cambia la contraseña
-                            if (isset($_POST['chkPassword'])){
-                                $resultado = $controladorUsuario->actualizarContrasena($passwd,$emailOri);
+                            if (isset($_POST['chkPassword'])) {
+                                $resultado = $controladorUsuario->actualizarContrasena($passwd, $emailOri);
                             }
 
                             //Si es cambio de correo (username)
-                            if (strcmp($email, $emailOri)!=0){
-                                $resultado = $controladorUsuario->actualizarUsuario($email,$emailOri);
+                            if (strcmp($email, $emailOri) != 0) {
+                                $resultado = $controladorUsuario->actualizarUsuario($email, $emailOri);
                                 echo "<script type='text/javascript'> 
                                         alert('Se desconectará la sesión, su usuario ha cambiado');
                                         window.location='logout.php';
                                      </script>";
                             }
                         }
-                        
                     } else {
 
                         //OJO REVISAR SI SE DEBE CAMBIAR A 13
@@ -227,61 +232,68 @@
                             </thead>
                             <tbody>
 
-        <?php
-        $shop = $controlador->retornarProfesoresActivos();
-        $x = 1;
-        foreach ($shop as $obj) :
-            if ($x == 1) {
-                $x = 0;
-                echo '<tr class="info">';
-            } else {
-                $x = 1;
-                echo '<tr>';
-            }
-            ?>
+                                <?php
+                                $shop = $controlador->retornarProfesoresActivos();
+                                $x = 1;
+                                foreach ($shop as $obj) :
+                                    if ($x == 1) {
+                                        $x = 0;
+                                        echo '<tr class="info">';
+                                    } else {
+                                        $x = 1;
+                                        echo '<tr>';
+                                    }
+                                    ?>
                                 <td><?php echo $obj->name; ?></td>
                                 <td><?php echo $obj->apellido1; ?></td>
                                 <td class="hidden-xs hidden-sm"><?php echo $obj->apellido2; ?></td>
                                 <td class="hidden-xs"><?php echo $obj->email; ?></td>
                                 <td class="hidden-xs hidden-sm"><?php echo $obj->tel; ?></td>
                                 </tr>
-                                <?php endforeach; ?>
+                            <?php endforeach; ?>
 
                             </tbody>
                         </table>
                     </div>
 
-                            <?php
-                        } else {
-                            $arrayInfo = explode(" ", $_SESSION['logged_user']);
-                            $usuario = $arrayInfo[0];
-                            $objProfesor = $controlador->retornarProfesor($usuario);
-                            ?>
+                    <?php
+                } else {
+                    $arrayInfo = explode(" ", $_SESSION['logged_user']);
+                    $usuario = $arrayInfo[0];
+                    $objProfesor = $controlador->retornarProfesor($usuario);
+                    $idProfesor = $objProfesor->ide;
+                    $_SESSION['profesor'] = $idProfesor;
+                    $shop = $controladorNotas->retornarNotas($idProfesor);
+
+                    if (count($shop) >= 1) {
+                        $mostrarLista = true;
+                    }
+                    ?>
 
                     <h2> Bienvenido  <?php echo htmlentities($objProfesor->name) ?>  <?php echo htmlentities($objProfesor->apellido1) ?></h2>
                     <div class="well well-lg">
                         <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
-                    <?php
-                    if ($validateFlag==TRUE && $validateFlagPswd==FALSE) {
-                        echo '<div class="alert alert-danger" role="alert">
+                            <?php
+                            if ($validateFlag == TRUE && $validateFlagPswd == FALSE) {
+                                echo '<div class="alert alert-danger" role="alert">
                     <p>Se deben llenar todos los campos </p>
                     </div>';
-                    }
+                            }
 
-                    if ($validateFlagPswd) {
-                        echo '<div class="alert alert-danger" role="alert">
+                            if ($validateFlagPswd) {
+                                echo '<div class="alert alert-danger" role="alert">
                         <p>Las contraseñas no coinciden </p>
                         </div>';
-                    }
+                            }
 
-                    if ($successFlag) {
-                        echo '<div class="alert alert-success" role="alert">
+                            if ($successFlag) {
+                                echo '<div class="alert alert-success" role="alert">
                     <p>Profesor actualizado con &eacute;xito </p>
                   </div>';
-                        $successFlag = FALSE;
-                    }
-                    ?>
+                                $successFlag = FALSE;
+                            }
+                            ?>
                             <h3>Información Actual</h3>
 
                             <div class="form-group">
@@ -351,9 +363,9 @@
                                     <option>Escuela de administraci&oacute;n</option>                            
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label class="checkbox-inline"><input type="checkbox" id="chkPassword" name="chkPassword" value="" onclick="habilitarTextBox(this.checked, ['password','rePassword'])">¿Actualizar Contraseña?</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="chkPassword" name="chkPassword" value="" onclick="habilitarTextBox(this.checked, ['password', 'rePassword'])">¿Actualizar Contraseña?</label>
                             </div>
 
                             <div class="form-group">
@@ -370,33 +382,47 @@
                             <button type="submit" class="btn btn-primary">Actualizar</button>
                         </form>
                     </div>
-                    <div class="well well-lg">
-                        <h3>Ultimas Evaluaciones</h3>
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>Nota</th>
-                                    <th>Período</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="info">         
-                                    <td>85</td>
-                                    <td>Segundo Semestre 2014</td>    
-                                </tr> 
-                                <tr>
-                                    <td>75</td>
-                                    <td>Primer Semestre 2014</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <?php
+                    if ($mostrarLista) {
+                        ?>
+                        <div class="well well-lg">
+                            <h3>&Uacute;ltimas Evaluaciones</h3>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Nota</th>
+                                        <th>Per&iacute;odo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+                                    $x = 1;
+                                    foreach ($shop as $obj) :
+                                        if ($x == 1) {
+                                            $x = 0;
+                                            echo '<tr class="info">';
+                                        } else {
+                                            $x = 1;
+                                            echo '<tr>';
+                                        }
+                                        ?>
+                                    <td><?php echo $obj->nota ?></td>
+                                    <td><?php echo $obj->periodo ?></td>
+                                    </tr>                                    
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php
+                        }
+                        ?>
                     </div>
                     <br/>
 
-        <?php
-    }
-}
-?>
+                    <?php
+                }
+            }
+            ?>
         </div>
     </body>
 </html>

@@ -5,7 +5,7 @@
   include('objetos/obj_grupo.php');
   include('objetos/obj_curso.php');
   include('objetos/obj_franja.php');
-  include('dataLayer/controladorBaseDatos.php');
+  //include('dataLayer/controladorBaseDatos.php');
 
 	class controladorMantenimientos {
 

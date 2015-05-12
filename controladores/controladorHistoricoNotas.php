@@ -1,6 +1,6 @@
 <?php
 
-include('dataLayer/controladorBaseDatos.php');
+//include('dataLayer/controladorBaseDatos.php');
 
 /**
  * Clase para el mantenimiento de profesores
