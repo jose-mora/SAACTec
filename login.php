@@ -24,6 +24,7 @@
 
             $loginStatus = 0;
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                include('dataLayer/controladorBaseDatos.php');
                 include('objetos/obj_usuario.php');
                 include('controladores/controladorUsuarios.php');
                   

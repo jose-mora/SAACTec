@@ -30,7 +30,7 @@
             $validateFlag = FALSE;
             $mostrarLista = false;
             $result = [];
-
+            include('dataLayer/controladorBaseDatos.php');
             include('objetos/obj_profesor.php');
             include('controladores/controladorProfesores.php');
             $controlador = new controladorProfesores();

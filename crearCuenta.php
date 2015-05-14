@@ -25,6 +25,8 @@
             $successFlag = FALSE;
             $emptyAmmount = 0;
 
+            include('dataLayer/controladorBaseDatos.php');
+
             include('objetos/obj_profesor.php');
             include('controladores/controladorProfesores.php');      
 

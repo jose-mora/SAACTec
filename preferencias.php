@@ -32,7 +32,7 @@
             $cursoABuscar = "";
             $result = [];
             $respuestaIngresar = 2;
-
+            include('dataLayer/controladorBaseDatos.php');
             include('objetos/obj_preferencia.php');
             include('controladores/controladorMantenimientos.php');
             include('controladores/controladorPreferencias.php');

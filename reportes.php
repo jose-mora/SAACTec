@@ -33,7 +33,7 @@
             define('MAS_SOLICITADOS', 'Cusos mas solicitados');
             define('MENOS_SOLICITADOS', 'Cursos menos solicitados');
 
-
+            include('dataLayer/controladorBaseDatos.php');
             include('objetos/obj_preferencia.php');
             include('controladores/controladorMantenimientos.php');
             $controlador = new controladorMantenimientos();

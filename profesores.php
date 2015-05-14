@@ -39,7 +39,7 @@
             if (!$loggedHeader) {
                 header('Location: ../Asignacion/index.php');
             }
-
+            include('dataLayer/controladorBaseDatos.php');
             include('objetos/obj_profesor.php');
             include('controladores/controladorProfesores.php');
 

@@ -82,7 +82,7 @@
             $successFlag = false;
             $mostrarLista = false;
             $result = [];
-
+            include('dataLayer/controladorBaseDatos.php');
             include('objetos/obj_profesor.php');
             include('objetos/obj_nota.php');
             include('controladores/controladorProfesores.php');

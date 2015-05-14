@@ -1,6 +1,4 @@
 <?php
-
-  include('dataLayer/controladorBaseDatos.php');
   
 	class controladorUsuarios {
 

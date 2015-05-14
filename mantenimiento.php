@@ -32,7 +32,7 @@
             $typeOperation = '';
             $numeroRespuesta = 0;
             $errorType = '';
-
+            include('dataLayer/controladorBaseDatos.php');
             include('controladores/controladorMantenimientos.php');
             $controlador = new controladorMantenimientos();
 

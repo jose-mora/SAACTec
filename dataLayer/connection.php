@@ -2,7 +2,7 @@
 
 $username = 'root';
 $password = '123456';
-$db = 'testDB';
+$db = 'TestDB';
 $dbhost = 'localhost';
 
 //@mysql_connect($dbhost,$username,$password) or die('Imposible conectarse a la base de datos');
