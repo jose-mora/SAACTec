@@ -62,7 +62,11 @@
                         if (count($shop) >= 1) {
                             $mostrarLista = true;
                         }
-                    }
+                    } else {
+                            echo '<div class="alert alert-danger" role="alert">
+                            <p>No se digitó ningún valor </p>
+                            </div>';
+                        }
                 }
             }
             ?>
@@ -120,9 +124,9 @@ if ($mostrarLista) {
             echo '<tr>';
         }
         ?>
-                            <td><? echo $obj->name . ' ' . $obj->apellido1  ?></td>
-                            <td class="hidden-xs"><? echo $obj->email; ?></td>
-                            <td><? echo "<a href='preferencias.php?prem=". $obj->email ."' class='btn btn-primary gestionBoton'>  Gestionar </a> "; ?></td>
+                            <td><?php echo $obj->name . ' ' . $obj->apellido1  ?></td>
+                            <td class="hidden-xs"><?php echo $obj->email; ?></td>
+                            <td><?php echo "<a href='preferencias.php?prem=". $obj->email ."' class='btn btn-primary gestionBoton'>  Gestionar </a> "; ?></td>
 
                             </tr>
                             <?php endforeach; ?>

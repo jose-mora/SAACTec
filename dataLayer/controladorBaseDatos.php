@@ -251,9 +251,9 @@ class controladorBaseDatos {
 
       /************************ */
 
-    function insertarFranja($nombreFranja, $dia) {
+    function insertarFranja($nombreFranja) {
         $cont = new data_controladorFranjas();
-        return $cont->registrarFranja($nombreFranja, $dia);
+        return $cont->registrarFranja($nombreFranja);
     }
 
     function retornarFranja($nombreFranja) {
@@ -478,7 +478,7 @@ class controladorBaseDatos {
 
         while ($obj = $result->fetch_assoc()) {
 
-            $array[] = new obj_preferencia($obj['email'], $obj['nivel'], $obj['ideGrupo']);
+            $array[] = new obj_preferenciaDetallada($obj['email'], $obj['nivel'], $obj['ideGrupo'],$obj['nombreCurso'],$obj['franja']);
         }
 
         return $array; 

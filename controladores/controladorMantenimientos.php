@@ -87,7 +87,7 @@
 
 
               $numeroRespuesta =0;
-              $nombreFranja = $inicio. " - ". $fin;
+              $nombreFranja = $dia. ": ". $inicio. " - ". $fin;
 
               $arrayInicio = explode(" ", $inicio);
               $arrayFin = explode(" ", $fin);
@@ -128,7 +128,7 @@
                 }
 
                 if ($insertar) { //si podemos insertar (no se encontro la sede)
-                  return $controlador->insertarFranja($nombreFranja,$dia);
+                  return $controlador->insertarFranja($nombreFranja);
 
                 }else{
                   return 1;

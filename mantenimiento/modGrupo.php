@@ -33,18 +33,18 @@
                   }
                   
               ?>
-              <td><? echo $obj->ideGrupo; ?></td>
+              <td><?php echo $obj->ideGrupo; ?></td>
              <?php
                 if ($obj->activo == 1) {
               
               ?>
-                  <td><? echo "<a href='mantenimiento.php?grupoDes=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
+                  <td><?php echo "<a href='mantenimiento.php?grupoDes=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
               <?php
 
                 }else{
 
               ?>
-                <td><? echo "<a href='mantenimiento.php?grupoAct=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
+                <td><?php echo "<a href='mantenimiento.php?grupoAct=". $obj->ideGrupo ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
               <?php
 
                 }

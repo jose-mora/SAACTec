@@ -48,7 +48,19 @@ class data_controladorPreferencias {
     function retornarPreferenciasProfesor($email){
 
     	global $mysqli;	
-    	$query = "SELECT * FROM preferencias WHERE email ='".$email."'";
+    	$query = "
+                    SELECT 
+                        preferencias.email,
+                        preferencias.ideGrupo,
+                        cursos.nombre AS 'nombreCurso',
+                        franjas.nombre AS 'franja',
+                        preferencias.nivel
+                    FROM 
+                        preferencias INNER JOIN grupos ON grupos.ideGrupo = preferencias.ideGrupo
+                        INNER JOIN franjas ON franjas.id = grupos.idFranja
+                        INNER JOIN cursos ON cursos.id = grupos.idCurso
+                    WHERE 
+                        preferencias.email ='".$email."'";
 		$result = $mysqli->query($query);
 
 		return $result;

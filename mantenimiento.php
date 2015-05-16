@@ -99,13 +99,15 @@
                 }
                 if ($operation == "curso_reg") {  //si es regitrar curso
                     $nombreCurso = $_POST["name"];
-                    $numeroRespuesta = $controlador->registrarCurso($nombreCurso);
+                    $nivel = $_POST["nivel"];
+                    $numeroRespuesta = $controlador->registrarCurso($nombreCurso,$nivel);
                     procesarRespuesta($numeroRespuesta, 'regCurso');
                 }
                 if ($operation == "franja_reg") {  //si es regitrar franja
                     $inicio = $_POST["franjaInicio"];
                     $fin = $_POST["franjaFin"];
-                    $numeroRespuesta = $controlador->registrarFranja($inicio, $fin);
+                    $dia = $_POST["franjaDia"];
+                    $numeroRespuesta = $controlador->registrarFranja($inicio, $fin, $dia);
                     procesarRespuesta($numeroRespuesta, 'regFranja');
                 }
                 if ($operation == "grupo_reg") { //si es registrar grupo
@@ -167,6 +169,18 @@
                             <li><a href="mantenimiento.php?etype=modCurso">Gestionar Cursos</a></li>
                         </ul>
                     </div>
+                    <!-- Franjas-->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Gestionar Franjas 
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="mantenimiento.php?etype=regFranja">Registrar Franjas</a></li>
+                            <li class="divider"></li>
+                            <li><a href="mantenimiento.php?etype=modFranja">Gestionar Franjas</a></li>
+                        </ul>
+                    </div>                              
                     <!-- Grupos-->
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -179,18 +193,6 @@
                             <li><a href="mantenimiento.php?etype=modGrupo">Gestionar Grupo</a></li>
                         </ul>
                     </div>
-                    <!-- Franjas-->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            Gestionar Franjas 
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="mantenimiento.php?etype=regFranja">Registrar Franjas</a></li>
-                            <li class="divider"></li>
-                            <li><a href="mantenimiento.php?etype=modFranja">Gestionar Franjas</a></li>
-                        </ul>
-                    </div>           		            
                 </div>
             </div>  
 

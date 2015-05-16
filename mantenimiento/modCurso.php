@@ -32,20 +32,20 @@
                     echo '<tr>';
                   }
               ?>
-              <td><? echo $obj->name; ?></td>
-              <td><? echo $obj->nivel; ?></td>
+              <td><?php echo $obj->name; ?></td>
+              <td><?php echo $obj->nivel; ?></td>
 
               <?php
                 if ($obj->activo == 1) {
               
               ?>
-                  <td><? echo "<a href='mantenimiento.php?cursoDes=". $obj->name ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
+                  <td><?php echo "<a href='mantenimiento.php?cursoDes=". $obj->name ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
               <?php
 
                 }else{
 
               ?>
-                <td><? echo "<a href='mantenimiento.php?cursoAct=". $obj->name ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
+                <td><?php echo "<a href='mantenimiento.php?cursoAct=". $obj->name ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
               <?php
 
                 }

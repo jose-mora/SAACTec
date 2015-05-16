@@ -3,9 +3,8 @@
         	<?php
               
               if ($numeroRespuesta == 2) {
-
                 echo '<div class="alert alert-danger" role="alert">
-                      <p>Las horas seleccionadas son inaceptables </p>
+                      <p>La hora final no puede ser menor a la hora inicial </p>
                       </div>';
               }elseif ($numeroRespuesta == 1) {
                 echo '<div class="alert alert-danger" role="alert">
@@ -19,6 +18,16 @@
         	?>
         		<h3>Registro de Franjas</h3>
         		<div class="form-group">
+
+                <label for="sede">D&iacute;a:</label>
+                <select class="form-control" name="franjaDia" id="franjaDia">
+                  <option>Lunes</option>
+                  <option>Martes</option>
+                  <option>Miercoles</option>
+                  <option>Jueves</option>
+                  <option>Viernes</option>
+                </select>
+
                 <label for="sede">Inicio de Franja:</label>
                 <select class="form-control" name="franjaInicio" id="franjaInicio">
                   <option>7 am</option>
@@ -40,18 +49,6 @@
                   <option>7 pm</option>
                   <option>9 pm</option>
                 </select>
-
-                <!--
-                <label for="sede">D&iacute;a:</label>
-                <select class="form-control" name="franjaDia" id="franjaDia">
-                  <option>L</option>
-                  <option>K</option>
-                  <option>M</option>
-                  <option>J</option>
-                  <option>V</option>
-                </select>
-                -->
-
 
           			<input type="hidden" name="operation" id="operation" value="franja_reg">	
         		</div>

@@ -6,11 +6,11 @@ class data_controladorFranjas {
 
     public function __construct() {}
 
-	function registrarFranja($nombreFranja,$dia){
+	function registrarFranja($nombreFranja){
 
 		global $mysqli;
 
-        $query = "INSERT INTO franjas (nombre,dia) VALUES ('". $nombreFranja . "','". $dia . "')";
+        $query = "INSERT INTO franjas (nombre,activo) VALUES ('". $nombreFranja . "','0')";
 
 		$mysqli->query($query);
 

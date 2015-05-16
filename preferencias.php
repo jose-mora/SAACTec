@@ -91,10 +91,11 @@
         if ($cantidadA > 0) { //si existen preferencias tipo A
 
             if ($cantidadBC < $cantidadA) { //si las BC no suman lo suficiente
-                echo '<div class="alert alert-danger" role="alert">
+                echo '<div class="alert alert-info" role="information">
                 <p>La cantidad de preferencias B y C en conjunto debe ser igual o mayor a la cantidad de preferencias A</p>
                 <p>Preferencias B y C: '.$cantidadBC.'</p>
                 <p>Preferencias A: '.$cantidadA.'</p>
+                <p>Si no agrega preferencias en B o C, no será tomado en cuenta para la asignación de cargas.</p>
                 </div>';
 
                 $controladorPrefs->gestionarPreferencias($_SESSION['prefProf'],0);
@@ -178,10 +179,10 @@
                             
                                 <td><?php echo $obj->ideGrupo; ?></td>
                                 <td class="hidden-xs"> <?php echo $obj->franja; ?></td>
-                                <td>San Jose</td>
-                                <td><? echo "<a href='preferencias.php?prefA=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> A </a> "; ?>
-                                    <? echo "<a href='preferencias.php?prefB=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> B </a> "; ?>
-                                    <? echo "<a href='preferencias.php?prefC=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> C </a> "; ?></td>
+                                <td><?php echo $obj->sede; ?></td>
+                                <td><?php echo "<a href='preferencias.php?prefA=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> A </a> "; ?>
+                                    <?php echo "<a href='preferencias.php?prefB=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> B </a> "; ?>
+                                    <?php echo "<a href='preferencias.php?prefC=".$obj->ideGrupo."' class='btn btn-primary gestionBoton'> C </a> "; ?></td>
 
                             </tr>
                     <?php endforeach; ?>
@@ -201,7 +202,9 @@
                     <thead>
                         <tr>
                             <th>Grupo</th>
-                            <th>Rango</th>
+                            <th>Curso</th>
+                            <th>Horario</th>
+                            <th>Nivel Preferencia</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -226,6 +229,8 @@
                 }
     ?>
                         <td><?php echo $obj->ideGrupo; ?></td>
+                        <td><?php echo $obj->curso; ?></td>
+                        <td><?php echo $obj->horario; ?></td>
                         <td><?php echo $obj->rank; ?></td>
                         <td><?php echo "<a href='preferencias.php?delPref=". $obj->ideGrupo ."&delRank=".$obj->rank."' class='btn btn-primary gestionBoton'> Remover </a> "; ?></td>
 

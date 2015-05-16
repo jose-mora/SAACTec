@@ -36,8 +36,18 @@ class data_controladorGrupos {
 
         global $mysqli;
         
-        $query = "SELECT * FROM grupos WHERE idCurso=".$idCurso."";
-
+        $query = "  SELECT 
+                        grupos.ideGrupo,
+                        grupos.idCurso,
+                        sedes.nombre AS 'idSede',
+                        franjas.nombre AS 'idFranja',
+                        grupos.activo
+                    FROM 
+                        grupos INNER JOIN franjas ON franjas.id = grupos.idFranja
+                        INNER JOIN sedes on sedes.id = grupos.idsede
+                    WHERE 
+                        grupos.idCurso=".$idCurso."";
+                        
         $result = $mysqli->query($query);
 
 

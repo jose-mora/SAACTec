@@ -8,7 +8,7 @@
                       </div>';
               }elseif ($numeroRespuesta == 1) {
                 echo '<div class="alert alert-danger" role="alert">
-                      <p>El Grupo a registrar ya existe </p>
+                      <p>El grupo a registrar ya existe </p>
                       </div>';
               } elseif ($numeroRespuesta == 3) {
                 echo '<div class="alert alert-danger" role="alert">
@@ -47,7 +47,7 @@
               ?>
               </select>
 
-              <label for="sede">Sede:</label>
+              <label for="sede">Sedes Activas:</label>
               <select class="form-control" name="sede" id="sede">
                 <?php
 

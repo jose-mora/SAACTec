@@ -33,18 +33,18 @@
                   }
                   
               ?>
-              <td><? echo $obj->name; ?></td>
+              <td><?php echo $obj->name; ?></td>
              <?php
                 if ($obj->activo == 1) {
               
               ?>
-                  <td><? echo "<a href='mantenimiento.php?sedeDes=". $obj->name ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
+                  <td><?php echo "<a href='mantenimiento.php?sedeDes=". $obj->name ."' class='btn btn-primary gestionBoton'> Desactivar </a> "; ?></td>
               <?php
 
                 }else{
 
               ?>
-                <td><? echo "<a href='mantenimiento.php?sedeAct=". $obj->name ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
+                <td><?php echo "<a href='mantenimiento.php?sedeAct=". $obj->name ."' class='btn btn-primary gestionBoton'> Activar </a> "; ?></td>
               <?php
 
                 }
