@@ -253,7 +253,7 @@
                 $objFranja = $controlador->retornarFranja($franja);
                 $objCurso = $controlador -> retornarCurso($curso);
 
-                return $controlador->registrarGrupo($ideGrupo,$objCurso->ide,$objSede->ide,$objFranja->ide);
+                return $controlador->registrarGrupo($ideGrupo,$objSede->ide,$objCurso->ide,$objFranja->ide);
 
               }else{
                 return 1;
@@ -274,7 +274,6 @@
           }
 
           function retornarGruposConIDCurso($idCurso){
-
             $controlador = new controladorBaseDatos();
             return $controlador->retornarGruposConIDCurso($idCurso);
           }

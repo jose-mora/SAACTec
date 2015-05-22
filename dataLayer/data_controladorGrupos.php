@@ -36,7 +36,7 @@ class data_controladorGrupos {
 
         global $mysqli;
         
-        $query = "  SELECT 
+        $query = "SELECT 
                         grupos.ideGrupo,
                         grupos.idCurso,
                         sedes.nombre AS 'idSede',
