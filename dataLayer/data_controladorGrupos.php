@@ -32,6 +32,18 @@ class data_controladorGrupos {
 		return $result;
     }
 
+    function retornarGruposActivos(){
+
+        global $mysqli;
+        
+        $query = "SELECT * FROM grupos WHERE activo=1";
+
+        $result = $mysqli->query($query);
+
+
+        return $result;
+    }
+
     function retornarGruposConIDCurso($idCurso){
 
         global $mysqli;

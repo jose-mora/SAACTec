@@ -8,7 +8,7 @@ include('data_controladorProfesores.php');
 include('data_controladorUsuarios.php');
 include('data_controladorPreferencias.php');
 include('data_controladorHistoricoNotas.php');
-
+include('data_controladorAsignacion.php');
 
 class controladorBaseDatos {
 
@@ -378,6 +378,19 @@ class controladorBaseDatos {
         return $array;
     }
 
+    function retornarGruposActivos(){
+        $cont = new data_controladorGrupos();
+        $result = $cont->retornarGruposActivos();
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
+        }
+
+        return $array;   
+    }
+
     function retornarGruposConIDCurso($idCurso){
 
         $cont = new data_controladorGrupos();
@@ -516,6 +529,18 @@ class controladorBaseDatos {
         $cont = new data_controladorHistoricoNotas();
         return $cont->anularNota($idProfesor, $tiempo, $modalidad, $periodoLectivo, $anular);
     }
+
+
+    /********************************************************************************************************** ASIGNACION DE NOTAS
+
+      Operaciones con  ASIGNACION DE NOTAS
+
+      /************************ */
+      function retornarProfesoresActivosparaPreferenciasValidas($ideGrupo){
+        $cont = new data_controladorAsignacion();
+
+        return $cont->retornarProfesoresActivosparaPreferenciasValidas($ideGrupo);
+     }
 }
 
 ?>
