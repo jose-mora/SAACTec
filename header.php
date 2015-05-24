@@ -47,7 +47,7 @@
  
         		<li><a href="reportes.php"><p class="nb">Reportes</p></a></li>
 
-        		<li><a href="underConstruction.php"><p class="nb">Asignar Cargas</p></a></li>
+        		<li><a href="gestionProcesosAsignacion.php"><p class="nb">Asignar Cargas</p></a></li>
 
             <li><a href="acercaDe.php"><p class="nb">Acerca de</p></a></li>
             

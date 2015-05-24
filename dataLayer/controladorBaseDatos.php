@@ -9,6 +9,7 @@ include('data_controladorUsuarios.php');
 include('data_controladorPreferencias.php');
 include('data_controladorHistoricoNotas.php');
 include('data_controladorAsignacion.php');
+include('data_controladorProcesosAsignacion.php');
 
 class controladorBaseDatos {
 
@@ -502,6 +503,55 @@ class controladorBaseDatos {
         $cont = new data_controladorPreferencias();
         $result = $cont->gestionarPreferencias($email,$valor);
     }
+
+    /********************************************************************************************************** PROCESO DE ASIGNACION
+
+      Operaciones con  PROCESOS DE ASIGNACIONES
+
+      /************************ */
+
+    function registrarProcesoAsignacion($nombre) {
+        $cont = new data_controladorProcesosAsignacion();
+
+        $procesos = $cont->retornarProcesosAsignacionxNombre($nombre);
+        echo $procesos;
+        if ($procesos>0){
+            return 1;
+        }
+
+        else{
+            return $cont->registrarProcesoAsignacion($nombre);
+        }        
+        
+    }
+
+    function activarProcesosAsignacion($nombre,$activo) {
+        $cont = new data_controladorProcesosAsignacion();
+        return $cont->activarProcesosAsignacion($nombre,$activo);
+    }
+
+    function retornarProcesosAsignacion() {
+        $cont = new data_controladorProcesosAsignacion();
+        $result = $cont->retornarProcesosAsignacion();
+        $array = array();
+        while ($obj = $result->fetch_assoc()){
+            $newProcAsig = new obj_procesoAsignacion($obj['nombre'], $obj['activo']);
+            $array[] = $newProcAsig;
+        }
+        return $array;
+    }
+
+    function retornarProcesosAsignacionActivos() {
+        $cont = new data_controladorProcesosAsignacion();
+        $result = $cont->retornarProcesosAsignacionActivos();
+        $array = array();
+        while ($obj = $result->fetch_assoc()){
+            $newProcAsig = new obj_procesoAsignacion($obj['nombre'], $obj['activo']);
+            $array[] = $newProcAsig;
+        }
+        return $array;
+
+    }   
     
     /*     * ******************************************************************************************************** HISTORICO NOTAS
 
@@ -542,5 +592,4 @@ class controladorBaseDatos {
         return $cont->retornarProfesoresActivosparaPreferenciasValidas($ideGrupo);
      }
 }
-
 ?>
