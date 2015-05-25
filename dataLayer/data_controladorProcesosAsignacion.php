@@ -12,9 +12,9 @@ class data_controladorProcesosAsignacion{
     	global $mysqli;
 
     	$query = "INSERT INTO
-    				procesoasignacion (nombre, activo)
+    				procesoasignacion (nombre, activo, ejecutado)
     			  VALUES
-    			    ('".$nombre."','0')";
+    			    ('".$nombre."','0','0')";
 
     	$mysqli->query($query);
        
@@ -31,6 +31,22 @@ class data_controladorProcesosAsignacion{
                     activo = '".$activo."'
                   WHERE
                     nombre = '".$nombre."'";
+
+        $mysqli->query($query);
+       
+        return 0;
+    }
+
+    function ejecutarProcesosAsignacion($idProcesoAsignacion,$ejecutar){
+
+        global $mysqli;
+
+        $query = "UPDATE
+                    procesoasignacion
+                  SET
+                    ejecutado = '".$ejecutar."'
+                  WHERE
+                    idProcesoAsignacion = '".$idProcesoAsignacion."'";
 
         $mysqli->query($query);
        

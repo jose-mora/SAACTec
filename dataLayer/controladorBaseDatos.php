@@ -10,6 +10,7 @@ include('data_controladorPreferencias.php');
 include('data_controladorHistoricoNotas.php');
 include('data_controladorAsignacion.php');
 include('data_controladorProcesosAsignacion.php');
+include('data_controladorResultadoProcAsignacion.php');
 
 class controladorBaseDatos {
 
@@ -530,12 +531,17 @@ class controladorBaseDatos {
         return $cont->activarProcesosAsignacion($nombre,$activo);
     }
 
+    function ejecutarProcesosAsignacion($nombre,$ejecutar) {
+        $cont = new data_controladorProcesosAsignacion();
+        return $cont->ejecutarProcesosAsignacion($nombre,$ejecutar);
+    }
+
     function retornarProcesosAsignacion() {
         $cont = new data_controladorProcesosAsignacion();
         $result = $cont->retornarProcesosAsignacion();
         $array = array();
         while ($obj = $result->fetch_assoc()){
-            $newProcAsig = new obj_procesoAsignacion($obj['nombre'], $obj['activo']);
+            $newProcAsig = new obj_procesoAsignacion($obj['idProcesoAsignacion'], $obj['nombre'], $obj['activo'], $obj['ejecutado']);
             $array[] = $newProcAsig;
         }
         return $array;
@@ -546,12 +552,41 @@ class controladorBaseDatos {
         $result = $cont->retornarProcesosAsignacionActivos();
         $array = array();
         while ($obj = $result->fetch_assoc()){
-            $newProcAsig = new obj_procesoAsignacion($obj['nombre'], $obj['activo']);
+            $newProcAsig = new obj_procesoAsignacion($obj['idProcesoAsignacion'], $obj['nombre'], $obj['activo'], $obj['ejecutado']);
             $array[] = $newProcAsig;
         }
         return $array;
 
-    }   
+    }
+
+    /********************************************************************************************************** RESULTADO DE ASIGNACION
+
+      Operaciones con  RESULTADO DE ASIGNACIONES
+
+      /************************ */ 
+
+
+    function registrarResultadoProcAsignacion($idProcesoAsignacion, $ideGrupo, $email) {
+        $cont = new data_controladorResultadoProcAsignacion();
+        return $cont->registrarResultadoProcAsignacion($idProcesoAsignacion, $ideGrupo, $email);
+    }
+
+    function eliminarResultadoProcAsignacion($idProcesoAsignacion) {
+        $cont = new data_controladorResultadoProcAsignacion();
+        return $cont->eliminarResultadoProcAsignacion($idProcesoAsignacion);
+    }
+
+
+    function retornarResultadoProcAsignacion($idProcesoAsignacion){
+        $cont = new data_controladorResultadoProcAsignacion();
+        $result = $cont->retornarResultadoProcAsignacion($idProcesoAsignacion);
+        $array = array();
+        while ($obj = $result->fetch_assoc()){
+            $newResProcAsig = new obj_resultadoProcAsignacion($obj['proceso'], $obj['sede'], $obj['curso'], $obj['ideGrupo'], $obj['franja'], $obj['profesor']);
+            $array[] = $newResProcAsig;
+        }
+        return $array;
+    }    
     
     /*     * ******************************************************************************************************** HISTORICO NOTAS
 

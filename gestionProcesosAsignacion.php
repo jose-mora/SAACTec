@@ -41,6 +41,7 @@
 
             $controlador = new controladorProcesosAsignacion();
 
+
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 if (!empty($_GET["etype"])) {
 
@@ -50,6 +51,15 @@
                 if (!empty($_GET["procesoDes"])) {
                     $procesoGes = $_GET["procesoDes"];
                     $numeroRespuesta = $controlador->activarProcesosAsignacion($procesoGes, 0);
+                }
+
+                 if (!empty($_GET["procesoDel"])) {
+                    $procesoGes = $_GET["procesoDel"];
+                    $numeroRespuesta = $controlador->ejecutarProcesosAsignacion($procesoGes, 0);
+                    include('controladores/controladorResultadoProcAsignacion.php');
+                    include('objetos/obj_resultadoProcAsignacion.php');
+                    $controladorResul = new controladorResultadoProcAsignacion();
+                    $numeroRespuesta = $controladorResul->eliminarResultadoProcAsignacion($procesoGes, 0);
                 }
                 
                 if (!empty($_GET["procesoAct"])) {
@@ -129,17 +139,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="gestionProcesosAsignacion.php?etype=regAsignacion">Registrar Asignacion</a></li>
                             <li class="divider"></li>
-                            <li><a href="gestionProcesosAsignacion.php?etype=modAsignacion">Activar Asignacion</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            Generar Proceso Asignacion 
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="ejecutarAsignacion.php">Ejecutar Asignacion</a></li>                            
+                            <li><a href="gestionProcesosAsignacion.php?etype=modAsignacion">Gestionar Asignacion</a></li>
                         </ul>
                     </div>
 

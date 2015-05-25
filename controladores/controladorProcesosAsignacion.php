@@ -15,6 +15,11 @@
             return $controlador->activarProcesosAsignacion($nombre,$activo);
           }  
 
+          function ejecutarProcesosAsignacion($idProcesoAsignacion,$ejecutar){
+            $controlador = new controladorBaseDatos(); 
+            return $controlador->ejecutarProcesosAsignacion($idProcesoAsignacion,$ejecutar);
+          }  
+
           function retornarProcesosAsignacion(){
             $controlador = new controladorBaseDatos(); 
             return $controlador->retornarProcesosAsignacion();
