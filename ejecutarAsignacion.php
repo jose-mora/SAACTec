@@ -36,9 +36,8 @@
             include('controladores/controladorAsignacionProfesores.php');
 
             $controlador = new controladorAsignacionProfesores();
-            
-            
-            ?>
+
+           ?>
 
             <div>
                 <h2> Asignación de Profesores </h2>
@@ -50,7 +49,9 @@
 
             <div class="well well-lg">
                 <div class="container-fluid" align="center">
-                    
+                 <?php
+                    $controlador->asignarProfesores("test");     
+                 ?>   
                 </div>
             </div>  
 

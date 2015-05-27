@@ -539,8 +539,70 @@ class controladorBaseDatos {
       function retornarProfesoresActivosparaPreferenciasValidas($ideGrupo){
         $cont = new data_controladorAsignacion();
 
-        return $cont->retornarProfesoresActivosparaPreferenciasValidas($ideGrupo);
+        $result = $cont->retornarProfesoresActivosparaPreferenciasValidas($ideGrupo);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {            
+            $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
+            $newProf->setActivo($obj['activo']);
+            $array[] = $newProf;
+        }
+
+        return $array;
      }
+
+      function preferenciasdeGrupoxProfesorxNivel($email,$ideGrupo,$nivel){
+
+        $cont = new data_controladorAsignacion();
+
+        $result = $cont->preferenciasdeGrupoxProfesorxNivel($email,$ideGrupo,$nivel);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {            
+            $array[] = new obj_preferencia($obj['email'], $obj['nivel'], $obj['ideGrupo']);
+
+        }
+
+        return count($array);
+      }
+
+
+      function retornarUltimaNotaProfesor($email){
+
+        $cont = new data_controladorAsignacion();
+
+        $result = $cont->retornarUltimaNotaProfesor($email);
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {            
+            $newNota = new obj_nota($obj['idProfesor'], $obj['periodo'], $obj['nota'], $obj['anular']);
+            $array[] = $newNota;
+        }
+
+        if (count($array) > 0) {
+            return $array[0]->nota;
+        }else{
+            return 0;
+        }
+
+      }
+
+      function retornarPromedioYCantidad($email){
+
+        $cont = new data_controladorAsignacion();
+
+        $result = $cont->retornarPromedioYCantidad($email);
+        $array = array();
+
+
+        while ($obj = $result->fetch_assoc()) {            
+            $array[] = $obj['nota'];
+            $array[] = $obj['cantidad'];
+        }
+
+        return $array;
+
+      }
 }
 
 ?>
