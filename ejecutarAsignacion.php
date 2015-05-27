@@ -36,13 +36,13 @@
             include('controladores/controladorAsignacionProfesores.php');
 
             $controlador = new controladorAsignacionProfesores();
+
             
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $typeOperation = $_GET["etype"];
             }
 
             ?>
-
             <div>
                 <h2> Asignación de Profesores </h2>
                 <blockquote>
@@ -61,11 +61,17 @@
                 <?php
                 //TESTEANDO LA INSERSIÓN
 
+                if (strlen($typeOperation)) {
+                  $controlador->asignarProfesores($typeOperation);
+                }
+                
+
                 include('controladores/controladorResultadoProcAsignacion.php');
+
                 $controladoroInserc = new controladorResultadoProcAsignacion();
-                $resulinserc = $controladoroInserc->registrarResultadoProcAsignacion($typeOperation,'ECD1','jmendezb88@yahoo.com');
-                $resulinserc = $controladoroInserc->registrarResultadoProcAsignacion($typeOperation,'GrupoMendez','elizondo1288@gmail.com');
-                $resulinserc = $controladoroInserc->registrarResultadoProcAsignacion($typeOperation,'ECD2','elizondo1288@gmail.com');
+                
+                //$resulinserc = $controladoroInserc->registrarResultadoProcAsignacion($typeOperation,'ECD1','jmendezb88@yahoo.com');
+                
                 //Activar el ejecutado de la insercion
                 include('controladores/controladorProcesosAsignacion.php');
                 include('objetos/obj_procesoAsignacion.php');
@@ -121,6 +127,7 @@
 
                 <!--  FIN DEL TEST: Resultado Aprobado -->
                     
+
                 </div>
             </div>  
 
