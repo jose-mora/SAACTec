@@ -11,6 +11,7 @@ include('data_controladorHistoricoNotas.php');
 include('data_controladorAsignacion.php');
 include('data_controladorProcesosAsignacion.php');
 include('data_controladorResultadoProcAsignacion.php');
+include('data_controladorReporte.php');
 
 class controladorBaseDatos {
 
@@ -18,47 +19,47 @@ class controladorBaseDatos {
         
     }
 
-    /********************************************************************************************************** USUARIOS/LOGIN
-    
-    Operaciones con  Usuarios / Login
+    /*     * ******************************************************************************************************** USUARIOS/LOGIN
 
-    /*************************/
+      Operaciones con  Usuarios / Login
 
-    function retornarUsuario($usuario,$contrasena,$tipoUsuario){
+      /************************ */
+
+    function retornarUsuario($usuario, $contrasena, $tipoUsuario) {
         $cont = new data_controladorUsuarios();
-        if (strcmp($tipoUsuario, 'Profesor')==0){
-            $result = $cont-> retornarUsuarioProf($usuario,$contrasena);
+        if (strcmp($tipoUsuario, 'Profesor') == 0) {
+            $result = $cont->retornarUsuarioProf($usuario, $contrasena);
         } else {
-            $result = $cont-> retornarUsuarioAdm($usuario,$contrasena);
+            $result = $cont->retornarUsuarioAdm($usuario, $contrasena);
         }
 
         $array = array();
 
         while ($obj = $result->fetch_assoc()) {
-            $newUs =  new obj_usuario($obj['tipoUsuario'],$obj['usuario'],$obj['contrasena']); 
+            $newUs = new obj_usuario($obj['tipoUsuario'], $obj['usuario'], $obj['contrasena']);
             $array[] = $newUs;
         }
-        return $array;  
+        return $array;
     }
 
-    function registrarUsuario($usuario, $contrasena, $tipoUsuario){
+    function registrarUsuario($usuario, $contrasena, $tipoUsuario) {
         $cont = new data_controladorUsuarios();
         return $cont->registrarUsuario($usuario, $contrasena, $tipoUsuario);
     }
 
-    function actualizarContrasena($passwd,$emailOri){
+    function actualizarContrasena($passwd, $emailOri) {
         $cont = new data_controladorUsuarios();
-        return $cont->actualizarContrasena($passwd,$emailOri);
+        return $cont->actualizarContrasena($passwd, $emailOri);
     }
 
-    function actualizarUsuario($email,$emailOri){
+    function actualizarUsuario($email, $emailOri) {
         $cont = new data_controladorUsuarios();
-        return $cont->actualizarUsuario($email,$emailOri);
+        return $cont->actualizarUsuario($email, $emailOri);
     }
 
     /*
 
-    /*     * ******************************************************************************************************** PROFESORES
+      /*     * ******************************************************************************************************** PROFESORES
 
       Operaciones con  profesores
 
@@ -75,16 +76,15 @@ class controladorBaseDatos {
 
         $profs = $this->retornarProfesor($email);
         $nombre = "";
-        /*if (count($profs) > 0) {
-            while ($obj = $profs->fetch_assoc()) {
-                $nombre = $obj['nombre'];
-            }
-        }*/
-        
-        if ($profs){
+        /* if (count($profs) > 0) {
+          while ($obj = $profs->fetch_assoc()) {
+          $nombre = $obj['nombre'];
+          }
+          } */
+
+        if ($profs) {
             return 1;
-        }
-        else{
+        } else {
             $cont = new data_controladorProfesores();
             //$nom,$ap1,$ap2,$email,$tel,$jor,$niv
             return $cont->registrarProfesores($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion);
@@ -99,10 +99,10 @@ class controladorBaseDatos {
 //        }
     }
 
-    function actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion,$emailViejo){
+    function actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion, $emailViejo) {
 
         $cont = new data_controladorProfesores();
-        return $cont->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion,$emailViejo);
+        return $cont->actualizarProfesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $nom, $ap1, $ap2, $email, $tel, $cel, $jor, $direccion, $emailViejo);
     }
 
     function retonarProfesor($criterio, $valor) {
@@ -134,7 +134,7 @@ class controladorBaseDatos {
         $result = $cont->retornarTodosLosProfesores();
         $array = array();
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
@@ -142,10 +142,10 @@ class controladorBaseDatos {
 
         return $array;
     }
-    
+
     function retornarProfesor($emailProfesor) {
         $cont = new data_controladorProfesores();
-        $result = $cont->retornarProfesor($emailProfesor);        
+        $result = $cont->retornarProfesor($emailProfesor);
         $array = array();
         while ($obj = $result->fetch_assoc()) {
             $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
@@ -380,7 +380,7 @@ class controladorBaseDatos {
         return $array;
     }
 
-    function retornarGruposActivos(){
+    function retornarGruposActivos() {
         $cont = new data_controladorGrupos();
         $result = $cont->retornarGruposActivos();
         $array = array();
@@ -390,10 +390,10 @@ class controladorBaseDatos {
             $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
         }
 
-        return $array;   
+        return $array;
     }
 
-    function retornarGruposConIDCurso($idCurso){
+    function retornarGruposConIDCurso($idCurso) {
 
         $cont = new data_controladorGrupos();
         $result = $cont->retornarGruposConIDCurso($idCurso);
@@ -404,7 +404,7 @@ class controladorBaseDatos {
             $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
         }
 
-        return $array;   
+        return $array;
     }
 
     function gestionarGrupo($grupoGest, $valor) {
@@ -418,7 +418,7 @@ class controladorBaseDatos {
 
       /************************ */
 
-    function registrarPreferencia($email,$grupo,$nivel){
+    function registrarPreferencia($email, $grupo, $nivel) {
 
         $cont = new data_controladorPreferencias();
         $encontrado = 0;
@@ -426,50 +426,43 @@ class controladorBaseDatos {
 
         while ($obj = $result->fetch_assoc()) {
 
-            if (($grupo == $obj['ideGrupo'])&& ($nivel == $obj['nivel'])) {
-                 $encontrado = 1; //1 significa que ya existe esa preferencia con ese grado
+            if (($grupo == $obj['ideGrupo']) && ($nivel == $obj['nivel'])) {
+                $encontrado = 1; //1 significa que ya existe esa preferencia con ese grado
             }
-            
         }
 
         if ($encontrado == 0) { //no existe preferencia para ese grupo
-
             //ahora vemos si la cantidad de A no es mayor a 4
             $cantidadA = $this->cantidadA($email);
 
             if ($cantidadA <= 4) {
-                return $cont->registrarPreferencia($email,$grupo,$nivel);    
-            }else{
+                return $cont->registrarPreferencia($email, $grupo, $nivel);
+            } else {
                 return 3; //3 sería ya sobrepaso el limite de preferencias
-            }  
-
-            
-        }else{
+            }
+        } else {
             return $encontrado;
         }
-        
-        
     }
 
-    function eliminarPreferencia($ideGrupo,$email,$rank){
-        
+    function eliminarPreferencia($ideGrupo, $email, $rank) {
+
         $cont = new data_controladorPreferencias();
-        return $cont->eliminarPreferencia($ideGrupo,$email,$rank);
-        
+        return $cont->eliminarPreferencia($ideGrupo, $email, $rank);
     }
 
-    function cantidadA($email){
+    function cantidadA($email) {
 
         $cont = new data_controladorPreferencias();
         return $cont->cantidadA($email);
     }
 
-    function cantidadBC($email){
+    function cantidadBC($email) {
 
         $cont = new data_controladorPreferencias();
-        $result = $this->retornarPreferenciasProfesor($email);//sacamos el total de preferencias
+        $result = $this->retornarPreferenciasProfesor($email); //sacamos el total de preferencias
 
-        $cantidadA =$this->cantidadA($email); //sacamos las cantidad de tipo A
+        $cantidadA = $this->cantidadA($email); //sacamos las cantidad de tipo A
 
         $cantidadBC = count($result); //obtenemos el total
         //echo "Cantidad A ".$cantidadA;
@@ -485,7 +478,7 @@ class controladorBaseDatos {
         return $cantidadBC;
     }
 
-    function retornarPreferenciasProfesor($email){
+    function retornarPreferenciasProfesor($email) {
 
         $cont = new data_controladorPreferencias();
         $result = $cont->retornarPreferenciasProfesor($email);
@@ -493,19 +486,18 @@ class controladorBaseDatos {
 
         while ($obj = $result->fetch_assoc()) {
 
-            $array[] = new obj_preferenciaDetallada($obj['email'], $obj['nivel'], $obj['ideGrupo'],$obj['nombreCurso'],$obj['franja']);
+            $array[] = new obj_preferenciaDetallada($obj['email'], $obj['nivel'], $obj['ideGrupo'], $obj['nombreCurso'], $obj['franja']);
         }
 
-        return $array; 
-
+        return $array;
     }
 
-    function gestionarPreferencias($email,$valor){
+    function gestionarPreferencias($email, $valor) {
         $cont = new data_controladorPreferencias();
-        $result = $cont->gestionarPreferencias($email,$valor);
+        $result = $cont->gestionarPreferencias($email, $valor);
     }
 
-    /********************************************************************************************************** PROCESO DE ASIGNACION
+    /*     * ******************************************************************************************************** PROCESO DE ASIGNACION
 
       Operaciones con  PROCESOS DE ASIGNACIONES
 
@@ -516,31 +508,28 @@ class controladorBaseDatos {
 
         $procesos = $cont->retornarProcesosAsignacionxNombre($nombre);
         echo $procesos;
-        if ($procesos>0){
+        if ($procesos > 0) {
             return 1;
-        }
-
-        else{
+        } else {
             return $cont->registrarProcesoAsignacion($nombre);
-        }        
-        
+        }
     }
 
-    function activarProcesosAsignacion($nombre,$activo) {
+    function activarProcesosAsignacion($nombre, $activo) {
         $cont = new data_controladorProcesosAsignacion();
-        return $cont->activarProcesosAsignacion($nombre,$activo);
+        return $cont->activarProcesosAsignacion($nombre, $activo);
     }
 
-    function ejecutarProcesosAsignacion($nombre,$ejecutar) {
+    function ejecutarProcesosAsignacion($nombre, $ejecutar) {
         $cont = new data_controladorProcesosAsignacion();
-        return $cont->ejecutarProcesosAsignacion($nombre,$ejecutar);
+        return $cont->ejecutarProcesosAsignacion($nombre, $ejecutar);
     }
 
     function retornarProcesosAsignacion() {
         $cont = new data_controladorProcesosAsignacion();
         $result = $cont->retornarProcesosAsignacion();
         $array = array();
-        while ($obj = $result->fetch_assoc()){
+        while ($obj = $result->fetch_assoc()) {
             $newProcAsig = new obj_procesoAsignacion($obj['idProcesoAsignacion'], $obj['nombre'], $obj['activo'], $obj['ejecutado']);
             $array[] = $newProcAsig;
         }
@@ -551,20 +540,18 @@ class controladorBaseDatos {
         $cont = new data_controladorProcesosAsignacion();
         $result = $cont->retornarProcesosAsignacionActivos();
         $array = array();
-        while ($obj = $result->fetch_assoc()){
+        while ($obj = $result->fetch_assoc()) {
             $newProcAsig = new obj_procesoAsignacion($obj['idProcesoAsignacion'], $obj['nombre'], $obj['activo'], $obj['ejecutado']);
             $array[] = $newProcAsig;
         }
         return $array;
-
     }
 
-    /********************************************************************************************************** RESULTADO DE ASIGNACION
+    /*     * ******************************************************************************************************** RESULTADO DE ASIGNACION
 
       Operaciones con  RESULTADO DE ASIGNACIONES
 
-      /************************ */ 
-
+      /************************ */
 
     function registrarResultadoProcAsignacion($idProcesoAsignacion, $ideGrupo, $email) {
         $cont = new data_controladorResultadoProcAsignacion();
@@ -576,118 +563,114 @@ class controladorBaseDatos {
         return $cont->eliminarResultadoProcAsignacion($idProcesoAsignacion);
     }
 
-
-    function retornarResultadoProcAsignacion($idProcesoAsignacion){
+    function retornarResultadoProcAsignacion($idProcesoAsignacion) {
         $cont = new data_controladorResultadoProcAsignacion();
         $result = $cont->retornarResultadoProcAsignacion($idProcesoAsignacion);
         $array = array();
-        while ($obj = $result->fetch_assoc()){
+        while ($obj = $result->fetch_assoc()) {
             $newResProcAsig = new obj_resultadoProcAsignacion($obj['proceso'], $obj['sede'], $obj['curso'], $obj['ideGrupo'], $obj['franja'], $obj['profesor']);
             $array[] = $newResProcAsig;
         }
         return $array;
-    }    
-    
+    }
+
     /*     * ******************************************************************************************************** HISTORICO NOTAS
 
       Operaciones con  HISTORICO NOTAS
 
       /************************ */
-    
+
     function registrarNota($idProfesor, $periodo, $nota, $anular) {
         $cont = new data_controladorHistoricoNotas();
         return $cont->registrarNota($idProfesor, $periodo, $nota, $anular);
-    }    
-    
+    }
+
     function retornarNotas($idProfesor) {
         $cont = new data_controladorHistoricoNotas();
         $result = $cont->retornarNotas($idProfesor);
         $array = array();
-        while ($obj = $result->fetch_assoc()){
+        while ($obj = $result->fetch_assoc()) {
             $newNota = new obj_nota($obj['idProfesor'], $obj['periodo'], $obj['nota'], $obj['anular']);
             $array[] = $newNota;
         }
         return $array;
     }
-    
+
     function anularNota($idProfesor, $tiempo, $modalidad, $periodoLectivo, $anular) {
         $cont = new data_controladorHistoricoNotas();
         return $cont->anularNota($idProfesor, $tiempo, $modalidad, $periodoLectivo, $anular);
     }
 
-
-    /********************************************************************************************************** ASIGNACION DE NOTAS
+    /*     * ******************************************************************************************************** ASIGNACION DE NOTAS
 
       Operaciones con  ASIGNACION DE NOTAS
 
       /************************ */
-      function retornarProfesoresActivosparaPreferenciasValidas($ideGrupo){
+
+    function retornarProfesoresActivosparaPreferenciasValidas($ideGrupo) {
         $cont = new data_controladorAsignacion();
 
         $result = $cont->retornarProfesoresActivosparaPreferenciasValidas($ideGrupo);
         $array = array();
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $newProf = new obj_profesor($obj['tipoProfesor'], $obj['departamentoEscuela'], $obj['gradoAcademicoProfesor'], $obj['cedula'], $obj['nombre'], $obj['apellido1'], $obj['apellido2'], $obj['email'], $obj['telefono'], $obj['celular'], $obj['jornada'], $obj['direccion'], $obj['nivel']);
             $newProf->setActivo($obj['activo']);
             $array[] = $newProf;
         }
 
         return $array;
-     }
+    }
 
-      function preferenciasdeGrupoxProfesorxNivel($email,$ideGrupo,$nivel){
+    function preferenciasdeGrupoxProfesorxNivel($email, $ideGrupo, $nivel) {
 
         $cont = new data_controladorAsignacion();
 
-        $result = $cont->preferenciasdeGrupoxProfesorxNivel($email,$ideGrupo,$nivel);
+        $result = $cont->preferenciasdeGrupoxProfesorxNivel($email, $ideGrupo, $nivel);
         $array = array();
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $array[] = new obj_preferencia($obj['email'], $obj['nivel'], $obj['ideGrupo']);
-
         }
 
         return count($array);
-      }
+    }
 
-
-      function retornarUltimaNotaProfesor($email){
+    function retornarUltimaNotaProfesor($email) {
 
         $cont = new data_controladorAsignacion();
 
         $result = $cont->retornarUltimaNotaProfesor($email);
         $array = array();
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $newNota = new obj_nota($obj['idProfesor'], $obj['periodo'], $obj['nota'], $obj['anular']);
             $array[] = $newNota;
         }
 
         if (count($array) > 0) {
             return $array[0]->nota;
-        }else{
+        } else {
             return 0;
         }
+    }
 
-      }
-
-      function tieneDisponibilidad($email,$ideProceso){
+    function tieneDisponibilidad($email, $ideProceso) {
 
         $cont = new data_controladorAsignacion();
 
-        $result = $cont->tieneDisponibilidad($email,$ideProceso);
+        $result = $cont->tieneDisponibilidad($email, $ideProceso);
         $cantidad = 0;
 
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $cantidad = $obj['cantidad'];
         }
 
         return $cantidad;
-      }
+    }
 
-      function retornarPromedioYCantidad($email){
+    function retornarPromedioYCantidad($email) {
 
         $cont = new data_controladorAsignacion();
 
@@ -695,15 +678,37 @@ class controladorBaseDatos {
         $array = array();
 
 
-        while ($obj = $result->fetch_assoc()) {            
+        while ($obj = $result->fetch_assoc()) {
             $array[] = $obj['nota'];
             $array[] = $obj['cantidad'];
         }
 
         return $array;
+    }
 
-      }
+    /*     * ******************************************************************************************************** ASIGNACION DE NOTAS
 
+      Operaciones con  ASIGNACION DE NOTAS
 
+      /************************ */
+
+    function retornarCursosMasSolicitados() {
+        
+        $cont = new data_controladorReporte();  
+        $result = $cont->cursosMasSolicitados();        
+        $array = "";
+        
+        while ($obj = $result->fetch_assoc()) {            
+            $array = "Este es un ejemplo de PDF";
+        }
+                
+        return $array;
+    }
+    
+    function retornarCursosMenosSolicitados() {
+        $cont = new data_controladorReporte();               
+        return $cont->cursosMenosSolicitados();
+    }
 }
+
 ?>

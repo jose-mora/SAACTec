@@ -34,34 +34,41 @@
             define('MENOS_SOLICITADOS', 'Cursos menos solicitados');
 
             include('dataLayer/controladorBaseDatos.php');
-            include('objetos/obj_preferencia.php');
-            include('controladores/controladorMantenimientos.php');
-            $controlador = new controladorMantenimientos();
+            include('controladores/controladorReporte.php');
 
-            $result[] = new obj_preferencia('test@mail.com', 'A', 'TEST01C');
-            $result[] = new obj_preferencia('test@mail.com', 'B', 'TEST02C');
-            $result[] = new obj_preferencia('test@mail.com', 'C', 'TEST03C');
+            $controlador = new controladorReporte();
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                if (!empty($_GET["prefA"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'A', $_GET["prefA"]);
-                }
-                if (!empty($_GET["prefB"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'B', $_GET["prefB"]);
-                }
-                if (!empty($_GET["prefC"])) {
-                    $result[] = new obj_preferencia('test@mail.com', 'C', $_GET["prefC"]);
-                }
+                
             }
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                $operation = $_POST["operation"];
+                $operation = $_POST["operation"];                
 
-
-                if ($operation == "reporte") {  //si es regitrar sede
-                    $mostrarReporte = true;
+                if ($operation == "reporte") {  //si es generar reporte
+                    
+                    $cursoSeleccionado = test_input($_POST["curso"]);
+                    
+                    if ($cursoSeleccionado == "Cusos mas solicitados") {
+                        //TODO hacer el llamado del metodo que devuelve la lista de cursos mas solicitados
+                        $mostrarReporte = true;
+                    } else {
+                        //TODO hacer el llamado del metodo que devuelve la lista de cursos menos solicitados
+                        $mostrarReporte = true;
+                    }
                 }
+                if ($operation == "guardar_reporte") {  //si es regitrar sede
+                    $resultado = $controlador->crearReporteDeCursosMasSolicitados();
+                }
+            }
+
+            function test_input($data) {//clean the data from the fields
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+
+                return $data;
             }
             ?>
             <div>
@@ -74,14 +81,14 @@
 
             <div class="well well-lg">
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-<?php ?>
+                    <?php ?>
                     <h3>Selecci&oacute;n de reporte</h3>
                     <label for="curso">Reporte:</label>
                     <select class="form-control" name="curso" id="curso">
-<?php
-echo "<option>" . MAS_SOLICITADOS . "</option>";
-echo "<option>" . MENOS_SOLICITADOS . "</option>";
-?>
+                        <?php
+                        echo "<option>" . MAS_SOLICITADOS . "</option>";
+                        echo "<option>" . MENOS_SOLICITADOS . "</option>";
+                        ?>
                     </select> 
                     <br/>
                     <input type="hidden" id="operation" name="operation" value="reporte">
@@ -90,9 +97,9 @@ echo "<option>" . MENOS_SOLICITADOS . "</option>";
                 </form>
             </div>
 
-                        <?php
-                        if ($mostrarReporte) {
-                            ?>
+            <?php
+            if ($mostrarReporte) {
+                ?>
 
                 <div class="well well-lg">
                     <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -129,14 +136,14 @@ echo "<option>" . MENOS_SOLICITADOS . "</option>";
                             </tbody>
                         </table>
 
-                        <input type="hidden" id="operation" name="operation" value="reporte">
-                        <button type="submit" class="btn btn-primary">Guardar Reporte</button>
+                        <input type="hidden" id="operation" name="operation" value="guardar_reporte">
+                        <button type="submit" id="generarReporte" class="btn btn-primary">Guardar Reporte</button>
 
                     </form>
                 </div>
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
 
         </div>
     </body>
