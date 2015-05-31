@@ -227,14 +227,11 @@
 
                     <label for="critero"> Per&iacute;odo lectivo</label>
                     <select class="form-control" name="periodoLectivo" id="periodoLectivo">
+                        <option>2011</option>
+                        <option>2012</option>
                         <option>2013</option>
                         <option>2014</option>
-                        <option selected>2015</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
+                        <option selected>2015</option>                        
                     </select>
 
                     <label for="name">Nota:</label>

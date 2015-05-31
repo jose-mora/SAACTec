@@ -704,6 +704,23 @@ class controladorBaseDatos {
 
       }
 
-
+    function retornarCursosMasSolicitados() {
+        
+        $cont = new data_controladorReporte();  
+        $result = $cont->cursosMasSolicitados();        
+        $array = "";
+        
+        while ($obj = $result->fetch_assoc()) {
+            $newReporte = new obj_reporte($obj['nombre'], $obj['nivel'], $obj['nombre'], $obj['apellido1'], 
+                                          $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], $obj['nombre']);
+            $array = $newReporte;
+        }                
+        return $array;
+    }
+    
+    function retornarCursosMenosSolicitados() {
+        $cont = new data_controladorReporte();               
+        return $cont->cursosMenosSolicitados();
+    }
 }
 ?>

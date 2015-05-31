@@ -341,10 +341,12 @@
                                     $seleccionado = "selected";
                                     ?>
                                     <option <?php echo $seleccionado ?>>Con plaza</option>
+                                    <option>Interino</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Interino") {
                                     $seleccionado = "selected";
                                     ?>
+                                    <option>Con plaza</option>
                                     <option <?php echo $seleccionado ?>>Interino</option>                                    
                                     <?php
                                 }
@@ -363,10 +365,12 @@
                                     $seleccionado = "selected";
                                     ?>
                                     <option <?php echo $seleccionado ?>>Escuela de computacion</option>
+                                    <option>Escuela de administracion</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Escuela de administracion") {
                                     $seleccionado = "selected";
                                     ?>
+                                    <option>Escuela de computacion</option>
                                     <option <?php echo $seleccionado ?>>Escuela de administracion</option>
                                     <?php
                                 }
@@ -384,26 +388,46 @@
                                     $seleccionado = "selected";
                                     ?>
                                     <option <?php echo $seleccionado ?>>Diplomado</option>
+                                    <option>Bachiller</option>
+                                    <option>Licenciado(a)</option>
+                                    <option>Master</option>
+                                    <option>Doctor(a)</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Bachiller") {
                                     $seleccionado = "selected";
                                     ?>
-                                    <option <?php echo $seleccionado ?>>Bachiller</option>                                    
+                                    <option>Diplomado</option>
+                                    <option <?php echo $seleccionado ?>>Bachiller</option>
+                                    <option>Licenciado(a)</option>
+                                    <option>Master</option>
+                                    <option>Doctor(a)</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Licenciado(a)") {
                                     $seleccionado = "selected";
                                     ?>
-                                    <option <?php echo $seleccionado ?>>Licenciado(a)</option>                                    
+                                    <option>Diplomado</option>
+                                    <option>Bachiller</option>
+                                    <option <?php echo $seleccionado ?>>Licenciado(a)</option>
+                                    <option>Master</option>
+                                    <option>Doctor(a)</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Master") {
                                     $seleccionado = "selected";
                                     ?>
-                                    <option <?php echo $seleccionado ?>>Master</option>                                    
+                                    <option>Diplomado</option>
+                                    <option>Bachiller</option>
+                                    <option>Licenciado(a)</option>
+                                    <option <?php echo $seleccionado ?>>Master</option>
+                                    <option>Doctor(a)</option>
                                     <?php
                                 } elseif ($opcionSeleccionada == "Doctor(a)") {
                                     $seleccionado = "selected";
                                     ?>
-                                    <option <?php echo $seleccionado ?>>Doctor(a)</option>                                    
+                                    <option>Diplomado</option>
+                                    <option>Bachiller</option>
+                                    <option>Licenciado(a)</option>
+                                    <option>Master</option>
+                                    <option <?php echo $seleccionado ?>>Doctor(a)</option>
                                     <?php
                                 }
                                 ?>

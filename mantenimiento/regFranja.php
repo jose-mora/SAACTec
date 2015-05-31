@@ -31,22 +31,36 @@
                 <label for="sede">Inicio de Franja:</label>
                 <select class="form-control" name="franjaInicio" id="franjaInicio">
                   <option>7 am</option>
+                  <option>8 am</option>
                   <option>9 am</option>
+                  <option>10 am</option>
                   <option>11 am</option>
                   <option>1 pm</option>
+                  <option>2 pm</option>
                   <option>3 pm</option>
+                  <option>4 pm</option>
                   <option>5 pm</option>
+                  <option>6 pm</option>
                   <option>7 pm</option>
+                  <option>8 pm</option>
+                  <option>9 pm</option>
                 </select>
 
                 <label for="sede">Fin de Franja:</label>
                 <select class="form-control" name="franjaFin" id="franjaFin">
+                  <option>7 am</option>
+                  <option>8 am</option>
                   <option>9 am</option>
+                  <option>10 am</option>
                   <option>11 am</option>
                   <option>1 pm</option>
+                  <option>2 pm</option>
                   <option>3 pm</option>
+                  <option>4 pm</option>
                   <option>5 pm</option>
+                  <option>6 pm</option>
                   <option>7 pm</option>
+                  <option>8 pm</option>
                   <option>9 pm</option>
                 </select>
 

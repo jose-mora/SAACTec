@@ -255,9 +255,10 @@ if ($successFlag) {
                             <option>Seleccione</option>
                             <option>25%</option>
                             <option>50%</option>
+                            <option>75%</option>
                             <option>100%</option>
-                            <option>120%</option>
-                            <option>133%</option>
+                            <option>125%</option>
+                            <option>150%</option>
                         </select>
                     </div>
                     <div class="form-group">

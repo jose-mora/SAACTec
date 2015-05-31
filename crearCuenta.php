@@ -28,12 +28,12 @@
             include('dataLayer/controladorBaseDatos.php');
 
             include('objetos/obj_profesor.php');
-            include('controladores/controladorProfesores.php');      
+            include('controladores/controladorProfesores.php');
 
             include('objetos/obj_usuario.php');
             include('controladores/controladorUsuarios.php');
-                    
-            $controladorUsuario = new controladorUsuarios();      
+
+            $controladorUsuario = new controladorUsuarios();
 
             $controlador = new controladorProfesores();
 
@@ -103,11 +103,11 @@
                     $emptyAmmount++;
                 }
 
-                if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)){
+                if ((strlen($passwd) <= 0) || (strlen($rePasswd) <= 0)) {
                     $validateFlag = TRUE;
                     $emptyAmmount++;
                 } else {
-                    if (strcmp($passwd, $rePasswd)!=0){
+                    if (strcmp($passwd, $rePasswd) != 0) {
                         $validateFlag = TRUE;
                         $validateFlagPswd = TRUE;
                     }
@@ -123,9 +123,9 @@
                     $prof = new obj_profesor($tipoProfesor, $departamentoEscuela, $gradoAcademicoProfesor, $cedula, $username, $lastname, $lastname2, $email, $tel, $cel, $jornadaLaboral, $direccion);
                     $resultado = $controlador->registrarProfesores($prof);
 
-                    $usr = new obj_usuario("Profesor",$email,$passwd);
+                    $usr = new obj_usuario("Profesor", $email, $passwd);
                     $resultado2 = $controladorUsuario->registrarUsuario($usr);
-                    
+
                     if ($resultado > 0) {
                         $validateFlag = TRUE;
                         $successFlag = FALSE;
@@ -134,7 +134,7 @@
                         $successFlag = TRUE;
                     }
 
-                    
+
 
                     //$_SESSION['profesor']= $prof;
                     //header('Location: ../Asignacion/profesores.php');   
@@ -165,29 +165,29 @@
             <div class="well well-lg">
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <h3>Registro de Profesores</h3>
-<?php
-$flagCrear = 0;
+                    <?php
+                    $flagCrear = 0;
 
-if ($validateFlag==TRUE && $validateFlagPswd==FALSE) {
-    echo '<div class="alert alert-danger" role="alert">
+                    if ($validateFlag == TRUE && $validateFlagPswd == FALSE) {
+                        echo '<div class="alert alert-danger" role="alert">
                     <p>Se deben llenar todos los campos </p>
                   </div>';
-}
+                    }
 
-if ($validateFlagPswd) {
-    echo '<div class="alert alert-danger" role="alert">
+                    if ($validateFlagPswd) {
+                        echo '<div class="alert alert-danger" role="alert">
     <p>Las contraseñas no coinciden </p>
     </div>';
-}
+                    }
 
-if ($successFlag) {
-    echo '<div class="alert alert-success" role="alert">
+                    if ($successFlag) {
+                        echo '<div class="alert alert-success" role="alert">
                     <p>Su cuenta se ha creado queda esperando validaci&oacute;n del administrador </p>
                   </div>';
 
-    $flagCrear = 1;
-}
-?>
+                        $flagCrear = 1;
+                    }
+                    ?>
 
 
                     <?php
@@ -253,9 +253,10 @@ if ($successFlag) {
                                 <option>Seleccione</option>
                                 <option>25%</option>
                                 <option>50%</option>
+                                <option>75%</option>
                                 <option>100%</option>
-                                <option>120%</option>
-                                <option>133%</option>
+                                <option>125%</option>
+                                <option>150%</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -267,7 +268,7 @@ if ($successFlag) {
                             <label for="pas">Password: </label>
                             <input type="password" class="form-control" id="password" name="password" value="">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="rePas">Confirmar Password: </label>
                             <input type="password" class="form-control" id="rePassword" name="rePassword" value="">
@@ -275,10 +276,10 @@ if ($successFlag) {
 
                         <button type="button" class="btn btn-primary" onclick="goBack();"> Atr&aacute;s </button>
                         <button type="submit" class="btn btn-primary">Registrar</button>
-    <?php
-    # code...
-}
-?>
+                        <?php
+                        # code...
+                    }
+                    ?>
 
 
 
