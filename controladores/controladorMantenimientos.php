@@ -268,6 +268,11 @@
               return $controlador->retornarGrupos();
          }
 
+         function retornarGruposCompleto(){
+              $controlador = new controladorBaseDatos(); 
+              return $controlador->retornarGruposCompleto();
+         }
+
          function gestionarGrupo($grupoGest,$valor){
               $controlador = new controladorBaseDatos(); 
               return $controlador->gestionarGrupo($grupoGest,$valor);

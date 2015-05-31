@@ -32,6 +32,26 @@ class data_controladorGrupos {
 		return $result;
     }
 
+     function retornarGruposCompleto(){
+
+        global $mysqli;
+        
+         $query = "SELECT 
+                        grupos.ideGrupo,
+                        cursos.nombre 'idCurso',
+                        sedes.nombre AS 'idSede',
+                        franjas.nombre AS 'idFranja',
+                        grupos.activo
+                    FROM 
+                        grupos INNER JOIN franjas ON franjas.id = grupos.idFranja
+                        INNER JOIN sedes on sedes.id = grupos.idsede
+                        INNER JOIN cursos on cursos.id = grupos.idCurso";
+
+        $result = $mysqli->query($query);
+
+        return $result;
+    }
+
     function retornarGruposActivos(){
 
         global $mysqli;

@@ -380,6 +380,20 @@ class controladorBaseDatos {
         return $array;
     }
 
+    function retornarGruposCompleto() {
+        $cont = new data_controladorGrupos();
+        $result = $cont->retornarGruposCompleto();
+        $array = array();
+
+        while ($obj = $result->fetch_assoc()) {
+
+            $array[] = new obj_grupo($obj['ideGrupo'], $obj['idCurso'], $obj['idSede'], $obj['idFranja'], $obj['activo']);
+            
+        }
+
+        return $array;
+    }
+
     function retornarGruposActivos(){
         $cont = new data_controladorGrupos();
         $result = $cont->retornarGruposActivos();
@@ -704,23 +718,6 @@ class controladorBaseDatos {
 
       }
 
-    function retornarCursosMasSolicitados() {
-        
-        $cont = new data_controladorReporte();  
-        $result = $cont->cursosMasSolicitados();        
-        $array = "";
-        
-        while ($obj = $result->fetch_assoc()) {
-            $newReporte = new obj_reporte($obj['nombre'], $obj['nivel'], $obj['nombre'], $obj['apellido1'], 
-                                          $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], $obj['nombre']);
-            $array = $newReporte;
-        }                
-        return $array;
-    }
-    
-    function retornarCursosMenosSolicitados() {
-        $cont = new data_controladorReporte();               
-        return $cont->cursosMenosSolicitados();
-    }
+
 }
 ?>

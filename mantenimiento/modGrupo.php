@@ -14,6 +14,9 @@
               <thead>
                 <tr>
                   <th>Nombre de Grupo</th>
+                  <th>Nombre del Curso</th>
+                  <th>Sede</th>
+                  <th>Horario</th>
                   <th>Acci&oacute;n</th>
                 </tr>
               </thead>
@@ -21,7 +24,7 @@
 
               <?php 
                 $x = 1;
-                $gruposArray = $controlador->retornarGrupos();
+                $gruposArray = $controlador->retornarGruposCompleto();
                 foreach ($gruposArray as $obj) :
           
                   if ($x == 1) {
@@ -33,7 +36,10 @@
                   }
                   
               ?>
-              <td><?php echo $obj->ideGrupo; ?></td>
+             <td><?php echo $obj->ideGrupo; ?></td>
+             <td><?php echo $obj->curso; ?></td>
+             <td><?php echo $obj->sede; ?></td>
+             <td><?php echo $obj->franja; ?></td>
              <?php
                 if ($obj->activo == 1) {
               
