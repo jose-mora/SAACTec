@@ -54,6 +54,14 @@
                     header('Location: controladores/controladorReporte.php');
                 }
             }
+            
+            function test_input($data) {//clean the data from the fields
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+
+                return $data;
+            }
             ?>
             <div>
                 <h2> Generaci&oacute;n de Reportes </h2>
@@ -120,7 +128,7 @@
                             </tbody>
                         </table>
 
-                        <input type="hidden" id="operation" name="operation" value="reporte">
+                        <input type="hidden" id="operation" name="operation" value="guardar_reporte">
                         <button type="submit" class="btn btn-primary">Guardar Reporte</button>
 
                     </form>

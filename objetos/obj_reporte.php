@@ -10,11 +10,11 @@ class obj_reporte {
     public $apellido2Profesor;
     public $departamentoEscuelaProfesor;
     public $emailProfesor;
-    public $nombreProcesoAsignacion;
+    public $vecesSolicitado;
 
     // Assigning the values
     public function __construct($nombreCurso, $nivelCurso, $nombreProfesor, $apellido1Profesor, $apellido2Profesor, 
-                                $departamentoEscuelaProfesor, $emailProfesor, $nombreProcesoAsignacion) {
+                                $departamentoEscuelaProfesor, $emailProfesor, $vecesSolicitado) {
         $this->nombreCurso = $nombreCurso;
         $this->nivelCurso = $nivelCurso;
         $this->nombreProfesor = $nombreProfesor;
@@ -22,7 +22,7 @@ class obj_reporte {
         $this->apellido2Profesor = $apellido2Profesor;
         $this->departamentoEscuelaProfesor = $departamentoEscuelaProfesor;
         $this->emailProfesor = $emailProfesor;
-        $this->nombreProcesoAsignacion = $nombreProcesoAsignacion;
+        $this->vecesSolicitado = $vecesSolicitado;
     }
 
     public function getNombreCurso() {
@@ -53,8 +53,8 @@ class obj_reporte {
         return $this->emailProfesor;
     }
 
-    public function getNombreProcesoAsignacion() {
-        return $this->nombreProcesoAsignacion;
+    public function getVecesSolicitado() {
+        return $this->vecesSolicitado;
     }
 }
 ?>

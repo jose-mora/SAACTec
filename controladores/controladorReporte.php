@@ -3,100 +3,9 @@
 include ('/../dataLayer/controladorBaseDatos.php');
 include ('/../objetos/obj_reporte.php');
 
-//try {
-//    $p = new PDFlib();
-//    $controlador = new controladorReporte();
-//    $resultado = $controlador->retornarCursosMasSolicitados();
-//
-//    /*  open new PDF file; insert a file name to create the PDF on disk */
-//    if ($p->begin_document("", "") == 0) {
-//        die("Error: " . $p->get_errmsg());
-//    }
-//
-//    $p->set_info("Creator", "Erick");
-//    $p->set_info("Author", "Rainer Schaaf");
-//    $p->set_info("Title", "Cursos más solicitados");
-//
-//    $p->begin_page_ext(600, 800, "");
-//    $font = $p->load_font("Helvetica-Bold", "winansi", "");
-//
-//    if ($p->setfont($font, 24) == 0)
-//        throw new Exception("Error@setfont: " . $p->get_errmsg());
-//
-//    ###### TABLE TIME ###########
-//
-//    $table = 0;
-//
-//    $num_columns = 12;
-//
-//    $num_rows = 12;
-//
-//    #llx = lower left x, whereas ury = upper right y
-//
-//    $llx = 50;
-//    $lly = 50;
-//    $urx = 550;
-//    $ury = 800;
-//
-//    $row = 1;
-//    $col = 1;
-//
-//    $content = "Nombre del profesor: " . $resultado->getNivelCurso();
-//
-//    //$content = $data->cursosMasSolicitados();
-//    ###### add_table optlist. add table cell. table no longer is zero.
-//    # not setting the colwidth here results in warning.
-//
-//    $optlist = "fittextline={position=center font=" . $font .
-//            " fontsize=10} colwidth=50 rowheight=20";
-//
-//    $col_num = 0;
-//
-//
-//    $optlist .= " matchbox={fillcolor={rgb $r $g $b}}";
-//
-//    $table = $p->add_table_cell($table, $col_num, $row_num, $content, $optlist);
-//
-//    $optlist = "stroke={{line=other}}";
-//    $result = $p->fit_table($table, $llx, $lly, $urx, $ury, $optlist);
-//
-//    if ($result == "_error") {
-//
-//        die("Couldn't place table: " . PDF_get_errmsg($p));
-//    }
-//
-//    ##############################
-//
-//    $p->end_page_ext("");
-//
-//    $p->end_document("");
-//
-//    $buf = $p->get_buffer();
-//    $len = strlen($buf);
-//
-//    header("Content-type: application/pdf");
-//    header("Content-Length: $len");
-//    header("Content-Disposition: inline; filename=hello.pdf");
-//    print $buf;
-//
-//    unset($buf);
-//    pdf_delete($p);
-//} catch (PDFlibException $e) {
-//    die("PDFlib exception occurred in hello sample:\n" .
-//            "[" . $e->get_errnum() . "] " . $e->get_apiname() . ": " .
-//            $e->get_errmsg() . "\n");
-//} catch (Exception $e) {
-//    die($e);
-//}
-//$p = 0;
-
 /* This is where the data files are. Adjust as necessary. */
-$searchpath = dirname(dirname(dirname(__FILE__)))."/input";
 $outfile = "";
-$title = "Table Invoice";
-
-
-$infile = "stationery.pdf";
+$title = "Cursos más solictados";
 
 $tf=0; $tbl=0;
 
@@ -120,21 +29,16 @@ $llx = 55; $urx = 505; $lly = 80;
 /* The widths of the individual columns is fixed */
 $maxcol = 5;
 
-$c1 = 30; $c2 = 200; $c3 = 70; $c4 = 70; $c5 = 80;
+$c1 = 130; $c2 = 100; $c3 = 70; $c4 = 70; $c5 = 80;
 
 /* Get the current date */
 setlocale(LC_TIME, "C");
-date_default_timezone_set("Europe/Berlin");
+date_default_timezone_set("America/Costa_Rica");
 $fulldate = date("F j, Y");
 
 /* Text to output after the table */
 $closingtext =
-    "Terms of payment: 30 days net. " .
-    "90 days warranty starting at the day of sale. " .
-    "This warranty covers defects in workmanship only. " .
-    "Kraxi Systems, Inc. will, at its option, repair or replace the " .
-    "product under the warranty. This warranty is not transferable. " .
-    "No returns or exchanges will be accepted for wet products.";
+    "En el anterior reporte se muestran los cursos más solicitados por lo profesores.";
 
 $items = array(
 /*     Description,        Quantity, Price */
@@ -178,8 +82,11 @@ $address = array(
 
 try {
     $p = new PDFlib();
+    
+    $controlador = new controladorReporte();
+    $resultado = $controlador->retornarCursosMasSolicitados();
 
-    $p->set_option("searchpath={" . $searchpath . "}");
+    //$p->set_option("searchpath={" . $searchpath . "}");
 
     /* This means we must check return values of load_font() etc. */
     $p->set_option("errorpolicy=return");
@@ -188,18 +95,18 @@ try {
     if ($p->begin_document($outfile, "") == 0)
         throw new Exception("Error: " . $p->get_errmsg());
 
-    $p->set_info("Creator", "PDFlib Cookbook");
+    $p->set_info("Creator", "SAACTec");
     $p->set_info("Title", $title );
 
     /* Open the PDF document */
-    $stationery = $p->open_pdi_document($infile, "");
-    if ($stationery == 0)
-        throw new Exception("Error: " . $p->get_errmsg());
+//    $stationery = $p->open_pdi_document($infile, "");
+//    if ($stationery == 0)
+//        throw new Exception("Error: " . $p->get_errmsg());
     
     /* Open the first page of the PDF */
-    $page = $p->open_pdi_page($stationery, 1, "");
-    if ($page == 0)
-        throw new Exception("Error: " . $p->get_errmsg());
+//    $page = $p->open_pdi_page($stationery, 1, "");
+//    if ($page == 0)
+//        throw new Exception("Error: " . $p->get_errmsg());
   
     /* Load the bold and regular styles of a font */
     $boldfont = $p->load_font("Helvetica-Bold", "unicode", "");
@@ -214,8 +121,8 @@ try {
     $p->begin_page_ext($pagewidth, $pageheight, "");
 
     /* Fit and close the imported PDF page */
-    $p->fit_pdi_page($page, 0, 0, "");
-    $p->close_pdi_page($page);
+//    $p->fit_pdi_page($page, 0, 0, "");
+//    $p->close_pdi_page($page);
 
     /* Output the customer's address */
     $y = $ystart;
@@ -227,36 +134,20 @@ try {
         $y -= $yoffset;
     }
     
-    /* Print the header and the date */
     $y -= 3 * $yoffset;
     
     $p->setfont($boldfont, $fontsize);
     
-    $p->fit_textline("INVOICE", $llx, $y, "position {left top}");
+    $p->fit_textline("CURSOS MAS SOLICITADOS", $llx, $y, "position {left top}");
     $p->fit_textline($fulldate, $urx, $y, "position {right top}");
     
     $y -= 3 * $yoffset;
     
-    /* ----------------------------------------------------
-     * Add the first table row containing the heading cells
-     * ----------------------------------------------------
-     */
-    
-    /* Prepare the general option list for adding text line cells of the 
-     * table header:
-     * Define a fixed row height, and the position of the text line to be on
-     * the top left with a margin of 4, for example. 
-     * The text will be aligned on the top right or on the top left, 
-     * respectively.
-     * For an exact vertical alignment of the text line and the Textflow 
-     * which will be added later note the following:
-     * The height of an uppercase letter is exactly represented by the
-     * capheight value of the font. For this reason use the capheight in the
-     * font size specification. For example, a capheight of 8.5 will
-     * approximately result in a font size of 12 points and (along with
-     * "margin=4"), will sum up to an overall height of 16 points. 
-    */
     $head_opts_right = "fittextline={position={right top} " .
+        " font=" . $boldfont . " fontsize={capheight=" . $capheight . "}} " .
+        " rowheight=" . $rowheight . " margin=" . $margin;
+    
+    $head_opts_center = "fittextline={position={center top} " .
         " font=" . $boldfont . " fontsize={capheight=" . $capheight . "}} " .
         " rowheight=" . $rowheight . " margin=" . $margin;
     
@@ -265,97 +156,54 @@ try {
         " rowheight=" . $rowheight . " margin=" . $margin;
          
     $col = 1; $row = 1;
-          
-    /* Add each heading cell with the option list defined above; 
-     * in addition, supply a fixed column width
-     */
-    $tbl = $p->add_table_cell($tbl, $col++, $row, "ITEM", 
-        $head_opts_right . " colwidth=" . $c1);
+              
+    $tbl = $p->add_table_cell($tbl, $col++, $row, "CURSO", 
+        $head_opts_center . " colwidth=" . $c1);
     if ($tbl == 0)
         throw new Exception("Error adding cell: " . $p->get_errmsg());
     
-    $tbl = $p->add_table_cell($tbl, $col++, $row, "DESCRIPTION", 
-        $head_opts_left . " colwidth=" . $c1);
+    $tbl = $p->add_table_cell($tbl, $col++, $row, "NIVEL", 
+        $head_opts_center . " colwidth=" . $c2);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
     
-    $tbl = $p->add_table_cell($tbl, $col++, $row, "QUANTITY", 
-        $head_opts_right . " colwidth=" . $c3);
+    $tbl = $p->add_table_cell($tbl, $col++, $row, "NOMBRE PROFESOR", 
+        $head_opts_center . " colwidth=" . $c3);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
-    $tbl = $p->add_table_cell($tbl, $col++, $row, "PRICE", 
-        $head_opts_right . " colwidth=" . $c4);
+    $tbl = $p->add_table_cell($tbl, $col++, $row, "DEPARTAMENTO", 
+        $head_opts_center . " colwidth=" . $c4);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
-    $tbl = $p->add_table_cell($tbl, $col++, $row, "SUM", 
-            $head_opts_right . " colwidth=" . $c5);
+    $tbl = $p->add_table_cell($tbl, $col++, $row, "CORREO", 
+            $head_opts_center . " colwidth=" . $c5);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
     $row++;
     
-    
-    /* -------------------------------------------
-     * Add the body cells in subsequent table rows
-     * -------------------------------------------
-     */
-    
-    /* Prepare the general option list for adding text line cells of the 
-     * table body; it is similar to the option list defined for header cells
-     * but the font is set to a regular font instead
-     */
     $body_opts = "fittextline={position={right top} " .
         " font=" . $regularfont . 
         " fontsize={capheight=" . $capheight . "}} " .
         " rowheight=" . $rowheight . " margin=" . $margin;
     
-    for ($itemno = 1; $itemno <= count($items); $itemno++, $row++) {
+    for ($i= 1; $i<=count($resultado); $i++, $row++){
+        
         $col = 1;
         
-        /* ---------------------------------------------------------------
-         * Add the text line cell containing the Item in the first column,
-         * with the options defined for table body cells above
-         * ---------------------------------------------------------------
-         */
-        $tbl = $p->add_table_cell($tbl, $col++, $row, $itemno, $body_opts);
+        $tbl = $p->add_table_cell($tbl, $col++, $row, $resultado->nombreCurso, $body_opts);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
-        
-        /* --------------------------------------------------------------
-         * Add the Textflow cell containing the Description in the second
-         * column
-         * --------------------------------------------------------------
-         */
-                  
-        /* Prepare the option list for adding the Textflow.
-         * For an exact vertical alignment of the Textflow and the text
-         * lines added as well note the following:
-         * The height of an uppercase letter is exactly represented by the
-         * capheight value of the font. For this reason use the capheight in
-         * the font size specification. For example, a capheight of 8.5 will
-         * approximately result in a font size of 12 points and (along with
-         * "margin=4"), will sum up to an overall height of 16 points. 
-         */
         $tf_opts = "font=" . $regularfont . 
-            " fontsize={capheight=" . $capheight . "} leading=" . $leading; 
-        
-        /* Prepare the option list for adding the Textflow cell 
-         * 
-         * The first line of the Textflow should be aligned with the
-         * baseline of the text lines. At the same time, the text lines 
-         * should have the same distance from the top cell border as the 
-         * Textflow. To avoid any space from the top add the Textflow cell
-         * using "fittextflow={firstlinedist=capheight}". Then add a margin
-         * of 4 points, the same as for the text lines.
-         */
+            " fontsize={capheight=" . $capheight . "} leading=" . $leading;
         $bodytf_opts = "fittextflow={firstlinedist=capheight}" . 
             " colwidth=" . $c2 . " margin=" . $margin;
         
         /* Add the Textflow with the options defined above */
-        $tf = $p->add_textflow(0, $items[$itemno-1][0], $tf_opts);
+        $tf = $p->add_textflow(0, $resultado->nivelCurso, $tf_opts);
         
         if ($tf == 0)
             throw new Exception("Error: " . $p->get_errmsg());
@@ -369,48 +217,21 @@ try {
         
         $tf = 0;
         
-                    
-        /* -----------------------------------------------------------
-         * Add the text line cell containing the Quantity in the third
-         * column, with the options defined for table body cells above
-         * -----------------------------------------------------------
-         */
-        $tbl = $p->add_table_cell($tbl, $col++, $row, $items[$itemno-1][1], 
+        $tbl = $p->add_table_cell($tbl, $col++, $row, $resultado->nombreProfesor, 
             $body_opts);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
-        
-        /* -----------------------------------------------------------
-         * Add the text line cell containing the Price in the third
-         * column, with the options defined for table body cells above
-         * -----------------------------------------------------------
-         */
-        $tbl = $p->add_table_cell($tbl, $col++, $row, $items[$itemno-1][2], 
+        $tbl = $p->add_table_cell($tbl, $col++, $row, $resultado->departamentoEscuelaProfesor, 
             $body_opts);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
         
-        
-        /* ---------------------------------------------------------------
-         * Add the text line cell containing the sum with the options 
-         * defined for table body cells above. Format them to a maximum of 
-         * two fraction digits.
-         * ---------------------------------------------------------------
-         */
-        $sum = $items[$itemno-1][1] * $items[$itemno-1][2];
-        
-        $roundedValue = sprintf("%.2f", $sum);
-                       
-        $tbl = $p->add_table_cell($tbl, $col, $row, 
-                               $roundedValue, $body_opts);
-        
+        $tbl = $p->add_table_cell($tbl, $col++, $row, $resultado->emailProfesor, 
+            $body_opts);
         if ($tbl == 0)
             throw new Exception("Error adding cell: " . $p->get_errmsg());
-            
-        /* Calculate the overall sum */
-        $total += $sum;
-    } /* for */
+    }
     
     /* Add an empty footer row containing a matchbox called "subtotal".
      * It will be filled with the subtotal or total later. The matchbox 
@@ -485,8 +306,8 @@ try {
              * (x2, y2) with a small margin. Right-align the text.
              */
             $p->setfont($boldfont, $fontsize);
-            $p->fit_textline($contents, $x3 - $margin, $y3 - $margin,
-                "position={right top}");
+//            $p->fit_textline($contents, $x3 - $margin, $y3 - $margin,
+//                "position={right top}");
         }
         
         /* Print the subtotal for all rows in the table instance on the
@@ -590,7 +411,7 @@ try {
     $p->end_page_ext("");
    
     $p->end_document("");
-    $p->close_pdi_document($stationery);
+    //$p->close_pdi_document($stationery);
 
     $buf = $p->get_buffer();
     $len = strlen($buf);

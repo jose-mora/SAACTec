@@ -11,6 +11,7 @@ include('data_controladorHistoricoNotas.php');
 include('data_controladorAsignacion.php');
 include('data_controladorProcesosAsignacion.php');
 include('data_controladorResultadoProcAsignacion.php');
+include('data_controladorReporte.php');
 
 class controladorBaseDatos {
 
@@ -717,7 +718,42 @@ class controladorBaseDatos {
         return $array;
 
       }
+      
+      /*     * ******************************************************************************************************** REPORTES
 
+      Operaciones con  REPORTES
 
+      /************************ */
+
+    function retornarCursosMasSolicitados() {
+        
+        $cont = new data_controladorReporte();  
+        $result = $cont->cursosMasSolicitados();        
+        $array = "";
+        
+        while ($obj = $result->fetch_assoc()) {            
+            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel'], $obj['nombre_profesor'], $obj['apellido1'],
+                                          $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], 
+                                          $obj['veces_solicitado']);
+            $array = $newReporte;
+        }
+                
+        return $array;
+    }
+    
+    function retornarCursosMenosSolicitados() {
+        $cont = new data_controladorReporte();  
+        $result = $cont->cursosMenosSolicitados();        
+        $array = "";
+        
+        while ($obj = $result->fetch_assoc()) {            
+            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel'], $obj['nombre_profesor'], $obj['apellido1'],
+                                          $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], 
+                                          $obj['veces_solicitado']);
+            $array [] = $newReporte;
+        }
+                
+        return $array;
+    }
 }
 ?>
