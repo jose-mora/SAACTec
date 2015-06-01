@@ -7,17 +7,13 @@ class data_controladorReporte {
     public function __construct() {
         
     }
-    
-    function ejemplo(){
-        return "ejemplo!!!";
-    }
 
     function cursosMasSolicitados() {
         global $mysqli;
         $query = "SELECT 
-                    cursos.nombre, cursos.nivel, profesores.nombre, profesores.apellido1, 
-                    profesores.apellido2, profesores.departamentoEscuela, profesores.email, 
-                    procesoasignacion.nombre
+                    cursos.nombre AS nombre_curso, cursos.nivel, profesores.nombre AS nombre_profesor, profesores.apellido1, 
+                    profesores.apellido2, profesores.departamentoEscuela, profesores.email,
+                    COUNT(cursos.nombre) AS veces_solicitado
                   FROM 
                     profesores
                     INNER JOIN
@@ -44,9 +40,9 @@ class data_controladorReporte {
     function cursosMenosSolicitados() {
         global $mysqli;
         $query = "SELECT 
-                    cursos.nombre, cursos.nivel, profesores.nombre, profesores.apellido1, 
-                    profesores.apellido2, profesores.departamentoEscuela, profesores.email, 
-                    procesoasignacion.nombre
+                    cursos.nombre AS nombre_curso, cursos.nivel, profesores.nombre AS nombre_profesor, profesores.apellido1, 
+                    profesores.apellido2, profesores.departamentoEscuela, profesores.email,
+                    COUNT(cursos.nombre) AS veces_solicitado
                   FROM 
                     profesores
                     INNER JOIN
