@@ -11,7 +11,7 @@ class data_controladorReporte {
     function cursosMasSolicitados() {
         global $mysqli;
         $query = "SELECT 
-                    cursos.nombre AS nombre_curso, cursos.nivel, profesores.nombre AS nombre_profesor, profesores.apellido1, 
+                    cursos.nombre AS nombre_curso, cursos.nivel AS nivel_curso, profesores.nombre AS nombre_profesor, profesores.apellido1, 
                     profesores.apellido2, profesores.departamentoEscuela, profesores.email,
                     COUNT(cursos.nombre) AS veces_solicitado
                   FROM 
@@ -30,7 +30,7 @@ class data_controladorReporte {
                             cursos.id = grupos.idCurso
                   GROUP BY cursos.nivel, profesores.nombre, profesores.apellido1, 
                            profesores.apellido2, profesores.departamentoEscuela, profesores.email
-                  ORDER BY cursos.nombre
+                  ORDER BY cursos.nombre desc
                   LIMIT 5";
         $result = $mysqli->query($query);
 
@@ -40,7 +40,7 @@ class data_controladorReporte {
     function cursosMenosSolicitados() {
         global $mysqli;
         $query = "SELECT 
-                    cursos.nombre AS nombre_curso, cursos.nivel, profesores.nombre AS nombre_profesor, profesores.apellido1, 
+                    cursos.nombre AS nombre_curso, cursos.nivel AS nivel_curso, profesores.nombre AS nombre_profesor, profesores.apellido1, 
                     profesores.apellido2, profesores.departamentoEscuela, profesores.email,
                     COUNT(cursos.nombre) AS veces_solicitado
                   FROM 
@@ -59,7 +59,7 @@ class data_controladorReporte {
                             cursos.id = grupos.idCurso
                   GROUP BY cursos.nivel, profesores.nombre, profesores.apellido1, 
                            profesores.apellido2, profesores.departamentoEscuela, profesores.email
-                  ORDER BY cursos.nombre
+                  ORDER BY cursos.nombre asc
                   LIMIT 5";
         $result = $mysqli->query($query);
 

@@ -5,7 +5,7 @@ include ('/../objetos/obj_reporte.php');
 
 /* This is where the data files are. Adjust as necessary. */
 $outfile = "";
-$title = "Cursos más solictados";
+$title = "Cursos menos solictados";
 
 $tf=0; $tbl=0;
 
@@ -38,7 +38,7 @@ $fulldate = date("F j, Y");
 
 /* Text to output after the table */
 $closingtext =
-    "En el anterior reporte se muestran los cursos más solicitados por los profesores.";
+    "En el anterior reporte se muestran los cursos menos solicitados por los profesores.";
 
 //$address = array(
 //    "John Q. Doe", "255 Customer Lane", "Suite B",
@@ -51,7 +51,7 @@ try {
     $p = new PDFlib();
     
     $controlador = new controladorReporte();
-    $resultado = $controlador->retornarCursosMasSolicitados();
+    $resultado = $controlador->retornarCursosMenosSolicitados();
 
     //$p->set_option("searchpath={" . $searchpath . "}");
 
@@ -105,7 +105,7 @@ try {
     
     $p->setfont($boldfont, $fontsize);
     
-    $p->fit_textline("REPORTE DE CURSOS MAS SOLICITADOS", $llx, $y, "position {left top}");
+    $p->fit_textline("REPORTE DE CURSOS MENOS SOLICITADOS", $llx, $y, "position {left top}");
     $p->fit_textline($fulldate, $urx, $y, "position {right top}");
     
     $y -= 3 * $yoffset;

@@ -30,10 +30,13 @@
             $validateFlag = FALSE;
             $mostrarReporte = false;
             $result = [];
-            define('MAS_SOLICITADOS', 'Cusos mas solicitados');
+            define('MAS_SOLICITADOS', 'Cursos mas solicitados');
             define('MENOS_SOLICITADOS', 'Cursos menos solicitados');
+            
 
             include('dataLayer/controladorBaseDatos.php');
+            include ('objetos/obj_reporte.php');
+            $controlador = new controladorBaseDatos();
 
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -41,20 +44,30 @@
 
                 if ($operation == "reporte") {  //si es generar reporte
                     $cursoSeleccionado = test_input($_POST["curso"]);
+                    
+                    $_SESSION['cursoSeleccionado'] = $cursoSeleccionado;
+                    
+                    $_SESSION['cursoSeleccionado']= $cursoSeleccionado;
 
-                    if ($cursoSeleccionado == "Cusos mas solicitados") {
-                        //TODO hacer el llamado del metodo que devuelve la lista de cursos mas solicitados
+                    if ($cursoSeleccionado == "Cursos mas solicitados") {
+                        $shop = $controlador->retornarCursosMasSolicitados();
                         $mostrarReporte = true;
                     } else {
-                        //TODO hacer el llamado del metodo que devuelve la lista de cursos menos solicitados
+                        $shop = $controlador->retornarCursosMenosSolicitados();
                         $mostrarReporte = true;
                     }
                 }
                 if ($operation == "guardar_reporte") {  //si es regitrar sede
-                    header('Location: controladores/controladorReporte.php');
+                    $seleccionDelUsuario= $_SESSION['cursoSeleccionado'];
+                    if ($seleccionDelUsuario == "Cursos mas solicitados"){
+                        header('Location: controladores/controladorReporte.php');
+                    }
+                    else{
+                        header('Location: controladores/controladorReporte2.php');
+                    }
                 }
             }
-            
+
             function test_input($data) {//clean the data from the fields
                 $data = trim($data);
                 $data = stripslashes($data);
@@ -98,33 +111,38 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Grupo</th>
                                     <th>Curso</th>
-                                    <th>Solicitudes</th>
-
+                                    <th>Nivel</th>
+                                    <th>Profesor</th>
+                                    <th class="hidden-xs hidden-sm">Apellido</th>
+                                    <th class="hidden-xs hidden-sm">Apellido</th>
+                                    <th>Departamento</th>
+                                    <th>Email</th>
+                                    <th>Veces solicitado</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr class="info">
-                                    <td>PETI02C</td>
-                                    <td>PETI</td>
-                                    <td>4</td>
+                                <?php                                
+                                $x = 1;
+                                foreach ($shop as $obj) :
+                                    if ($x == 1) {
+                                        $x = 0;
+                                        echo '<tr class="info">';
+                                    } else {
+                                        $x = 1;
+                                        echo '<tr>';
+                                    }
+                                    ?>
+                                <td><?php echo $obj->nombreCurso; ?></td>
+                                <td><?php echo $obj->nivelCurso; ?></td>
+                                <td><?php echo $obj->nombreProfesor; ?></td>
+                                <td><?php echo $obj->apellido1Profesor; ?></td>
+                                <td class="hidden-xs hidden-sm"><?php echo $obj->apellido2Profesor; ?></td>
+                                <td><?php echo $obj->departamentoEscuelaProfesor; ?></td>
+                                <td><?php echo $obj->emailProfesor; ?></td>
+                                <td><?php echo $obj->vecesSolicitado; ?></td>
                                 </tr>
-                                <tr>
-                                    <td>SIA01</td>
-                                    <td>SIA</td>
-                                    <td>4</td>
-                                </tr>
-
-                                <tr class="info">
-                                    <td>ADMI01</td>
-                                    <td>Administracion de Proyectos</td>
-                                    <td>3</td>
-                                </tr>
-
-
-
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
 

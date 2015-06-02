@@ -729,13 +729,13 @@ class controladorBaseDatos {
         
         $cont = new data_controladorReporte();  
         $result = $cont->cursosMasSolicitados();        
-        $array = "";
+        $array = array();
         
         while ($obj = $result->fetch_assoc()) {            
-            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel'], $obj['nombre_profesor'], $obj['apellido1'],
+            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel_curso'], $obj['nombre_profesor'], $obj['apellido1'],
                                           $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], 
                                           $obj['veces_solicitado']);
-            $array = $newReporte;
+            $array[] = $newReporte;
         }
                 
         return $array;
@@ -744,10 +744,10 @@ class controladorBaseDatos {
     function retornarCursosMenosSolicitados() {
         $cont = new data_controladorReporte();  
         $result = $cont->cursosMenosSolicitados();        
-        $array = "";
+        $array = array();
         
         while ($obj = $result->fetch_assoc()) {            
-            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel'], $obj['nombre_profesor'], $obj['apellido1'],
+            $newReporte = new obj_reporte($obj['nombre_curso'], $obj['nivel_curso'], $obj['nombre_profesor'], $obj['apellido1'],
                                           $obj['apellido2'], $obj['departamentoEscuela'], $obj['email'], 
                                           $obj['veces_solicitado']);
             $array [] = $newReporte;
